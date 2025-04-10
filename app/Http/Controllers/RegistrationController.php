@@ -41,8 +41,6 @@ class RegistrationController extends Controller
             'role' => 'user',
             'phone_users' => $request->phone_users,
             'profile_picture_users' => $profilePath,
-            'path' => $profilePath,
-            'type' => $file->getClientOriginalExtension() ?? null,
         ]);
 
         $request->session()->put('success', 'Registration success!');
