@@ -4,6 +4,7 @@ use App\Http\Controllers\BarangController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -24,3 +25,7 @@ Route::post('/barang', [BarangController::class, 'store'])->name('barang.store')
 Route::get('/barang/{id_barang}/edit', [BarangController::class, 'edit'])->name('barang.edit');
 Route::put('/barang/{id_barang}', [BarangController::class, 'update'])->name('barang.update');
 Route::delete('/barang/{id_barang}', [BarangController::class, 'destroy'])->name('barang.destroy');
+
+Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('users')->group(function () {
+    Route::resource('users', UserController::class);
+});
