@@ -11,11 +11,9 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 'users';
+    protected $primaryKey = 'id'; 
+
     protected $fillable = [
         'First_Name',
         'Last_Name',
@@ -26,26 +24,14 @@ class User extends Authenticatable
         'profile_picture_users',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+// Relasi dengan Barang
+public function barang()
+{
+    return $this->hasMany(Barang::class, 'id_user', 'id');
+}
 }
