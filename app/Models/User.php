@@ -15,11 +15,13 @@ class User extends Authenticatable
     protected $primaryKey = 'id'; 
 
     protected $fillable = [
-        'name',
+        'First_Name',
+        'Last_Name',
         'email',
         'password',
-        'no_hp',
-        'is_admin',
+        'role',
+        'phone_users',
+        'profile_picture_users',
     ];
 
     protected $hidden = [
