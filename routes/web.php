@@ -4,7 +4,7 @@ use App\Http\Controllers\BarangController;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
-
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::middleware(['auth'])->group(function () {
     Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
     Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.create');

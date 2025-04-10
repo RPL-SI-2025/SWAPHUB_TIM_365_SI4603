@@ -23,11 +23,15 @@
             </div>
         @endif
 
-        <a href="{{ route('barang.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block">Tambah Barang</a>
+        <!-- Hanya mahasiswa yang bisa melihat tombol Tambah Barang -->
+        @if (!Auth::user()->is_admin)
+            <a href="{{ route('barang.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block">Tambah Barang</a>
+        @endif
 
         <table class="w-full bg-white shadow-md rounded">
             <thead>
                 <tr class="bg-gray-200">
+                    <th class="p-3">Gambar</th>
                     <th class="p-3">Nama Barang</th>
                     <th class="p-3">Kategori</th>
                     <th class="p-3">Deskripsi</th>
@@ -39,18 +43,28 @@
             <tbody>
                 @foreach ($barang as $item)
                     <tr>
+                        <td class="p-3">
+                            @if ($item->gambar)
+                                <img src="{{ Storage::url($item->gambar) }}" alt="{{ $item->nama_barang }}" class="w-16 h-16 object-cover">
+                            @else
+                                <span>Tidak ada gambar</span>
+                            @endif
+                        </td>
                         <td class="p-3">{{ $item->nama_barang }}</td>
                         <td class="p-3">{{ $item->kategori->nama_kategori }}</td>
                         <td class="p-3">{{ $item->deskripsi_barang }}</td>
                         <td class="p-3">{{ $item->status_barang }}</td>
                         <td class="p-3">{{ $item->user->name }}</td>
                         <td class="p-3">
-                            <a href="{{ route('barang.edit', $item->id_barang) }}" class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</a>
-                            <form action="{{ route('barang.destroy', $item->id_barang) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded" onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?')">Hapus</button>
-                            </form>
+                            <!-- Hanya pemilik barang yang bisa melihat tombol Edit dan Hapus -->
+                            @if (Auth::user()->id == $item->user_id)
+                                <a href="{{ route('barang.edit', $item->id_barang) }}" class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</a>
+                                <form action="{{ route('barang.destroy', $item->id_barang) }}" method="POST" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded" onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?')">Hapus</button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

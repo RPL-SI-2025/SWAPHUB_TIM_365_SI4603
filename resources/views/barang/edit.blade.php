@@ -11,7 +11,7 @@
     <div class="container mx-auto p-6">
         <h1 class="text-3xl font-bold mb-6">Edit Barang</h1>
 
-        <form action="{{ route('barang.update', $barang->id_barang) }}" method="POST">
+        <form action="{{ route('barang.update', $barang->id_barang) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="mb-4">
@@ -40,6 +40,14 @@
                     <option value="ditukar" {{ $barang->status_barang == 'ditukar' ? 'selected' : '' }}>Ditukar</option>
                     <option value="dihapus" {{ $barang->status_barang == 'dihapus' ? 'selected' : '' }}>Dihapus</option>
                 </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="gambar" class="block text-gray-700">Gambar Barang</label>
+                @if ($barang->gambar)
+                    <img src="{{ Storage::url($barang->gambar) }}" alt="{{ $barang->nama_barang }}" class="w-32 h-32 object-cover mb-2">
+                @endif
+                <input type="file" name="gambar" id="gambar" class="w-full p-2 border rounded">
             </div>
 
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Simpan</button>
