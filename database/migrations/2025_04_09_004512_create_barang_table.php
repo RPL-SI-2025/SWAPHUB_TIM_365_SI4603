@@ -13,7 +13,6 @@ return new class extends Migration
                 $table->engine = 'InnoDB';
                 $table->id('id_barang');
                 $table->foreignId('id_user')->constrained('id', 'users')->onDelete('cascade');
-                $table->foreignId('id_kategori')->constrained('kategori', 'id_kategori')->onDelete('cascade');
                 $table->string('nama_barang');
                 $table->text('deskripsi_barang');
                 $table->string('status_barang');
