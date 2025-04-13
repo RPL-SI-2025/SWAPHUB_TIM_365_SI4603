@@ -12,10 +12,10 @@ return new class extends Migration
             Schema::create('barang', function (Blueprint $table) {
                 $table->engine = 'InnoDB';
                 $table->id('id_barang');
-                $table->foreignId('id_user')->constrained('id', 'users')->onDelete('cascade');
+                $table->foreignId('id_user')->constrained('users', 'id')->onDelete('cascade');
                 $table->string('nama_barang');
                 $table->text('deskripsi_barang');
-                $table->string('status_barang');
+                $table->enum('status_barang', ['tersedia', 'ditukar', 'dihapus']);
                 $table->string('gambar')->nullable();
                 $table->timestamps();
             });

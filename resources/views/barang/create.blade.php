@@ -11,7 +11,6 @@
     <div class="container mx-auto p-6">
         <h1 class="text-3xl font-bold mb-6">Tambah Barang</h1>
 
-        <!-- Tampilkan pesan error jika ada -->
         @if ($errors->any())
             <div class="bg-red-500 text-white p-4 rounded mb-4">
                 <ul>
@@ -24,23 +23,6 @@
 
         <form action="{{ route('barang.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="mb-4">
-                <label for="id_kategori" class="block text-gray-700">Kategori</label>
-                <select name="id_kategori" id="id_kategori" class="w-full p-2 border rounded">
-                    <option value="">Pilih Kategori</option>
-                    @if ($kategori->isEmpty())
-                        <option value="" disabled>Tidak ada kategori tersedia</option>
-                    @else
-                        @foreach ($kategori as $kat)
-                            <option value="{{ $kat->id_kategori }}">{{ $kat->nama_kategori }}</option>
-                        @endforeach
-                    @endif
-                </select>
-                @error('id_kategori')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
-
             <div class="mb-4">
                 <label for="nama_barang" class="block text-gray-700">Nama Barang</label>
                 <input type="text" name="nama_barang" id="nama_barang" value="{{ old('nama_barang') }}" class="w-full p-2 border rounded" required>
@@ -77,7 +59,7 @@
                 @enderror
             </div>
 
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Simpan</button>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Simpan</button>
             <a href="{{ route('barang.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded">Kembali</a>
         </form>
     </div>

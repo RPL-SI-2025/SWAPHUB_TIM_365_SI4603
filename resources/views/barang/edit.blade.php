@@ -15,15 +15,6 @@
             @csrf
             @method('PUT')
             <div class="mb-4">
-                <label for="id_kategori" class="block text-gray-700">Kategori</label>
-                <select name="id_kategori" id="id_kategori" class="w-full p-2 border rounded">
-                    @foreach ($kategori as $kat)
-                        <option value="{{ $kat->id_kategori }}" {{ $barang->id_kategori == $kat->id_kategori ? 'selected' : '' }}>{{ $kat->nama_kategori }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="mb-4">
                 <label for="nama_barang" class="block text-gray-700">Nama Barang</label>
                 <input type="text" name="nama_barang" id="nama_barang" value="{{ $barang->nama_barang }}" class="w-full p-2 border rounded" required>
             </div>
@@ -50,7 +41,7 @@
                 <input type="file" name="gambar" id="gambar" class="w-full p-2 border rounded">
             </div>
 
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Simpan</button>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Simpan</button>
             <a href="{{ route('barang.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded">Kembali</a>
         </form>
     </div>

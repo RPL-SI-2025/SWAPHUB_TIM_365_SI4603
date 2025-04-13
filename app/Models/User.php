@@ -28,8 +28,21 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-public function barang()
-{
-    return $this->hasMany(Barang::class, 'id_user', 'id');
-}
+    // Accessor for name
+    public function getNameAttribute()
+    {
+        return $this->First_Name . ' ' . $this->Last_Name;
+    }
+
+    // Check if user is admin
+    public function getIsAdminAttribute()
+    {
+        return $this->role === 'admin';
+    }
+
+    // Relationship with Barang
+    public function barang()
+    {
+        return $this->hasMany(Barang::class, 'id_user', 'id');
+    }
 }

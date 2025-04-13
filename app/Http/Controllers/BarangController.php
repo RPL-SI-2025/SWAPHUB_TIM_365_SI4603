@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
-use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class BarangController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $barang = Barang::show_item();
@@ -18,24 +22,20 @@ class BarangController extends Controller
 
     public function create()
     {
-        // Hanya mahasiswa (bukan admin) yang bisa menambah barang
         if (Auth::user()->is_admin) {
             return redirect()->route('barang.index')->with('error', 'Admin tidak memiliki akses untuk menambah barang.');
         }
 
-        $kategori = Kategori::all();
-        return view('barang.create', compact('kategori'));
+        return view('barang.create');
     }
 
     public function store(Request $request)
     {
-        // Hanya mahasiswa (bukan admin) yang bisa menambah barang
         if (Auth::user()->is_admin) {
             return redirect()->route('barang.index')->with('error', 'Admin tidak memiliki akses untuk menambah barang.');
         }
 
         $request->validate([
-            'id_kategori' => 'required|exists:kategori,id_kategori',
             'nama_barang' => 'required|string|max:255',
             'deskripsi_barang' => 'required|string',
             'status_barang' => 'required|in:tersedia,ditukar,dihapus',
@@ -44,7 +44,6 @@ class BarangController extends Controller
 
         $data = [
             'id_user' => Auth::user()->id,
-            'id_kategori' => $request->id_kategori,
             'nama_barang' => $request->nama_barang,
             'deskripsi_barang' => $request->deskripsi_barang,
             'status_barang' => $request->status_barang,
@@ -64,26 +63,22 @@ class BarangController extends Controller
     {
         $barang = Barang::findOrFail($id_barang);
 
-        // Hanya pemilik barang (mahasiswa) yang bisa mengedit barang
         if (Auth::user()->id != $barang->id_user) {
             return redirect()->route('barang.index')->with('error', 'Anda tidak memiliki akses untuk mengedit barang ini.');
         }
 
-        $kategori = Kategori::all();
-        return view('barang.edit', compact('barang', 'kategori'));
+        return view('barang.edit', compact('barang'));
     }
 
     public function update(Request $request, $id_barang)
     {
         $barang = Barang::findOrFail($id_barang);
 
-        // Hanya pemilik barang (mahasiswa) yang bisa mengedit barang
         if (Auth::user()->id != $barang->id_user) {
             return redirect()->route('barang.index')->with('error', 'Anda tidak memiliki akses untuk mengedit barang ini.');
         }
 
         $request->validate([
-            'id_kategori' => 'required|exists:kategori,id_kategori',
             'nama_barang' => 'required|string|max:255',
             'deskripsi_barang' => 'required|string',
             'status_barang' => 'required|in:tersedia,ditukar,dihapus',
@@ -91,7 +86,6 @@ class BarangController extends Controller
         ]);
 
         $data = [
-            'id_kategori' => $request->id_kategori,
             'nama_barang' => $request->nama_barang,
             'deskripsi_barang' => $request->deskripsi_barang,
             'status_barang' => $request->status_barang,
@@ -114,7 +108,6 @@ class BarangController extends Controller
     {
         $barang = Barang::findOrFail($id_barang);
 
-        // Hanya pemilik barang (mahasiswa) yang bisa menghapus barang
         if (Auth::user()->id != $barang->id_user) {
             return redirect()->route('barang.index')->with('error', 'Anda tidak memiliki akses untuk menghapus barang ini.');
         }
