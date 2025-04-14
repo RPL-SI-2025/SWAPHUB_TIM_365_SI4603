@@ -13,7 +13,7 @@ class Barang extends Model
     protected $primaryKey = 'id_barang';
 
     protected $fillable = [
-        'id_user', 
+        'id_user',
         'nama_barang',
         'deskripsi_barang',
         'status_barang',
@@ -25,4 +25,9 @@ class Barang extends Model
         return $this->belongsTo(User::class, 'id_user', 'id');
     }
 
+    // Add a static method to fetch items (used in your controller)
+    public static function show_item()
+    {
+        return self::with('user')->get();
+    }
 }

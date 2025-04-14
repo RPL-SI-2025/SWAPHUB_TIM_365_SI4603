@@ -23,7 +23,6 @@
             </div>
         @endif
 
-        <!-- Hanya mahasiswa yang bisa melihat tombol Tambah Barang -->
         @if (!Auth::user()->is_admin)
             <a href="{{ route('barang.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block">Tambah Barang</a>
         @endif
@@ -33,7 +32,6 @@
                 <tr class="bg-gray-200">
                     <th class="p-3">Gambar</th>
                     <th class="p-3">Nama Barang</th>
-                    <th class="p-3">Kategori</th>
                     <th class="p-3">Deskripsi</th>
                     <th class="p-3">Status</th>
                     <th class="p-3">Pemilik</th>
@@ -51,13 +49,11 @@
                             @endif
                         </td>
                         <td class="p-3">{{ $item->nama_barang }}</td>
-                        <td class="p-3">{{ $item->kategori->nama_kategori }}</td>
                         <td class="p-3">{{ $item->deskripsi_barang }}</td>
                         <td class="p-3">{{ $item->status_barang }}</td>
                         <td class="p-3">{{ $item->user->name }}</td>
                         <td class="p-3">
-                            <!-- Hanya pemilik barang yang bisa melihat tombol Edit dan Hapus -->
-                            @if (Auth::user()->id == $item->user_id)
+                            @if (Auth::user()->id == $item->id_user)
                                 <a href="{{ route('barang.edit', $item->id_barang) }}" class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</a>
                                 <form action="{{ route('barang.destroy', $item->id_barang) }}" method="POST" class="inline">
                                     @csrf
