@@ -12,8 +12,8 @@ return new class extends Migration
             Schema::create('barang', function (Blueprint $table) {
                 $table->engine = 'InnoDB';
                 $table->id('id_barang');
-                $table->foreignId('id_user')->constrained('id', 'users')->onDelete('cascade');
-                $table->foreignId('id_kategori')->constrained('kategori', 'id_kategori')->onDelete('cascade');
+                $table->foreignId('id_user')->constrained('users', 'id')->onDelete('cascade');
+                // $table->foreignId('id_kategori')->constrained('kategori', 'id_kategori')->onDelete('cascade');
                 $table->string('nama_barang');
                 $table->text('deskripsi_barang');
                 $table->string('status_barang');

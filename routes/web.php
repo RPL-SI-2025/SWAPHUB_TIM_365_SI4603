@@ -4,6 +4,7 @@ use App\Http\Controllers\BarangController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\WishlistController;
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -24,3 +25,5 @@ Route::post('/barang', [BarangController::class, 'store'])->name('barang.store')
 Route::get('/barang/{id_barang}/edit', [BarangController::class, 'edit'])->name('barang.edit');
 Route::put('/barang/{id_barang}', [BarangController::class, 'update'])->name('barang.update');
 Route::delete('/barang/{id_barang}', [BarangController::class, 'destroy'])->name('barang.destroy');
+
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
