@@ -6,6 +6,7 @@ use App\Models\Barang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class BarangController extends Controller
 {
@@ -54,9 +55,18 @@ class BarangController extends Controller
             $data['gambar'] = $gambarPath;
         }
 
-        Barang::create($data);
+        $barang = Barang::create($data);
 
-        return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan!');
+        // Tambahkan logging untuk debugging
+        Log::info('Barang baru ditambahkan: ' . $barang->toJson());
+
+        return redirect()->route('home')->with('success', 'Barang berhasil ditambahkan!');
+    }
+
+    public function show($id_barang)
+    {
+        $barang = Barang::with('user')->findOrFail($id_barang);
+        return view('barang.show', compact('barang'));
     }
 
     public function edit($id_barang)
@@ -101,7 +111,7 @@ class BarangController extends Controller
 
         $barang->update($data);
 
-        return redirect()->route('barang.index')->with('success', 'Barang berhasil diperbarui!');
+        return redirect()->route('home')->with('success', 'Barang berhasil diperbarui!');
     }
 
     public function destroy($id_barang)
@@ -118,6 +128,6 @@ class BarangController extends Controller
 
         $barang->delete();
 
-        return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus!');
+        return redirect()->route('home')->with('success', 'Barang berhasil dihapus!');
     }
 }

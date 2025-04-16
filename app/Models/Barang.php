@@ -25,7 +25,6 @@ class Barang extends Model
         return $this->belongsTo(User::class, 'id_user', 'id');
     }
 
-    // Add a static method to fetch items (used in your controller)
     public static function show_item()
     {
         return self::with('user')->get();
