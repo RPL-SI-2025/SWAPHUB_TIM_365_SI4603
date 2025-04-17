@@ -26,6 +26,6 @@ Route::get('/barang/{id_barang}/edit', [BarangController::class, 'edit'])->name(
 Route::put('/barang/{id_barang}', [BarangController::class, 'update'])->name('barang.update');
 Route::delete('/barang/{id_barang}', [BarangController::class, 'destroy'])->name('barang.destroy');
 
-Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('users')->group(function () {
+Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
     Route::resource('users', UserController::class);
 });

@@ -24,11 +24,12 @@
             @forelse($users as $index => $user)
                 <tr>
                     <td>{{ $index + 1 }}</td>
+                    <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role }}</td>
                     <td>
-                        <form action="{{ route('users.destroy', $user->$id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?')">
+                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>

@@ -15,6 +15,6 @@ class IsAdmin
             return $next($request);
         }
 
-        abort(403);
+        return redirect('/home')->with('error', 'Kamu tidak memiliki akses admin.');
     }
 }
