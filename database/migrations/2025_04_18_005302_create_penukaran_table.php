@@ -10,10 +10,11 @@ return new class extends Migration
     {
         Schema::create('penukaran', function (Blueprint $table) {
             $table->id('id_penukaran');
-            $table->foreignId('id_mahasiswa')->constrained('users', 'id')->onDelete('cascade'); // Requester
-            $table->foreignId('id_barang')->constrained('barang', 'id_barang')->onDelete('cascade'); // Requested item
-            $table->foreignId('id_barang_ditawarkan')->constrained('barang', 'id_barang')->onDelete('cascade'); // Offered item
-            $table->string('riwayat_penukaran')->nullable(); // History or message
+            $table->foreignId('id_penawar')->constrained('users')->onDelete('cascade');
+            $table->foreignId('id_ditawar')->constrained('users')->onDelete('cascade');
+            $table->foreignId('id_barang_penawar')->constrained('barang', 'id_barang')->onDelete('cascade');
+            $table->foreignId('id_barang_ditawar')->constrained('barang', 'id_barang')->onDelete('cascade');
+            $table->text('pesan_penukaran')->nullable();
             $table->enum('status_penukaran', ['pending', 'diterima', 'ditolak'])->default('pending');
             $table->timestamps();
         });

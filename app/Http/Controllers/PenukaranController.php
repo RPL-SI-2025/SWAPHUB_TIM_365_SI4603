@@ -6,8 +6,7 @@ use App\Models\Barang;
 use App\Models\Penukaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\PenukaranDiterima;
+use Illuminate\Notifications\DatabaseNotification;
 
 class PenukaranController extends Controller
 {
@@ -45,7 +44,7 @@ class PenukaranController extends Controller
 
         $request->validate([
             'id_barang_ditawarkan' => 'required|exists:barang,id_barang',
-            'riwayat_penukaran' => 'nullable|string|max:1000',
+            'pesan_penukaran' => 'nullable|string|max:1000',
         ]);
 
         $barangDitawarkan = Barang::findOrFail($request->id_barang_ditawarkan);
@@ -59,10 +58,11 @@ class PenukaranController extends Controller
         }
 
         Penukaran::create([
-            'id_mahasiswa' => Auth::user()->id,
-            'id_barang' => $barang->id_barang,
-            'id_barang_ditawarkan' => $barangDitawarkan->id_barang,
-            'riwayat_penukaran' => $request->riwayat_penukaran,
+            'id_penawar' => Auth::user()->id,
+            'id_ditawar' => $barang->id_user,
+            'id_barang_penawar' => $barangDitawarkan->id_barang,
+            'id_barang_ditawar' => $barang->id_barang,
+            'pesan_penukaran' => $request->pesan_penukaran,
             'status_penukaran' => 'pending',
         ]);
 
@@ -71,18 +71,24 @@ class PenukaranController extends Controller
 
     public function index()
     {
-        $penukaranMasuk = Penukaran::whereHas('barang', function ($query) {
-            $query->where('id_user', Auth::user()->id);
-        })->with(['barang', 'barangDitawarkan', 'requester'])->get();
+        // Permintaan masuk: Barang milik user yang diminta oleh orang lain
+        $permintaanMasuk = Penukaran::where('id_ditawar', Auth::user()->id)
+                                   ->with(['barangPenawar', 'barangDitawar', 'penawar', 'ditawar'])
+                                   ->get();
 
-        return view('penukaran.index', compact('penukaranMasuk'));
+        // Penawaran keluar: Penawaran yang diajukan oleh user
+        $penawaranKeluar = Penukaran::where('id_penawar', Auth::user()->id)
+                                   ->with(['barangPenawar', 'barangDitawar', 'penawar', 'ditawar'])
+                                   ->get();
+
+        return view('penukaran.index', compact('permintaanMasuk', 'penawaranKeluar'));
     }
 
     public function confirm($id_penukaran)
     {
         $penukaran = Penukaran::findOrFail($id_penukaran);
 
-        if ($penukaran->barang->id_user != Auth::user()->id) {
+        if ($penukaran->id_ditawar != Auth::user()->id) {
             return redirect()->route('penukaran.index')->with('error', 'Anda tidak memiliki akses untuk mengkonfirmasi permintaan ini.');
         }
 
@@ -92,11 +98,36 @@ class PenukaranController extends Controller
 
         $penukaran->update(['status_penukaran' => 'diterima']);
 
-        $penukaran->barang->update(['status_barang' => 'ditukar']);
-        $penukaran->barangDitawarkan->update(['status_barang' => 'ditukar']);
+        $penukaran->barangPenawar->update(['status_barang' => 'ditukar']);
+        $penukaran->barangDitawar->update(['status_barang' => 'ditukar']);
 
-        // Notify the requester
-        $penukaran->requester->notify(new PenukaranDiterima($penukaran));
+        // Notifikasi untuk penawar
+        DatabaseNotification::create([
+            'id' => \Illuminate\Support\Str::uuid(),
+            'type' => 'App\Notifications\SimpleNotification',
+            'notifiable_type' => 'App\Models\User',
+            'notifiable_id' => $penukaran->id_penawar,
+            'data' => [
+                'message' => 'Permintaan tukar barang Anda untuk "' . $penukaran->barangDitawar->nama_barang . '" telah diterima oleh ' . $penukaran->ditawar->name . '.',
+                'url' => route('penukaran.index'),
+            ],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Notifikasi untuk yang ditawar
+        DatabaseNotification::create([
+            'id' => \Illuminate\Support\Str::uuid(),
+            'type' => 'App\Notifications\SimpleNotification',
+            'notifiable_type' => 'App\Models\User',
+            'notifiable_id' => $penukaran->id_ditawar,
+            'data' => [
+                'message' => 'Anda telah menerima penawaran tukar barang "' . $penukaran->barangPenawar->nama_barang . '" dari ' . $penukaran->penawar->name . '.',
+                'url' => route('penukaran.index'),
+            ],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
         return redirect()->route('penukaran.index')->with('success', 'Permintaan tukar barang telah diterima!');
     }
@@ -105,7 +136,7 @@ class PenukaranController extends Controller
     {
         $penukaran = Penukaran::findOrFail($id_penukaran);
 
-        if ($penukaran->barang->id_user != Auth::user()->id) {
+        if ($penukaran->id_ditawar != Auth::user()->id) {
             return redirect()->route('penukaran.index')->with('error', 'Anda tidak memiliki akses untuk menolak permintaan ini.');
         }
 
@@ -114,6 +145,20 @@ class PenukaranController extends Controller
         }
 
         $penukaran->update(['status_penukaran' => 'ditolak']);
+
+        // Notifikasi untuk penawar
+        DatabaseNotification::create([
+            'id' => \Illuminate\Support\Str::uuid(),
+            'type' => 'App\Notifications\SimpleNotification',
+            'notifiable_type' => 'App\Models\User',
+            'notifiable_id' => $penukaran->id_penawar,
+            'data' => [
+                'message' => 'Permintaan tukar barang Anda untuk "' . $penukaran->barangDitawar->nama_barang . '" telah ditolak oleh ' . $penukaran->ditawar->name . '.',
+                'url' => route('penukaran.index'),
+            ],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
         return redirect()->route('penukaran.index')->with('success', 'Permintaan tukar barang telah ditolak.');
     }

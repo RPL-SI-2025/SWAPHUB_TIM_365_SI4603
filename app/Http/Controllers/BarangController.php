@@ -39,8 +39,10 @@ class BarangController extends Controller
         $request->validate([
             'nama_barang' => 'required|string|max:255',
             'deskripsi_barang' => 'required|string',
-            'status_barang' => 'required|in:tersedia,ditukar,dihapus',
+            'status_barang' => 'required|in:tersedia,tidak tersedia',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'is_gift' => 'required|boolean',
+            'kategori' => 'required|in:Fashion,Outfits,Automotive,Accessories,Stationery,Books,Furniture,Decoration',
         ]);
 
         $data = [
@@ -48,6 +50,8 @@ class BarangController extends Controller
             'nama_barang' => $request->nama_barang,
             'deskripsi_barang' => $request->deskripsi_barang,
             'status_barang' => $request->status_barang,
+            'is_gift' => $request->is_gift,
+            'kategori' => $request->kategori,
         ];
 
         if ($request->hasFile('gambar')) {
@@ -57,7 +61,6 @@ class BarangController extends Controller
 
         $barang = Barang::create($data);
 
-        // Tambahkan logging untuk debugging
         Log::info('Barang baru ditambahkan: ' . $barang->toJson());
 
         return redirect()->route('home')->with('success', 'Barang berhasil ditambahkan!');
@@ -77,6 +80,10 @@ class BarangController extends Controller
             return redirect()->route('barang.index')->with('error', 'Anda tidak memiliki akses untuk mengedit barang ini.');
         }
 
+        if ($barang->status_barang == 'ditukar') {
+            return redirect()->route('barang.index')->with('error', 'Barang ini sudah ditukar dan tidak dapat diubah.');
+        }
+
         return view('barang.edit', compact('barang'));
     }
 
@@ -88,17 +95,25 @@ class BarangController extends Controller
             return redirect()->route('barang.index')->with('error', 'Anda tidak memiliki akses untuk mengedit barang ini.');
         }
 
+        if ($barang->status_barang == 'ditukar') {
+            return redirect()->route('barang.index')->with('error', 'Barang ini sudah ditukar dan tidak dapat diubah.');
+        }
+
         $request->validate([
             'nama_barang' => 'required|string|max:255',
             'deskripsi_barang' => 'required|string',
-            'status_barang' => 'required|in:tersedia,ditukar,dihapus',
+            'status_barang' => 'required|in:tersedia,tidak tersedia',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'is_gift' => 'required|boolean',
+            'kategori' => 'required|in:Fashion,Outfits,Automotive,Accessories,Stationery,Books,Furniture,Decoration',
         ]);
 
         $data = [
             'nama_barang' => $request->nama_barang,
             'deskripsi_barang' => $request->deskripsi_barang,
             'status_barang' => $request->status_barang,
+            'is_gift' => $request->is_gift,
+            'kategori' => $request->kategori,
         ];
 
         if ($request->hasFile('gambar')) {
@@ -120,6 +135,10 @@ class BarangController extends Controller
 
         if (Auth::user()->id != $barang->id_user) {
             return redirect()->route('barang.index')->with('error', 'Anda tidak memiliki akses untuk menghapus barang ini.');
+        }
+
+        if ($barang->status_barang == 'ditukar') {
+            return redirect()->route('barang.index')->with('error', 'Barang ini sudah ditukar dan tidak dapat dihapus.');
         }
 
         if ($barang->gambar) {

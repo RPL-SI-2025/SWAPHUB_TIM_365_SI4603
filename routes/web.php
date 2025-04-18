@@ -29,4 +29,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/penukaran', [PenukaranController::class, 'index'])->name('penukaran.index');
     Route::post('/penukaran/{id_penukaran}/confirm', [PenukaranController::class, 'confirm'])->name('penukaran.confirm');
     Route::post('/penukaran/{id_penukaran}/reject', [PenukaranController::class, 'reject'])->name('penukaran.reject');
+    Route::post('notification/read/{id}', [App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notification.read');
 });

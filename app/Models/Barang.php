@@ -17,7 +17,9 @@ class Barang extends Model
         'nama_barang',
         'deskripsi_barang',
         'status_barang',
-        'gambar'
+        'gambar',
+        'is_gift',
+        'kategori',
     ];
 
     public function user()

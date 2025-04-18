@@ -26,15 +26,17 @@
             <div class="bg-red-500 text-white p-4 rounded mb-8">{{ session('error') }}</div>
         @endif
 
-        @foreach (Auth::user()->unreadNotifications as $notification)
-            <div class="bg-blue-500 text-white p-4 rounded mb-8 flex justify-between items-center">
-                <span>{{ $notification->data['message'] }}</span>
-                <a href="{{ $notification->data['url'] }}" onclick="event.preventDefault(); document.getElementById('mark-as-read-{{ $notification->id }}').submit();" class="text-white underline">Tandai Dibaca</a>
-                <form id="mark-as-read-{{ $notification->id }}" action="{{ route('notification.read', $notification->id) }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            </div>
-        @endforeach
+        @if (Auth::user()->unreadNotifications->isNotEmpty())
+            @foreach (Auth::user()->unreadNotifications as $notification)
+                <div class="bg-blue-500 text-white p-4 rounded mb-8 flex justify-between items-center">
+                    <span>{{ $notification->data['message'] }}</span>
+                    <a href="{{ $notification->data['url'] }}" onclick="event.preventDefault(); document.getElementById('mark-as-read-{{ $notification->id }}').submit();" class="text-white underline">Tandai Dibaca</a>
+                    <form id="mark-as-read-{{ $notification->id }}" action="{{ route('notification.read', $notification->id) }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+            @endforeach
+        @endif
 
         <!-- Tombol Tambah Barang dan Lihat Permintaan Tukar -->
         @if (!Auth::user()->is_admin)
@@ -59,7 +61,7 @@
         <!-- Seksi Just For You -->
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Just For You</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
-            @foreach ($barang->take(4) as $item)
+            @foreach ($barang->where('is_gift', false) as $item)
                 <div class="bg-white shadow-md rounded-lg overflow-hidden">
                     <div class="h-48 bg-gray-200 flex items-center justify-center">
                         @if ($item->gambar)
@@ -73,7 +75,7 @@
                         <p class="text-gray-600 text-sm">{{ Str::limit($item->deskripsi_barang, 50) }}</p>
                         <div class="mt-4 flex space-x-2">
                             <a href="{{ route('barang.show', $item->id_barang) }}" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Lihat</a>
-                            @if (Auth::user()->id == $item->id_user)
+                            @if (Auth::user()->id == $item->id_user && $item->status_barang != 'ditukar')
                                 <a href="{{ route('barang.edit', $item->id_barang) }}" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Edit</a>
                                 <form action="{{ route('barang.destroy', $item->id_barang) }}" method="POST" class="inline">
                                     @csrf
@@ -90,7 +92,7 @@
         <!-- Seksi With Bonus Item -->
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">With Bonus Item 🎁</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
-            @foreach ($barang->skip(4) as $item)
+            @foreach ($barang->where('is_gift', true) as $item)
                 <div class="bg-white shadow-md rounded-lg overflow-hidden">
                     <div class="h-48 bg-gray-200 flex items-center justify-center">
                         @if ($item->gambar)
@@ -104,7 +106,7 @@
                         <p class="text-gray-600 text-sm">{{ Str::limit($item->deskripsi_barang, 50) }}</p>
                         <div class="mt-4 flex space-x-2">
                             <a href="{{ route('barang.show', $item->id_barang) }}" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Lihat</a>
-                            @if (Auth::user()->id == $item->id_user)
+                            @if (Auth::user()->id == $item->id_user && $item->status_barang != 'ditukar')
                                 <a href="{{ route('barang.edit', $item->id_barang) }}" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Edit</a>
                                 <form action="{{ route('barang.destroy', $item->id_barang) }}" method="POST" class="inline">
                                     @csrf

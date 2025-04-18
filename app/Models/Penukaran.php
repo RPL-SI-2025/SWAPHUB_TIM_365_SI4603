@@ -13,25 +13,31 @@ class Penukaran extends Model
     protected $primaryKey = 'id_penukaran';
 
     protected $fillable = [
-        'id_mahasiswa',
-        'id_barang',
-        'id_barang_ditawarkan',
-        'riwayat_penukaran',
+        'id_penawar',
+        'id_ditawar',
+        'id_barang_penawar',
+        'id_barang_ditawar',
+        'pesan_penukaran',
         'status_penukaran',
     ];
 
-    public function requester()
+    public function penawar()
     {
-        return $this->belongsTo(User::class, 'id_mahasiswa', 'id');
+        return $this->belongsTo(User::class, 'id_penawar', 'id');
     }
 
-    public function barang()
+    public function ditawar()
     {
-        return $this->belongsTo(Barang::class, 'id_barang', 'id_barang');
+        return $this->belongsTo(User::class, 'id_ditawar', 'id');
     }
 
-    public function barangDitawarkan()
+    public function barangPenawar()
     {
-        return $this->belongsTo(Barang::class, 'id_barang_ditawarkan', 'id_barang');
+        return $this->belongsTo(Barang::class, 'id_barang_penawar', 'id_barang');
+    }
+
+    public function barangDitawar()
+    {
+        return $this->belongsTo(Barang::class, 'id_barang_ditawar', 'id_barang');
     }
 }
