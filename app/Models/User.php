@@ -34,4 +34,10 @@ public function barang()
 {
     return $this->hasMany(Barang::class, 'id_user', 'id');
 }
+
+public function getFullNameAttribute()
+{
+    return "{$this->First_Name} {$this->Last_Name}";
+}
+
 }
