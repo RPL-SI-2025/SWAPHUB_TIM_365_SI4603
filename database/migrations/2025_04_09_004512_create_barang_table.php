@@ -10,10 +10,16 @@ return new class extends Migration
     {
         if (!Schema::hasTable('barang')) {
             Schema::create('barang', function (Blueprint $table) {
-                $table->engine = 'InnoDB';
                 $table->id('id_barang');
-                $table->foreignId('id_user')->constrained('id', 'users')->onDelete('cascade');
-                $table->foreignId('id_kategori')->constrained('kategori', 'id_kategori')->onDelete('cascade');
+
+                // Foreign key ke users.id
+                $table->unsignedBigInteger('id_user');
+                $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+
+                // Foreign key ke kategori.id_kategori
+                $table->foreignId('id_kategori')->constrained('kategori')->onDelete('cascade');
+
+
                 $table->string('nama_barang');
                 $table->text('deskripsi_barang');
                 $table->string('status_barang');

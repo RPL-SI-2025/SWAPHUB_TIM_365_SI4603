@@ -38,7 +38,7 @@
                 <a href="#" class="block hover:text-blue-600">My Profile</a>
                 <a href="#" class="block hover:text-blue-600">Wishlist</a>
                 <a href="#" class="block hover:text-blue-600">Setting</a>
-                <a href="#" class="block hover:text-blue-600">Product</a>
+                <a href={{route('home')}} class="block hover:text-blue-600">Product</a>
                 <a href="#" class="block hover:text-blue-600">Notification</a>
             </nav>
         </aside>
