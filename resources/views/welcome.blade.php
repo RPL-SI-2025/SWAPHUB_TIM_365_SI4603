@@ -15,7 +15,7 @@
             <img src="https://www.svgrepo.com/show/499963/arrows-retweet.svg" alt="logo" class="w-6 h-6">
             <h1 class="text-xl font-bold text-gray-800">SWAPHUB</h1>
         </div>
-          <a href="{{ route('profile') }}" class="flex items-center gap-2 hover:opacity-80 transition">
+          <a href="{{ route('profile.index') }}" class="flex items-center gap-2 hover:opacity-80 transition">
             <span class="font-medium text-gray-700">Tom Cook</span>
             <img src="https://www.svgrepo.com/show/384674/account-avatar-profile-user-11.svg" alt="profile" class="w-8 h-8 rounded-full">
           </a>

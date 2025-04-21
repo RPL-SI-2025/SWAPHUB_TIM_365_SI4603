@@ -5,46 +5,71 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
-        return view('profile', compact('user'));
+        return view('profile.index', compact('user'));
     }
 
     public function update(Request $request, $id)
 {
     $user = User::findOrFail($id);
 
-    // Validasi (opsional, tapi bagus dilakukan)
+    if ($user->id !== Auth::id()) {
+        return redirect()->route('profile.index')->with('error', 'Unauthorized action.');
+    }
+
+    // Validasi request
     $request->validate([
+        'First_Name' => 'nullable|string|max:255',
+        'Last_Name' => 'nullable|string|max:255',
+        'email' => 'nullable|email|max:255|unique:users,email,' . $user->id,
+        'phone' => 'nullable|string|max:20',
         'profile_picture_users' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
     ]);
 
-    // Handle upload foto
+    // Update data yang tersedia
+    if ($request->filled('First_Name')) {
+        $user->First_Name = $request->First_Name;
+    }
+
+    if ($request->filled('Last_Name')) {
+        $user->Last_Name = $request->Last_Name;
+    }
+
+    if ($request->filled('email')) {
+        $user->email = $request->email;
+    }
+
+    if ($request->filled('phone')) {
+        $user->phone_users = $request->phone;
+    }
+
+    // Handle profile picture
     if ($request->hasFile('profile_picture_users')) {
         $file = $request->file('profile_picture_users');
         $filename = time() . '.' . $file->getClientOriginalExtension();
 
-        // Simpan di storage/app/public/uploads
+        if (!Storage::exists('public/uploads')) {
+            Storage::makeDirectory('public/uploads');
+        }
+
         $file->storeAs('public/uploads', $filename);
 
-        // Hapus foto lama (jika ada)
         if ($user->profile_picture_users) {
             Storage::delete('public/uploads/' . $user->profile_picture_users);
         }
 
-        // Update nama file di database
-        $user->profile_picture_users = $filename;
+        $user->profile_picture_users = 'uploads/' . $filename;
     }
 
-    // Simpan perubahan
     $user->save();
 
-    return back()->with('success', 'Profile updated successfully.');
+    return redirect()->route('profile.index')->with('success', 'Profile updated successfully.');
 }
-
 
 }
