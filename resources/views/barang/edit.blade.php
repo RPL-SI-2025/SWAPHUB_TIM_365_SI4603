@@ -11,48 +11,74 @@
     <div class="container mx-auto p-6">
         <h1 class="text-3xl font-bold mb-6">Edit Barang</h1>
 
-        <form action="{{ route('barang.update', $barang->id_barang) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <div class="mb-4">
-                <label for="id_kategori" class="block text-gray-700">Kategori</label>
-                <select name="id_kategori" id="id_kategori" class="w-full p-2 border rounded">
-                    @foreach ($kategori as $kat)
-                        <option value="{{ $kat->id_kategori }}" {{ $barang->id_kategori == $kat->id_kategori ? 'selected' : '' }}>{{ $kat->nama_kategori }}</option>
-                    @endforeach
-                </select>
-            </div>
+        @if (session('error'))
+            <div class="bg-red-500 text-white p-4 rounded mb-4">{{ session('error') }}</div>
+        @endif
 
-            <div class="mb-4">
-                <label for="nama_barang" class="block text-gray-700">Nama Barang</label>
-                <input type="text" name="nama_barang" id="nama_barang" value="{{ $barang->nama_barang }}" class="w-full p-2 border rounded" required>
-            </div>
+        @if ($barang->status_barang == 'ditukar')
+            <div class="bg-yellow-500 text-white p-4 rounded mb-4">Barang ini sudah ditukar dan tidak dapat diubah.</div>
+            <a href="{{ route('home') }}" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Kembali</a>
+        @else
+            <form action="{{ route('barang.update', $barang->id_barang) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="mb-4">
+                    <label for="nama_barang" class="block text-gray-700">Nama Barang</label>
+                    <input type="text" name="nama_barang" id="nama_barang" class="w-full border rounded p-2 @error('nama_barang') border-red-500 @enderror" value="{{ old('nama_barang', $barang->nama_barang) }}">
+                    @error('nama_barang')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="deskripsi_barang" class="block text-gray-700">Deskripsi Barang</label>
-                <textarea name="deskripsi_barang" id="deskripsi_barang" class="w-full p-2 border rounded" required>{{ $barang->deskripsi_barang }}</textarea>
-            </div>
+                <div class="mb-4">
+                    <label for="deskripsi_barang" class="block text-gray-700">Deskripsi Barang</label>
+                    <textarea name="deskripsi_barang" id="deskripsi_barang" class="w-full border rounded p-2 @error('deskripsi_barang') border-red-500 @enderror">{{ old('deskripsi_barang', $barang->deskripsi_barang) }}</textarea>
+                    @error('deskripsi_barang')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="status_barang" class="block text-gray-700">Status Barang</label>
-                <select name="status_barang" id="status_barang" class="w-full p-2 border rounded">
-                    <option value="tersedia" {{ $barang->status_barang == 'tersedia' ? 'selected' : '' }}>Tersedia</option>
-                    <option value="ditukar" {{ $barang->status_barang == 'ditukar' ? 'selected' : '' }}>Ditukar</option>
-                    <option value="dihapus" {{ $barang->status_barang == 'dihapus' ? 'selected' : '' }}>Dihapus</option>
-                </select>
-            </div>
+                <div class="mb-4">
+                    <label for="status_barang" class="block text-gray-700">Status Barang</label>
+                    <select name="status_barang" id="status_barang" class="w-full border rounded p-2 @error('status_barang') border-red-500 @enderror">
+                        <option value="tersedia" {{ old('status_barang', $barang->status_barang) == 'tersedia' ? 'selected' : '' }}>Tersedia</option>
+                        <option value="tidak tersedia" {{ old('status_barang', $barang->status_barang) == 'tidak tersedia' ? 'selected' : '' }}>Tidak Tersedia</option>
+                    </select>
+                    @error('status_barang')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <div class="mb-4">
-                <label for="gambar" class="block text-gray-700">Gambar Barang</label>
-                @if ($barang->gambar)
-                    <img src="{{ Storage::url($barang->gambar) }}" alt="{{ $barang->nama_barang }}" class="w-32 h-32 object-cover mb-2">
-                @endif
-                <input type="file" name="gambar" id="gambar" class="w-full p-2 border rounded">
-            </div>
+                <div class="mb-4">
+                    <label for="kategori" class="block text-gray-700">Kategori Barang</label>
+                    <select name="kategori" id="kategori" class="w-full border rounded p-2 @error('kategori') border-red-500 @enderror">
+                        <option value="" {{ old('kategori', $barang->kategori) == '' ? 'selected' : '' }} disabled>Pilih Kategori</option>
+                        @foreach (['Fashion', 'Outfits', 'Automotive', 'Accessories', 'Stationery', 'Books', 'Furniture', 'Decoration'] as $kategori)
+                            <option value="{{ $kategori }}" {{ old('kategori', $barang->kategori) == $kategori ? 'selected' : '' }}>{{ $kategori }}</option>
+                        @endforeach
+                    </select>
+                    @error('kategori')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Simpan</button>
-            <a href="{{ route('barang.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded">Kembali</a>
-        </form>
+                <div class="mb-4">
+                    <label for="gambar" class="block text-gray-700">Gambar Barang</label>
+                    <input type="file" name="gambar" id="gambar" class="w-full border rounded p-2 @error('gambar') border-red-500 @enderror">
+                    @if ($barang->gambar)
+                        <p class="text-gray-600 text-sm mt-2">Gambar saat ini: <a href="{{ Storage::url($barang->gambar) }}" target="_blank">Lihat</a></p>
+                    @endif
+                    @error('gambar')
+                        <p class="text-red-500 text-sm">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="flex space-x-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Simpan</button>
+                    <a href="{{ route('home') }}" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Kembali</a>
+                </div>
+            </form>
+        @endif
     </div>
 </body>
 </html>

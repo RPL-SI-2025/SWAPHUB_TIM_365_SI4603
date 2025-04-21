@@ -3,13 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
-use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class BarangController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $barang = Barang::show_item();
@@ -18,36 +23,33 @@ class BarangController extends Controller
 
     public function create()
     {
-        // Hanya mahasiswa (bukan admin) yang bisa menambah barang
         if (Auth::user()->is_admin) {
             return redirect()->route('barang.index')->with('error', 'Admin tidak memiliki akses untuk menambah barang.');
         }
 
-        $kategori = Kategori::all();
-        return view('barang.create', compact('kategori'));
+        return view('barang.create');
     }
 
     public function store(Request $request)
     {
-        // Hanya mahasiswa (bukan admin) yang bisa menambah barang
         if (Auth::user()->is_admin) {
             return redirect()->route('barang.index')->with('error', 'Admin tidak memiliki akses untuk menambah barang.');
         }
 
         $request->validate([
-            'id_kategori' => 'required|exists:kategori,id_kategori',
             'nama_barang' => 'required|string|max:255',
             'deskripsi_barang' => 'required|string',
-            'status_barang' => 'required|in:tersedia,ditukar,dihapus',
+            'status_barang' => 'required|in:tersedia,tidak tersedia',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'kategori' => 'required|in:Fashion,Outfits,Automotive,Accessories,Stationery,Books,Furniture,Decoration',
         ]);
 
         $data = [
             'id_user' => Auth::user()->id,
-            'id_kategori' => $request->id_kategori,
             'nama_barang' => $request->nama_barang,
             'deskripsi_barang' => $request->deskripsi_barang,
             'status_barang' => $request->status_barang,
+            'kategori' => $request->kategori,
         ];
 
         if ($request->hasFile('gambar')) {
@@ -55,46 +57,59 @@ class BarangController extends Controller
             $data['gambar'] = $gambarPath;
         }
 
-        Barang::create($data);
+        $barang = Barang::create($data);
 
-        return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan!');
+        Log::info('Barang baru ditambahkan: ' . $barang->toJson());
+
+        return redirect()->route('home')->with('success', 'Barang berhasil ditambahkan!');
+    }
+
+    public function show($id_barang)
+    {
+        $barang = Barang::with('user')->findOrFail($id_barang);
+        return view('barang.show', compact('barang'));
     }
 
     public function edit($id_barang)
     {
         $barang = Barang::findOrFail($id_barang);
 
-        // Hanya pemilik barang (mahasiswa) yang bisa mengedit barang
         if (Auth::user()->id != $barang->id_user) {
             return redirect()->route('barang.index')->with('error', 'Anda tidak memiliki akses untuk mengedit barang ini.');
         }
 
-        $kategori = Kategori::all();
-        return view('barang.edit', compact('barang', 'kategori'));
+        if ($barang->status_barang == 'ditukar') {
+            return redirect()->route('barang.index')->with('error', 'Barang ini sudah ditukar dan tidak dapat diubah.');
+        }
+
+        return view('barang.edit', compact('barang'));
     }
 
     public function update(Request $request, $id_barang)
     {
         $barang = Barang::findOrFail($id_barang);
 
-        // Hanya pemilik barang (mahasiswa) yang bisa mengedit barang
         if (Auth::user()->id != $barang->id_user) {
             return redirect()->route('barang.index')->with('error', 'Anda tidak memiliki akses untuk mengedit barang ini.');
         }
 
+        if ($barang->status_barang == 'ditukar') {
+            return redirect()->route('barang.index')->with('error', 'Barang ini sudah ditukar dan tidak dapat diubah.');
+        }
+
         $request->validate([
-            'id_kategori' => 'required|exists:kategori,id_kategori',
             'nama_barang' => 'required|string|max:255',
             'deskripsi_barang' => 'required|string',
-            'status_barang' => 'required|in:tersedia,ditukar,dihapus',
+            'status_barang' => 'required|in:tersedia,tidak tersedia',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'kategori' => 'required|in:Fashion,Outfits,Automotive,Accessories,Stationery,Books,Furniture,Decoration',
         ]);
 
         $data = [
-            'id_kategori' => $request->id_kategori,
             'nama_barang' => $request->nama_barang,
             'deskripsi_barang' => $request->deskripsi_barang,
             'status_barang' => $request->status_barang,
+            'kategori' => $request->kategori,
         ];
 
         if ($request->hasFile('gambar')) {
@@ -107,16 +122,19 @@ class BarangController extends Controller
 
         $barang->update($data);
 
-        return redirect()->route('barang.index')->with('success', 'Barang berhasil diperbarui!');
+        return redirect()->route('home')->with('success', 'Barang berhasil diperbarui!');
     }
 
     public function destroy($id_barang)
     {
         $barang = Barang::findOrFail($id_barang);
 
-        // Hanya pemilik barang (mahasiswa) yang bisa menghapus barang
         if (Auth::user()->id != $barang->id_user) {
             return redirect()->route('barang.index')->with('error', 'Anda tidak memiliki akses untuk menghapus barang ini.');
+        }
+
+        if ($barang->status_barang == 'ditukar') {
+            return redirect()->route('barang.index')->with('error', 'Barang ini sudah ditukar dan tidak dapat dihapus.');
         }
 
         if ($barang->gambar) {
@@ -125,6 +143,6 @@ class BarangController extends Controller
 
         $barang->delete();
 
-        return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus!');
+        return redirect()->route('home')->with('success', 'Barang berhasil dihapus!');
     }
 }
