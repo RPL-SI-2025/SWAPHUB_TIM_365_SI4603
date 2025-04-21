@@ -18,7 +18,6 @@ class Barang extends Model
         'deskripsi_barang',
         'status_barang',
         'gambar',
-        'is_gift',
         'kategori',
     ];
 

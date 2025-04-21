@@ -41,7 +41,6 @@ class BarangController extends Controller
             'deskripsi_barang' => 'required|string',
             'status_barang' => 'required|in:tersedia,tidak tersedia',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'is_gift' => 'required|boolean',
             'kategori' => 'required|in:Fashion,Outfits,Automotive,Accessories,Stationery,Books,Furniture,Decoration',
         ]);
 
@@ -50,7 +49,6 @@ class BarangController extends Controller
             'nama_barang' => $request->nama_barang,
             'deskripsi_barang' => $request->deskripsi_barang,
             'status_barang' => $request->status_barang,
-            'is_gift' => $request->is_gift,
             'kategori' => $request->kategori,
         ];
 
@@ -104,7 +102,6 @@ class BarangController extends Controller
             'deskripsi_barang' => 'required|string',
             'status_barang' => 'required|in:tersedia,tidak tersedia',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'is_gift' => 'required|boolean',
             'kategori' => 'required|in:Fashion,Outfits,Automotive,Accessories,Stationery,Books,Furniture,Decoration',
         ]);
 
@@ -112,7 +109,6 @@ class BarangController extends Controller
             'nama_barang' => $request->nama_barang,
             'deskripsi_barang' => $request->deskripsi_barang,
             'status_barang' => $request->status_barang,
-            'is_gift' => $request->is_gift,
             'kategori' => $request->kategori,
         ];
 

@@ -45,17 +45,6 @@
             </div>
 
             <div class="mb-4">
-                <label for="is_gift" class="block text-gray-700">Tipe Barang</label>
-                <select name="is_gift" id="is_gift" class="w-full border rounded p-2 @error('is_gift') border-red-500 @enderror">
-                    <option value="0" {{ old('is_gift') == '0' ? 'selected' : '' }}>Barang Biasa</option>
-                    <option value="1" {{ old('is_gift') == '1' ? 'selected' : '' }}>Barang dengan Bonus</option>
-                </select>
-                @error('is_gift')
-                    <p class="text-red-500 text-sm">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div class="mb-4">
                 <label for="kategori" class="block text-gray-700">Kategori Barang</label>
                 <select name="kategori" id="kategori" class="w-full border rounded p-2 @error('kategori') border-red-500 @enderror">
                     <option value="" {{ old('kategori') == '' ? 'selected' : '' }} disabled>Pilih Kategori</option>
