@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create(history, function (Blueprint $table) {
-            $table->foreignId('id_mahasiswa')->constrained('mahasiswa')->onDelete('cascade');
-            $table->foreignId('id_barang')->constrained('barang')->onDelete('cascade');
-            $table->foreignId('id_kategori')->constrained('kategori')->onDelete('cascade');
-            $table->text('riwayat_penukaran');
-            $table->string('status_penukaran');
+        Schema::create('history', function (Blueprint $table) {
+            $table->id('id_history');
+            $table->foreignId('id_penukaran_barang')->constrained('penukaran_barang')->onDelete('cascade');
             $table->timestamps(); 
         });
     }
