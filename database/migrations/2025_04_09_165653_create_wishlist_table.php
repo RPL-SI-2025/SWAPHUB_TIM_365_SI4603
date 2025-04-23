@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('wishlist', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_wishlist');
             $table->foreignId('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('id_barang')->references('id_barang')->on('barang')->onDelete('cascade');
             $table->timestamps();

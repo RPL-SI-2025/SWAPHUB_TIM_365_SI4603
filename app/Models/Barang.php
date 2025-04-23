@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Barang extends Model
 {
@@ -13,7 +14,7 @@ class Barang extends Model
     protected $primaryKey = 'id_barang';
 
     protected $fillable = [
-        'id_user', 
+        'id_user',
         'id_kategori',
         'nama_barang',
         'deskripsi_barang',
@@ -39,5 +40,10 @@ class Barang extends Model
         return self::with(['user', 'kategori'])
             ->where('status_barang', 'tersedia')
             ->get();
+    }
+
+    public function wishlists(): HasMany
+    {
+        return $this->hasMany(Wishlist::class, 'id_barang');
     }
 }

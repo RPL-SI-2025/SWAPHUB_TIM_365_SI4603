@@ -10,6 +10,8 @@
   <!-- Scripts -->
   @vite('resources/css/app.css')
 
+  {{-- SweetAlert --}}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-gray-100">

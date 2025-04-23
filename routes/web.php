@@ -26,4 +26,8 @@ Route::get('/barang/{id_barang}/edit', [BarangController::class, 'edit'])->name(
 Route::put('/barang/{id_barang}', [BarangController::class, 'update'])->name('barang.update');
 Route::delete('/barang/{id_barang}', [BarangController::class, 'destroy'])->name('barang.destroy');
 
-Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+    Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
+    Route::delete('/wishlist/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+});
