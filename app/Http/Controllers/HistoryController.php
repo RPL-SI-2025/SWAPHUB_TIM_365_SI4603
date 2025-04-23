@@ -7,17 +7,14 @@ use Illuminate\Http\Request;
 
 class HistoryController extends Controller
 {
-    public function index(Request $request)
+        public function index(Request $request)
     {
         $query = History::with([
-            'penukaran_barang.user',
-            'penukaran_barang.barang_penawar',
-            'penukaran_barang.barang_ditawar'
+            'penukaran.penawar',
+            'penukaran.ditawar',
+            'penukaran.barangPenawar',
+            'penukaran.barangDitawar',
         ]);
-
-        if ($request->filled('tanggal')) {
-            $query->whereDate('created_at', $request->tanggal);
-        }
 
         $histories = $query->get();
 
@@ -38,9 +35,10 @@ class HistoryController extends Controller
     public function show($id)
     {
         $history = History::with([
-            'penukaran_barang.user',
-            'penukaran_barang.barang_penawar',
-            'penukaran_barang.barang_ditawar',
+            'penukaran.penawar',
+            'penukaran.ditawar',
+            'penukaran.barangPenawar',
+            'penukaran.barangDitawar',
         ])->findOrFail($id);
 
         return view('history.show', compact('history'));

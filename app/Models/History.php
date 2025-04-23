@@ -14,8 +14,8 @@ class History extends Model
         'id_penukaran_barang',
     ];
 
-    public function penukaran_barang(): BelongsTo
+        public function penukaran()
     {
-        return $this->belongsTo(Penukaran::class, 'id_penukaran_barang');
+        return $this->belongsTo(Penukaran::class, 'id_penukaran_barang', 'id_penukaran');
     }
 }

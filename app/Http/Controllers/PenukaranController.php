@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use App\Models\Penukaran;
+use App\Models\History;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\DatabaseNotification;
@@ -129,6 +130,12 @@ class PenukaranController extends Controller
             'updated_at' => now(),
         ]);
 
+        # TODO: Tambahkan kode untuk menambahkan history     
+        History::create([
+            'id_penukaran_barang' => $penukaran->id_penukaran,
+        ]);
+        
+
         return redirect()->route('penukaran.index')->with('success', 'Permintaan tukar barang telah diterima!');
     }
 
@@ -162,4 +169,15 @@ class PenukaranController extends Controller
 
         return redirect()->route('penukaran.index')->with('success', 'Permintaan tukar barang telah ditolak.');
     }
+
+    public function detail($id)
+    {
+        $penukaran = Penukaran::with([
+            'barangPenawar.user', 
+            'barangDitawar.user'
+        ])->findOrFail($id);
+
+        return view('penukaran.detail', compact('penukaran'));
+    }
+
 }

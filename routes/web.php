@@ -37,4 +37,6 @@ Route::middleware('auth')->group(function () {
     // Route History
     Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
     Route::get('/history/{id}', [HistoryController::class, 'show'])->name('history.show');
+    Route::get('/history/{id_history}', [HistoryController::class, 'show'])->name('history.show');
+    Route::get('/penukaran/{id}/detail', [PenukaranController::class, 'detail'])->name('penukaran.detail');
 });

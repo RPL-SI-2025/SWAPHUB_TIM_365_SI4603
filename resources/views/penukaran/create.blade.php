@@ -61,9 +61,9 @@
             </div>
 
             <div class="mb-4">
-                <label for="riwayat_penukaran" class="block text-gray-700">Pesan (Opsional)</label>
-                <textarea name="riwayat_penukaran" id="riwayat_penukaran" class="w-full p-2 border rounded" placeholder="Tambahkan pesan untuk pemilik barang...">{{ old('riwayat_penukaran') }}</textarea>
-                @error('riwayat_penukaran')
+                <label for="pesan_penukaran" class="block text-gray-700">Pesan (Opsional)</label>
+                <textarea name="pesan_penukaran" id="pesan_penukaran" class="w-full p-2 border rounded" placeholder="Tambahkan pesan untuk pemilik barang...">{{ old('pesan_penukaran') }}</textarea>
+                @error('pesan_penukaran')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
             </div>
