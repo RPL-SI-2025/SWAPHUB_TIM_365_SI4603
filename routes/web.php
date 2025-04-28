@@ -8,7 +8,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\WishlistController;
+
+// TODO: Perhatiin ada 2 Notifikasi
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\NotifikasiController;
+
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -57,4 +62,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/history/{id}', [HistoryController::class, 'show'])->name('history.show');
     Route::get('/history/{id_history}', [HistoryController::class, 'show'])->name('history.show');
     Route::get('/penukaran/{id}/detail', [PenukaranController::class, 'detail'])->name('penukaran.detail');
+
+        Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+    Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
+    Route::delete('/wishlist/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+
+    Route::get('/notifikasi', [NotifikasiController::class, 'index'])->name('notifikasi.index');
+    Route::post('/notifikasi/{id}/mark-as-read', [NotifikasiController::class, 'markAsRead'])->name('notifikasi.markAsRead');
+    Route::delete('/notifikasi/{id}', [NotifikasiController::class, 'destroy'])->name('notifikasi.destroy');
+    Route::post('/notifikasi/mark-all-as-read', [NotifikasiController::class, 'markAllAsRead'])->name('notifikasi.markAllAsRead');
 });

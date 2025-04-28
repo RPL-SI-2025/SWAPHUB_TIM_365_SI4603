@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -11,7 +12,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table = 'users';
-    protected $primaryKey = 'id'; 
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'First_Name',
@@ -28,8 +29,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-
-// Relasi dengan Barang
+    // Relasi dengan Barang
     public function barang()
     {
         return $this->hasMany(Barang::class, 'id_user', 'id');
@@ -40,10 +40,14 @@ class User extends Authenticatable
         return "{$this->First_Name} {$this->Last_Name}";
     }
 
-
     // Check if user is admin
     public function getIsAdminAttribute()
     {
         return $this->role === 'admin';
+    }
+
+    public function wishlists(): HasMany
+    {
+        return $this->hasMany(Wishlist::class, 'id_user', 'id');
     }
 }
