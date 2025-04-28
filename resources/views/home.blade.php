@@ -27,8 +27,7 @@
             align-items: center;
             padding: 0 5%;
             background: #FFFFFF;
-            height: 80px; /* Atur tinggi maksimal logo */
-            width: auto;  /* Biar proporsi logo tetap terjaga */
+            height: 80px;
         }
 
         .bottom-bar {
@@ -53,7 +52,7 @@
             font-weight: 700;
             font-size: 24px;
             color: #2194F3;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Efek shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .user-profile {
@@ -73,7 +72,7 @@
             font-weight: 600;
             font-size: 16px;
             color: #263238;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Efek shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .search-bar {
@@ -111,6 +110,20 @@
             align-items: center;
             gap: 5px;
             cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .category-item:hover {
+            transform: scale(1.1);
+        }
+
+        .category-item.selected {
+            transform: scale(1.1);
+        }
+
+        .category-item.selected span {
+            color: #2194F3;
+            font-weight: 600;
         }
 
         .category-item svg {
@@ -124,7 +137,7 @@
             font-weight: 500;
             font-size: 14px;
             color: #263238;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Efek shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .just-for-you, .daftar-barang {
@@ -142,7 +155,7 @@
             font-size: 24px;
             color: #003459;
             margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Efek shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .section-subtitle {
@@ -151,7 +164,7 @@
             font-size: 16px;
             color: #717171;
             margin-bottom: 20px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Efek shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .item-grid {
@@ -190,7 +203,7 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Efek shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .item-card .details a, .item-card .details button {
@@ -204,7 +217,7 @@
             font-size: 12px;
             cursor: pointer;
             text-decoration: none;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Efek shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .item-card .details a.edit, .item-card .details button.delete {
@@ -225,7 +238,7 @@
             padding: 15px;
             border-radius: 5px;
             margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Efek shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .notification .error {
@@ -234,7 +247,7 @@
             padding: 15px;
             border-radius: 5px;
             margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Efek shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .notification .unread {
@@ -249,11 +262,11 @@
         }
 
         .notification .unread span {
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Efek shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .notification .unread a {
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Efek shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .action-buttons {
@@ -271,7 +284,7 @@
             font-weight: 600;
             font-size: 14px;
             text-decoration: none;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Efek shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .action-buttons a.tambah {
@@ -294,7 +307,7 @@
             font-size: 24px;
             margin-bottom: 20px;
             text-align: center;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Efek shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .footer-links {
@@ -312,7 +325,7 @@
             font-weight: 600;
             font-size: 16px;
             margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Efek shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .footer-links ul {
@@ -330,7 +343,7 @@
             font-size: 14px;
             color: #FFFFFF;
             text-decoration: none;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Efek shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .footer-links .logo {
@@ -429,35 +442,35 @@
 
         <!-- Categories -->
         <div class="categories">
-            <div class="category-item">
+            <div class="category-item" data-kategori="Gadget">
                 <img src="{{ asset('images/mac-book-air.png') }}" alt="Gadget">
                 <span>Gadget</span>
             </div>
-            <div class="category-item">
+            <div class="category-item" data-kategori="Otomotif">
                 <img src="{{ asset('images/motorbike-helmet.png') }}" alt="Otomotif">
                 <span>Otomotif</span>
             </div>
-            <div class="category-item">
+            <div class="category-item" data-kategori="Administrasi">
                 <img src="{{ asset('images/book-and-pencil.png') }}" alt="Administrasi">
                 <span>Administrasi</span>
             </div>
-            <div class="category-item">
+            <div class="category-item" data-kategori="Pakaian">
                 <img src="{{ asset('images/hanger.png') }}" alt="Pakaian">
                 <span>Pakaian</span>
             </div>
-            <div class="category-item">
+            <div class="category-item" data-kategori="Mainan">
                 <img src="{{ asset('images/plush.png') }}" alt="Mainan">
                 <span>Mainan</span>
             </div>
-            <div class="category-item">
+            <div class="category-item" data-kategori="Olahraga">
                 <img src="{{ asset('images/tennis.png') }}" alt="Olahraga">
                 <span>Olahraga</span>
             </div>
-            <div class="category-item">
+            <div class="category-item" data-kategori="Furniture">
                 <img src="{{ asset('images/sofa.png') }}" alt="Furniture">
                 <span>Furniture</span>
             </div>
-            <div class="category-item">
+            <div class="category-item" data-kategori="Aksesoris">
                 <img src="{{ asset('images/necklace.png') }}" alt="Aksesoris">
                 <span>Aksesoris</span>
             </div>
@@ -504,37 +517,39 @@
         <div class="daftar-barang">
             <h2 class="section-title">Daftar Barang</h2>
             <p class="section-subtitle">Apa yang lagi dicari hari ini?</p>
-            @if ($barang->isEmpty())
-                <p class="text-gray-600 mb-12">Tidak ada barang yang tersedia.</p>
-            @else
-                <div class="item-grid">
-                    @foreach ($barang as $item)
-                        <div class="item-card">
-                            <div class="h-48 bg-gray-200 flex items-center justify-center">
-                                @if ($item->gambar)
-                                    <img src="{{ Storage::url($item->gambar) }}" alt="{{ $item->nama_barang }}" class="w-full h-full object-cover">
-                                @else
-                                    <span class="text-gray-500">Gambar Tidak Tersedia</span>
-                                @endif
-                            </div>
-                            <div class="details">
-                                <p class="description">{{ $item->deskripsi_barang }}</p>
-                                <div class="flex justify-center gap-2">
-                                    <a href="{{ route('barang.show', $item->id_barang) }}">Lihat</a>
-                                    @if (Auth::user()->id == $item->id_user && $item->status_barang != 'ditukar')
-                                        <a href="{{ route('barang.edit', $item->id_barang) }}" class="edit">Edit</a>
-                                        <form action="{{ route('barang.destroy', $item->id_barang) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="delete" onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?')">Hapus</button>
-                                        </form>
+            <div id="item-grid-container">
+                @if ($barang->isEmpty())
+                    <p class="text-gray-600 mb-12">Tidak ada barang yang tersedia.</p>
+                @else
+                    <div class="item-grid">
+                        @foreach ($barang as $item)
+                            <div class="item-card">
+                                <div class="h-48 bg-gray-200 flex items-center justify-center">
+                                    @if ($item->gambar)
+                                        <img src="{{ Storage::url($item->gambar) }}" alt="{{ $item->nama_barang }}" class="w-full h-full object-cover">
+                                    @else
+                                        <span class="text-gray-500">Gambar Tidak Tersedia</span>
                                     @endif
                                 </div>
+                                <div class="details">
+                                    <p class="description">{{ $item->deskripsi_barang }}</p>
+                                    <div class="flex justify-center gap-2">
+                                        <a href="{{ route('barang.show', $item->id_barang) }}">Lihat</a>
+                                        @if (Auth::user()->id == $item->id_user && $item->status_barang != 'ditukar')
+                                            <a href="{{ route('barang.edit', $item->id_barang) }}" class="edit">Edit</a>
+                                            <form action="{{ route('barang.destroy', $item->id_barang) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="delete" onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?')">Hapus</button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
-                </div>
-            @endif
+                        @endforeach
+                    </div>
+                @endif
+            </div>
         </div>
 
         <!-- Footer -->
@@ -580,5 +595,74 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@1.6.0/dist/flowbite.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const categoryItems = document.querySelectorAll('.category-item');
+            const itemGridContainer = document.getElementById('item-grid-container');
+
+            categoryItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    // Hapus class 'selected' dari semua kategori
+                    categoryItems.forEach(i => i.classList.remove('selected'));
+                    // Tambahkan class 'selected' pada kategori yang diklik
+                    this.classList.add('selected');
+
+                    const kategori = this.getAttribute('data-kategori');
+
+                    // Kirim permintaan AJAX untuk memfilter barang
+                    fetch(`/barang/filter?kategori=${kategori}`, {
+                        method: 'GET',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json',
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Kosongkan container sebelumnya
+                        itemGridContainer.innerHTML = '';
+                        
+                        if (data.barang.length === 0) {
+                            itemGridContainer.innerHTML = '<p class="text-gray-600 mb-12">Tidak ada barang yang tersedia.</p>';
+                        } else {
+                            const itemGrid = document.createElement('div');
+                            itemGrid.classList.add('item-grid');
+
+                            data.barang.forEach(item => {
+                                const itemCard = document.createElement('div');
+                                itemCard.classList.add('item-card');
+                                itemCard.innerHTML = `
+                                    <div class="h-48 bg-gray-200 flex items-center justify-center">
+                                        ${item.gambar ? `<img src="/storage/${item.gambar}" alt="${item.nama_barang}" class="w-full h-full object-cover">` : '<span class="text-gray-500">Gambar Tidak Tersedia</span>'}
+                                    </div>
+                                    <div class="details">
+                                        <p class="description">${item.deskripsi_barang || 'Deskripsi tidak tersedia'}</p>
+                                        <div class="flex justify-center gap-2">
+                                            <a href="/barang/${item.id_barang}">Lihat</a>
+                                            ${data.is_owner && item.status_barang !== 'ditukar' ? `
+                                                <a href="/barang/${item.id_barang}/edit" class="edit">Edit</a>
+                                                <form action="/barang/${item.id_barang}" method="POST" class="inline">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <button type="submit" class="delete" onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?')">Hapus</button>
+                                                </form>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                `;
+                                itemGrid.appendChild(itemCard);
+                            });
+
+                            itemGridContainer.appendChild(itemGrid);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        itemGridContainer.innerHTML = '<p class="text-red-600 mb-12">Terjadi kesalahan saat memuat data.</p>';
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>

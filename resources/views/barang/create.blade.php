@@ -48,7 +48,7 @@
                 <label for="kategori" class="block text-gray-700">Kategori Barang</label>
                 <select name="kategori" id="kategori" class="w-full border rounded p-2 @error('kategori') border-red-500 @enderror">
                     <option value="" {{ old('kategori') == '' ? 'selected' : '' }} disabled>Pilih Kategori</option>
-                    @foreach (['Fashion', 'Outfits', 'Automotive', 'Accessories', 'Stationery', 'Books', 'Furniture', 'Decoration'] as $kategori)
+                    @foreach (['Gadget','Otomotif','Adminitrasi','Pakaian','Mainan','Olahraga','Furniture','Aksesoris'] as $kategori)
                         <option value="{{ $kategori }}" {{ old('kategori') == $kategori ? 'selected' : '' }}>{{ $kategori }}</option>
                     @endforeach
                 </select>

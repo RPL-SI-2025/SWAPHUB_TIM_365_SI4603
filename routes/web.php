@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/barang/{id_barang}/edit', [BarangController::class, 'edit'])->name('barang.edit');
     Route::put('/barang/{id_barang}', [BarangController::class, 'update'])->name('barang.update');
     Route::delete('/barang/{id_barang}', [BarangController::class, 'destroy'])->name('barang.destroy');
+    Route::get('/barang/filter', [BarangController::class, 'filter'])->name('barang.filter');
     Route::get('/barang/{id_barang}', [BarangController::class, 'show'])->name('barang.show');
 
     Route::get('/penukaran/{id_barang}/create', [PenukaranController::class, 'create'])->name('penukaran.create');
@@ -36,4 +37,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/penukaran/{id_penukaran}/confirm', [PenukaranController::class, 'confirm'])->name('penukaran.confirm');
     Route::post('/penukaran/{id_penukaran}/reject', [PenukaranController::class, 'reject'])->name('penukaran.reject');
     Route::post('notification/read/{id}', [App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notification.read');
+    
 });
