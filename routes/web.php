@@ -11,6 +11,7 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\PenukaranController;
 use App\Http\Controllers\NotifikasiController;
+use App\Http\Controllers\Admin\UserController;
 
 // Landing page
 Route::get('/', function () {
@@ -23,8 +24,6 @@ Route::post('/registration', [RegistrationController::class, 'store'])->name('re
 // Login routes
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-Route::resource('kategori', KategoriController::class);
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
@@ -64,4 +63,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/notifikasi/{id}/mark-as-read', [NotifikasiController::class, 'markAsRead'])->name('notifikasi.markAsRead');
     Route::delete('/notifikasi/{id}', [NotifikasiController::class, 'destroy'])->name('notifikasi.destroy');
     Route::post('/notifikasi/mark-all-as-read', [NotifikasiController::class, 'markAllAsRead'])->name('notifikasi.markAllAsRead');
+});
+
+Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
+    Route::resource('users', UserController::class);
+    Route::resource('kategori', KategoriController::class);
 });
