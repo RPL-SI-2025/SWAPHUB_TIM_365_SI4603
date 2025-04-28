@@ -40,4 +40,9 @@ class Penukaran extends Model
     {
         return $this->belongsTo(Barang::class, 'id_barang_ditawar', 'id_barang');
     }
+
+    public function history()
+    {
+        return $this->hasOne(History::class, 'id_penukaran_barang', 'id_penukaran');
+    }
 }

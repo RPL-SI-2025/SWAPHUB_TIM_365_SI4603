@@ -1,11 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\NotificationController;
 
 Route::get('/welcome', function () {
@@ -26,16 +28,13 @@ Route::get('/', function () {
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::put('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
-});
 Route::resource('kategori', KategoriController::class);
-
-
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
+
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
     Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.create');
@@ -52,5 +51,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/penukaran/{id_penukaran}/confirm', [PenukaranController::class, 'confirm'])->name('penukaran.confirm');
     Route::post('/penukaran/{id_penukaran}/reject', [PenukaranController::class, 'reject'])->name('penukaran.reject');
     Route::post('notification/read/{id}', [App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notification.read');
-    
+
+    // Route History
+    Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
+    Route::get('/history/{id}', [HistoryController::class, 'show'])->name('history.show');
+    Route::get('/history/{id_history}', [HistoryController::class, 'show'])->name('history.show');
+    Route::get('/penukaran/{id}/detail', [PenukaranController::class, 'detail'])->name('penukaran.detail');
 });
