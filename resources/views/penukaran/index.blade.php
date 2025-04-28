@@ -36,7 +36,7 @@
                     <th class="p-3 text-left">Barang Ditawarkan</th>
                     <th class="p-3 text-left">Kategori</th>
                     <th class="p-3 text-left">Pesan</th>
-                    <th class="p-3 text-left">Status</th>
+                    <th class="p-3 text-left">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,7 +47,19 @@
                         <td class="p-3 border-b">{{ $penukaran->barangPenawar->nama_barang }}</td>
                         <td class="p-3 border-b">{{ $penukaran->barangDitawar->kategori }}</td>
                         <td class="p-3 border-b">{{ $penukaran->pesan_penukaran ?? '-' }}</td>
-                        <td class="p-3 border-b">{{ $penukaran->status_penukaran }}</td>
+                        <td class="p-3 border-b">
+                            @if ($penukaran->status_penukaran == 'pending')
+                                <form action="{{ route('penukaran.confirm', $penukaran->id_penukaran) }}" method="POST" class="inline">
+                                    @csrf
+                                    <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded mr-1" onclick="return confirm('Apakah Anda yakin ingin menerima permintaan ini?')">Terima</button>
+                                </form>
+                                <form action="{{ route('penukaran.reject', $penukaran->id_penukaran) }}" method="POST" class="inline">
+                                    @csrf
+                                    <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded" onclick="return confirm('Apakah Anda yakin ingin menolak permintaan ini?')">Tolak</button>
+                                </form>
+                            @endif
+
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
