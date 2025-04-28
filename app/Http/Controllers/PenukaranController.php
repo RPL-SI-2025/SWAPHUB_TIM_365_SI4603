@@ -5,17 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\Penukaran;
 use App\Models\History;
+use App\Models\Notifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Notifications\DatabaseNotification;
 
 class PenukaranController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function create($id_barang)
     {
         $barang = Barang::findOrFail($id_barang);
@@ -101,41 +96,25 @@ class PenukaranController extends Controller
 
         $penukaran->barangPenawar->update(['status_barang' => 'ditukar']);
         $penukaran->barangDitawar->update(['status_barang' => 'ditukar']);
-
+        
         // Notifikasi untuk penawar
-        DatabaseNotification::create([
-            'id' => \Illuminate\Support\Str::uuid(),
-            'type' => 'App\Notifications\SimpleNotification',
-            'notifiable_type' => 'App\Models\User',
-            'notifiable_id' => $penukaran->id_penawar,
-            'data' => [
-                'message' => 'Permintaan tukar barang Anda untuk "' . $penukaran->barangDitawar->nama_barang . '" telah diterima oleh ' . $penukaran->ditawar->name . '.',
-                'url' => route('penukaran.index'),
-            ],
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        Notifikasi::send(
+            $penukaran->id_penawar,
+            'Permintaan tukar barang Anda untuk "' . $penukaran->barangDitawar->nama_barang . '" telah diterima oleh ' . $penukaran->ditawar->first_name . '.',
+            route('penukaran.index')
+        );
 
         // Notifikasi untuk yang ditawar
-        DatabaseNotification::create([
-            'id' => \Illuminate\Support\Str::uuid(),
-            'type' => 'App\Notifications\SimpleNotification',
-            'notifiable_type' => 'App\Models\User',
-            'notifiable_id' => $penukaran->id_ditawar,
-            'data' => [
-                'message' => 'Anda telah menerima penawaran tukar barang "' . $penukaran->barangPenawar->nama_barang . '" dari ' . $penukaran->penawar->name . '.',
-                'url' => route('penukaran.index'),
-            ],
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        # TODO: Tambahkan kode untuk menambahkan history     
+        Notifikasi::send(
+            $penukaran->id_penawar,
+            'Anda telah menerima penawaran tukar barang "' . $penukaran->barangPenawar->nama_barang . '" dari ' . $penukaran->penawar->first_name . '.',
+            route('penukaran.index')
+        );
+ 
         History::create([
             'id_penukaran_barang' => $penukaran->id_penukaran,
         ]);
         
-
         return redirect()->route('penukaran.index')->with('success', 'Permintaan tukar barang telah diterima!');
     }
 
@@ -154,18 +133,11 @@ class PenukaranController extends Controller
         $penukaran->update(['status_penukaran' => 'ditolak']);
 
         // Notifikasi untuk penawar
-        DatabaseNotification::create([
-            'id' => \Illuminate\Support\Str::uuid(),
-            'type' => 'App\Notifications\SimpleNotification',
-            'notifiable_type' => 'App\Models\User',
-            'notifiable_id' => $penukaran->id_penawar,
-            'data' => [
-                'message' => 'Permintaan tukar barang Anda untuk "' . $penukaran->barangDitawar->nama_barang . '" telah ditolak oleh ' . $penukaran->ditawar->name . '.',
-                'url' => route('penukaran.index'),
-            ],
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        Notifikasi::send(
+            $penukaran->id_penawar,
+            'Permintaan tukar barang Anda untuk "' . $penukaran->barangDitawar->nama_barang . '" telah ditolak oleh ' . $penukaran->ditawar->first_name . '.',
+            route('penukaran.index')
+        );
 
         return redirect()->route('penukaran.index')->with('success', 'Permintaan tukar barang telah ditolak.');
     }

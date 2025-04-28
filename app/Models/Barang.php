@@ -15,11 +15,11 @@ class Barang extends Model
 
     protected $fillable = [
         'id_user',
+        'id_kategori',
         'nama_barang',
         'deskripsi_barang',
         'status_barang',
         'gambar',
-        'kategori',
     ];
 
     public function user()
@@ -35,5 +35,10 @@ class Barang extends Model
     public function wishlists(): HasMany
     {
         return $this->hasMany(Wishlist::class, 'id_barang');
+    }
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'id_kategori', 'id_kategori');
     }
 }

@@ -42,10 +42,10 @@
             <tbody>
                 @foreach ($permintaanMasuk as $penukaran)
                     <tr>
-                        <td class="p-3 border-b">{{ $penukaran->penawar->name }}</td>
+                        <td class="p-3 border-b">{{ $penukaran->penawar->first_name }}</td>
                         <td class="p-3 border-b">{{ $penukaran->barangDitawar->nama_barang }}</td>
                         <td class="p-3 border-b">{{ $penukaran->barangPenawar->nama_barang }}</td>
-                        <td class="p-3 border-b">{{ $penukaran->barangDitawar->kategori }}</td>
+                        <td class="p-3 border-b">{{ $penukaran->barangDitawar->kategori->nama_kategori }}</td>
                         <td class="p-3 border-b">{{ $penukaran->pesan_penukaran ?? '-' }}</td>
                         <td class="p-3 border-b">
                             @if ($penukaran->status_penukaran == 'pending')
@@ -81,10 +81,10 @@
             <tbody>
                 @foreach ($penawaranKeluar as $penukaran)
                     <tr>
-                        <td class="p-3 border-b">{{ $penukaran->ditawar->name }}</td>
+                        <td class="p-3 border-b">{{ $penukaran->ditawar->first_name }}</td>
                         <td class="p-3 border-b">{{ $penukaran->barangPenawar->nama_barang }}</td>
                         <td class="p-3 border-b">{{ $penukaran->barangDitawar->nama_barang }}</td>
-                        <td class="p-3 border-b">{{ $penukaran->barangPenawar->kategori }}</td>
+                        <td class="p-3 border-b">{{ $penukaran->barangPenawar->kategori->nama_kategori }}</td>
                         <td class="p-3 border-b">{{ $penukaran->pesan_penukaran ?? '-' }}</td>
                         <td class="p-3 border-b">{{ $penukaran->status_penukaran }}</td>
                     </tr>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -10,11 +11,6 @@ use Illuminate\Support\Facades\Log;
 
 class BarangController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         $barang = Barang::show_item();
@@ -24,7 +20,7 @@ class BarangController extends Controller
     public function filter(Request $request)
     {
         $kategori = $request->query('kategori');
-        $barang = Barang::where('kategori', $kategori)->get();
+        $barang = Barang::with('kategori')->where('id_kategori', $kategori)->get();
         $isOwner = Auth::user()->id;
 
         return response()->json([
@@ -39,7 +35,9 @@ class BarangController extends Controller
             return redirect()->route('barang.index')->with('error', 'Admin tidak memiliki akses untuk menambah barang.');
         }
 
-        return view('barang.create');
+        $kategori = Kategori::where('jenis_kategori', 'barang')->get();
+
+        return view('barang.create', compact('kategori'));
     }
 
     public function store(Request $request)
@@ -49,19 +47,19 @@ class BarangController extends Controller
         }
 
         $request->validate([
+            'id_kategori' => 'required|exists:kategori,id_kategori',
             'nama_barang' => 'required|string|max:255',
             'deskripsi_barang' => 'required|string',
             'status_barang' => 'required|in:tersedia,tidak tersedia',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'kategori' => 'required|in:Gadget,Otomotif,Administrasi,Pakaian,Mainan,Olahraga,Furniture,Aksesoris',
         ]);
 
         $data = [
             'id_user' => Auth::user()->id,
+            'id_kategori' => $request->id_kategori,
             'nama_barang' => $request->nama_barang,
             'deskripsi_barang' => $request->deskripsi_barang,
             'status_barang' => $request->status_barang,
-            'kategori' => $request->kategori,
         ];
 
         if ($request->hasFile('gambar')) {
@@ -94,7 +92,9 @@ class BarangController extends Controller
             return redirect()->route('barang.index')->with('error', 'Barang ini sudah ditukar dan tidak dapat diubah.');
         }
 
-        return view('barang.edit', compact('barang'));
+        $kategori = Kategori::where('jenis_kategori', 'barang')->get();
+
+        return view('barang.edit', compact('barang', 'kategori'));
     }
 
     public function update(Request $request, $id_barang)
@@ -111,17 +111,17 @@ class BarangController extends Controller
 
         $request->validate([
             'nama_barang' => 'required|string|max:255',
+            'id_kategori' => 'required|exists:kategori,id_kategori',
             'deskripsi_barang' => 'required|string',
             'status_barang' => 'required|in:tersedia,tidak tersedia',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'kategori' => 'required|in:Gadget,Otomotif,Administrasi,Pakaian,Mainan,Olahraga,Furniture,Aksesoris'
         ]);
 
         $data = [
             'nama_barang' => $request->nama_barang,
+            'id_kategori' => $request->id_kategori,
             'deskripsi_barang' => $request->deskripsi_barang,
             'status_barang' => $request->status_barang,
-            'kategori' => $request->kategori,
         ];
 
         if ($request->hasFile('gambar')) {

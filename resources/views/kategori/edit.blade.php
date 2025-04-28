@@ -15,22 +15,22 @@
             </div>
         @endif
 
-        <form action="{{ route('kategori.update', $kategori->id) }}" method="POST" class="space-y-4">
+        <form action="{{ route('kategori.update', $kategori->id_kategori) }}" method="POST" class="space-y-4">
             @csrf
             @method('PUT')
 
             <div>
-                <label for="nama" class="block text-sm font-semibold mb-1">Nama Kategori</label>
-                <input type="text" name="nama" id="nama" value="{{ old('nama', $kategori->nama) }}" required
+                <label for="nama_kategori" class="block text-sm font-semibold mb-1">Nama Kategori</label>
+                <input type="text" name="nama_kategori" id="nama_kategori" value="{{ old('nama_kategori', $kategori->nama_kategori) }}" required
                     class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
             </div>
 
             <div>
-                <label for="jenis" class="block text-sm font-semibold mb-1">Jenis Kategori</label>
-                <select name="jenis" id="jenis" required
+                <label for="jenis_kategori" class="block text-sm font-semibold mb-1">Jenis Kategori</label>
+                <select name="jenis_kategori" id="jenis_kategori" required
                     class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                    <option value="Barang" {{ $kategori->jenis == 'Barang' ? 'selected' : '' }}>Barang</option>
-                    <option value="Pelaporan" {{ $kategori->jenis == 'Pelaporan' ? 'selected' : '' }}>Pelaporan</option>
+                    <option value="barang" {{ $kategori->jenis_kategori == 'barang' ? 'selected' : '' }}>Barang</option>
+                    <option value="laporan" {{ $kategori->jenis_kategori == 'laporan' ? 'selected' : '' }}>Laporan</option>
                 </select>
             </div>
 

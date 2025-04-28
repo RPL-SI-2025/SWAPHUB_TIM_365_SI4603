@@ -9,25 +9,16 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\WishlistController;
-
-// TODO: Perhatiin ada 2 Notifikasi
-use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PenukaranController;
 use App\Http\Controllers\NotifikasiController;
-
-
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-Route::get('/registration', [RegistrationController::class, 'showRegistrationForm'])->name('registration');
-Route::post('/registration', [RegistrationController::class, 'store'])->name('registration');
 
 // Landing page
 Route::get('/', function () {
     return view('landing');
 })->name('landing');
+
+// Registration routes
+Route::post('/registration', [RegistrationController::class, 'store'])->name('registration');
 
 // Login routes
 Route::post('/login', [LoginController::class, 'login'])->name('login');
@@ -37,6 +28,8 @@ Route::resource('kategori', KategoriController::class);
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
 
@@ -63,7 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/history/{id_history}', [HistoryController::class, 'show'])->name('history.show');
     Route::get('/penukaran/{id}/detail', [PenukaranController::class, 'detail'])->name('penukaran.detail');
 
-        Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
     Route::delete('/wishlist/{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 

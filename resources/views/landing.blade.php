@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SwapHub - Swap, Use, Save, Sustain!</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@1.6.0/dist/flowbite.min.css" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite('resources/css/app.css')
     <style>
         * {
             margin: 0;
@@ -32,7 +31,8 @@
             padding: 20px 60px;
             background: #FFFFFF;
             border-bottom: 1px solid #E0E0E0;
-            height: 80px;
+            height: 80px; /* Atur tinggi maksimal logo */
+            width: auto;  /* Biar proporsi logo tetap terjaga */
         }
 
         .logo {
@@ -45,6 +45,7 @@
         .logo img {
             width: 80px;
             height: 80px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .logo-text {
@@ -58,6 +59,7 @@
         .menu {
             display: flex;
             gap: 80px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .menu a {
@@ -67,22 +69,16 @@
             color: #263238;
             text-decoration: none;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            transition: color 0.3s, font-weight 0.3s;
-        }
-
-        .menu a.active {
-            color: #2194F3;
-            font-weight: 700;
-            border-bottom: 2px solid #2194F3;
         }
 
         .hero-section {
             display: flex;
             align-items: center;
-            padding: 60, sans-serif;
+            padding: 60px 100px;
             background: #F5F7FA;
             gap: 40px;
             position: relative;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .hero-text {
@@ -90,6 +86,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .hero-text h1 {
@@ -98,11 +95,43 @@
             font-size: 48px;
             line-height: 56px;
             color: #003459;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Contoh: 2px horizontal, 2px vertikal, 4px blur, warna abu-abu transparan */
+        }
+        .text-swap {
+            color: #2196F3; /* Biru cerah misal */
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        .text-swap, .text-reuse, .text-signup, .text-enjoy, .text-collection, .text-swaphub, .text-features, .text-said {
-            color: #2196F3;
+        .text-reuse {
+            color: #2196F3; /* Hijau segar misal */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .text-signup {
+            color: #2196F3; /* Biru cerah misal */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .text-enjoy {
+            color: #2196F3; /* Hijau segar misal */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .text-collection {
+            color: #2196F3; /* Hijau segar misal */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .text-swaphub {
+            color: #2196F3; /* Hijau segar misal */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .text-features {
+            color: #2196F3; /* Hijau segar misal */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .text-said {
+            color: #2196F3; /* Hijau segar misal */
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
@@ -112,7 +141,7 @@
             font-size: 16px;
             line-height: 24px;
             color: #263238;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Contoh: 2px horizontal, 2px vertikal, 4px blur, warna abu-abu transparan */
         }
 
         .hero-button {
@@ -126,23 +155,35 @@
             font-size: 16px;
             color: #FFFFFF;
             text-decoration: none;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Contoh: 2px horizontal, 2px vertikal, 4px blur, warna abu-abu transparan */
         }
 
         .hero-illustration {
             width: 50%;
             position: relative;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .hero-illustration img {
             width: 100%;
             height: auto;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .arrows {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 100px;
+            height: auto;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .community-section {
             padding: 60px 100px;
             background: #FFFFFF;
             text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .section-title {
@@ -158,6 +199,7 @@
             display: flex;
             justify-content: space-between;
             gap: 40px;
+            
         }
 
         .signup-form, .login-form {
@@ -402,7 +444,7 @@
             justify-content: center;
             gap: 30px;
             margin-bottom: 20px;
-            flex-direction: row-reverse;
+            flex-direction: row-reverse; /* Membuat bintang terurut dari kanan ke kiri */
         }
 
         .stars input {
@@ -411,14 +453,14 @@
 
         .stars label {
             font-size: 60px;
-            color: #CFCFCF;
+            color: #CFCFCF; /* Warna bintang default */
             transition: color 0.3s;
         }
 
         .stars input:checked ~ label,
         .stars label:hover,
         .stars label:hover ~ label {
-            color: #FFD700;
+            color: #FFD700; /* Warna bintang saat dipilih atau hover */
         }
 
         .feedback-form {
@@ -453,6 +495,7 @@
             padding: 30px;
             background: #003459;
             text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .footer p {
@@ -474,7 +517,7 @@
             </div>
             <div class="menu">
                 <a href="#home">Home</a>
-                <a href="#whatis">Profile</a>
+                <a href="#profile">Profile</a>
                 <a href="#features">Features</a>
                 <a href="#review">Review</a>
             </div>
@@ -492,77 +535,97 @@
             </div>
         </div>
 
-        <!-- Community Section (Sign Up & Log In) -->
-        <div class="community-section" id="profile">
-            <h2 class="section-title"><span class="text-signup">SIGN UP</span> & <span class="text-enjoy">ENJOY</span> YOUR SWAPHUB!</h2>
-            <div class="auth-section">
-                <!-- Sign Up Form -->
-                <div class="signup-form">
-                    <h3>Sign Up</h3>
+        @auth
+        @else
+            <!-- Community Section (Sign Up & Log In) -->
+            <div class="community-section">
+                <h2 class="section-title"><span class="text-signup">SIGN UP</span> & <span class="text-enjoy">ENJOY</span> YOUR SWAPHUB!</h2>
+                <div class="auth-section">
+                    <!-- Sign Up Form -->
+                    <div class="signup-form">
+                        <h3>Sign Up</h3>
 
-                    @if (session('success'))
-                        <div class="form-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+                        @if (session('success'))
+                            <div class="form-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
 
-                    @if ($errors->any())
-                        <div class="form-error">
-                            <ul class="list-disc pl-5">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                        @if ($errors->any())
+                            <div class="form-error">
+                                <ul class="list-disc pl-5">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
-                    <form method="POST" action="{{ route('registration') }}" enctype="multipart/form-data">
-                        @csrf
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <input type="text" name="firstName" placeholder="Your first name" class="form-input" value="{{ old('firstName') }}" required>
-                            <input type="text" name="lastName" placeholder="Your last name" class="form-input" value="{{ old('lastName') }}" required>
-                        </div>
-                        <input type="email" name="email" placeholder="Your email address" class="form-input" value="{{ old('email') }}" required>
-                        <input type="text" name="phone_users" placeholder="Your phone number" class="form-input" value="{{ old('phone_users') }}" required>
-                        <input type="password" name="password" placeholder="Pick a password" class="form-input" required>
-                        <input type="password" name="password_confirmation" placeholder="Confirm password" class="form-input" required>
-                        <select name="role" class="form-input" required>
-                            <option value="">Select Role</option>
-                            <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
-                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                        </select>
-                        <label class="block text-gray-700 mb-2 text-sm">Upload Profile Picture (optional)</label>
-                        <input type="file" name="profile_picture" class="form-input bg-white file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" accept="image/*">
-                        <button type="submit" class="form-button">Sign Up</button>
-                    </form>
-                    <div class="text-center text-sm text-gray-600">
-                        Already have an account? <a href="{{ route('login') }}" class="text-blue-600 hover:underline">Log In</a>
+                        <form method="POST" action="{{ route('registration') }}" enctype="multipart/form-data">
+                            @csrf
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <input type="text" name="first_name" placeholder="Your first name"
+                                    class="form-input" value="{{ old('first_name') }}" required>
+                                <input type="text" name="last_name" placeholder="Your last name"
+                                    class="form-input" value="{{ old('last_name') }}" required>
+                            </div>
+
+                            <input type="email" name="email" placeholder="Your email address"
+                                class="form-input" value="{{ old('email') }}" required>
+
+                            <input type="text" name="phone" placeholder="Your phone number"
+                                class="form-input" value="{{ old('phone') }}" required>
+
+                            <input type="password" name="password" placeholder="Pick a password"
+                                class="form-input" required>
+
+                            <input type="password" name="password_confirmation" placeholder="Confirm password"
+                                class="form-input" required>
+
+                            <!-- Role Dropdown -->
+                            <select name="role" class="form-input" required>
+                                <option value="">Select Role</option>
+                                <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
+                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                            </select>
+
+                            <label class="block text-gray-700 mb-2 text-sm">Upload Profile Picture (optional)</label>
+                            <input type="file" name="profile_picture"
+                                class="form-input bg-white file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" accept="image/*">
+
+                            <button type="submit" class="form-button">Sign Up</button>
+                        </form>
                     </div>
-                </div>
 
-                <!-- Log In Form -->
-                <div class="login-form">
-                    <h3>Log In</h3>
-                    @if (session('loginError'))
-                        <div class="form-error">
-                            {{ session('loginError') }}
-                        </div>
-                    @endif
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-                        <input type="email" name="email" placeholder="Email address" class="form-input" required />
-                        <input type="password" name="password" placeholder="Password" class="form-input" required />
-                        <button type="submit" class="form-button">Log In</button>
-                    </form>
-                    <div class="text-center text-sm text-gray-600">
-                        Don't have an account? <a href="{{ url('/registration') }}" class="text-blue-600 hover:underline">Sign Up</a>
+                    <!-- Log In Form -->
+                    <div class="login-form">
+                        <h3>Log In</h3>
+
+                        @if (session('loginError'))
+                            <div class="form-error">
+                                {{ session('loginError') }}
+                            </div>
+                        @endif
+
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
+
+                            <input type="email" name="email" placeholder="Email address"
+                                class="form-input" required />
+
+                            <input type="password" name="password" placeholder="Password"
+                                class="form-input" required />
+
+                            <button type="submit" class="form-button">Log In</button>
+                        </form>
                     </div>
                 </div>
             </div>
-        </div>
+        @endauth
 
         <!-- Our Collection -->
-        <div class="collection-section" id="collection">
+        <div class="collection-section">
             <h2 class="section-title">OUR <span class="text-collection">COLLECTION</span></h2>
             <div class="collection-items">
                 <div class="item-card">
@@ -583,15 +646,13 @@
                 </div>
                 <div class="item-card">
                     <img src="{{ asset('images/Yehlex.jpg') }}" alt="Yehlex">
-                    <div class="item-card">
-                    <img src="{{ asset('images/Yehlex.jpg') }}" alt="Yehlex">
                     <div class="status-tag">Tersedia</div>
                 </div>
             </div>
         </div>
 
         <!-- What is SwapHub? -->
-        <div class="what-is-section" id="whatis">
+        <div class="what-is-section" id="profile">
             <div class="what-is-image">
                 <img src="{{ asset('images/WHATIS.jpg') }}" alt="What is SwapHub">
             </div>
@@ -642,7 +703,7 @@
         </div>
 
         <!-- Feedback Section -->
-        <div class="feedback-section" id="feedback">
+        <div class="feedback-section">
             <h2 class="section-title">Give Us Feedback for Improvement</h2>
             <div class="stars">
                 <input type="radio" name="rating" id="star5" value="5" class="hidden">
@@ -668,44 +729,6 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@1.6.0/dist/flowbite.min.js"></script>
-    <script>
-        // Smooth scrolling untuk semua tautan dengan href yang dimulai dengan '#'
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Deteksi section yang terlihat saat scroll
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('.hero-section, .community-section, .collection-section, .what-is-section, .features-section, .community-updates, .feedback-section');
-            const navLinks = document.querySelectorAll('.menu a');
-            let currentSection = '';
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (window.scrollY >= sectionTop - 60 && window.scrollY < sectionTop + sectionHeight - 60) {
-                    currentSection = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${currentSection}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>
 </html>

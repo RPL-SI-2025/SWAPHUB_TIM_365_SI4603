@@ -407,8 +407,10 @@
             <div class="user-profile">
                 <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="flex items-center text-sm pe-1 font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:me-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-black" type="button">
                     <span class="sr-only">Open user menu</span>
-                    <img class="w-8 h-8 me-2 rounded-full" src="{{ asset(Auth::user()->profile_picture_users) }}?t={{ time() }}" alt="Profile Picture">
-                    {{ $user->full_name }}
+                    <img class="w-8 h-8 me-2 rounded-full" 
+                    src="{{ !empty(Auth::user()->profile_picture_users) ? asset(Auth::user()->profile_picture_users) : asset('photo-profile/default.png') }}?t={{ time() }}" 
+                    alt="Profile Picture">
+                                   {{ $user->full_name }}
                     <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                     </svg>
@@ -444,25 +446,13 @@
         <!-- Bottom Bar (Garis Biru di Bawah Navbar) -->
         <div class="bottom-bar"></div>
 
-        <!-- Notifikasi -->
+        <!-- Alert -->
         <div class="notification">
             @if (session('success'))
                 <div class="success">{{ session('success') }}</div>
             @endif
             @if (session('error'))
                 <div class="error">{{ session('error') }}</div>
-            @endif
-
-            @if (Auth::user()->unreadNotifications->isNotEmpty())
-                @foreach (Auth::user()->unreadNotifications as $notification)
-                    <div class="unread">
-                        <span>{{ $notification->data['message'] }}</span>
-                        <a href="{{ $notification->data['url'] }}" onclick="event.preventDefault(); document.getElementById('mark-as-read-{{ $notification->id }}').submit();" class="text-white underline">Tandai Dibaca</a>
-                        <form id="mark-as-read-{{ $notification->id }}" action="{{ route('notification.read', $notification->id) }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </div>
-                @endforeach
             @endif
         </div>
 

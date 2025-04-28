@@ -10,10 +10,10 @@ class KategoriController extends Controller
 
     public function index()
     {
-        $barang = Kategori::where('jenis', 'Barang')->get();
-        $pelaporan = Kategori::where('jenis', 'Pelaporan')->get();
+        $barang = Kategori::where('jenis_kategori', 'barang')->get();
+        $laporan = Kategori::where('jenis_kategori', 'laporan')->get();
     
-        return view('kategori.index', compact('barang', 'pelaporan'));
+        return view('kategori.index', compact('barang', 'laporan'));
     }
     
     public function create()
@@ -24,8 +24,8 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'jenis' => 'required|in:Barang,Pelaporan',
+            'nama_kategori' => 'required|string|max:255|unique:kategori,nama_kategori',
+            'jenis_kategori' => 'required|in:barang,laporan',
         ]);
 
         Kategori::create($request->all());
@@ -46,8 +46,8 @@ class KategoriController extends Controller
     public function update(Request $request, Kategori $kategori)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'jenis' => 'required|in:Barang,Pelaporan',
+            'nama_kategori' => 'required|string|max:255|unique:kategori,nama_kategori,' . $kategori->id_kategori . ',id_kategori',
+            'jenis_kategori' => 'required|in:barang,laporan',
         ]);
 
         $kategori->update($request->all());

@@ -7,12 +7,12 @@
 
         <div class="mb-4">
             <strong class="block text-gray-700 mb-1">Nama:</strong>
-            <p class="text-gray-600">{{ $kategori->nama }}</p>
+            <p class="text-gray-600">{{ $kategori->nama_kategori }}</p>
         </div>
 
         <div class="mb-4">
             <strong class="block text-gray-700 mb-1">Jenis:</strong>
-            <p class="text-gray-600">{{ $kategori->jenis }}</p>
+            <p class="text-gray-600">{{ $kategori->jenis_kategori }}</p>
         </div>
 
         <div class="flex justify-center mt-6">

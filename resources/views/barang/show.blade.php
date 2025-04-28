@@ -36,7 +36,8 @@
                     <h2 class="text-2xl font-semibold">{{ $barang->nama_barang }}</h2>
                     <p class="text-gray-600 mt-2"><strong>Deskripsi:</strong> {{ $barang->deskripsi_barang }}</p>
                     <p class="text-gray-600 mt-2"><strong>Status:</strong> {{ $barang->status_barang }}</p>
-                    <p class="text-gray-600 mt-2"><strong>Pemilik:</strong> {{ $barang->user->name }}</p>
+                    <p class="text-gray-600 mt-2"><strong>Pemilik:</strong> {{ $barang->user->first_name }}</p>
+                    <p class="text-gray-600 mt-2"><strong>Kategori:</strong> {{ $barang->kategori->nama_kategori }}</p>
                 </div>
             </div>
             <div class="mt-6">

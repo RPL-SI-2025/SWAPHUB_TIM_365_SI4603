@@ -22,12 +22,12 @@
                     <tbody>
                         @forelse ($barang as $item)
                             <tr class="border-t">
-                                <td class="px-4 py-2">{{ $item->nama }}</td>
+                                <td class="px-4 py-2">{{ $item->nama_kategori }}</td>
                                 <td class="px-4 py-2">
                                     <div class="flex space-x-2">
-                                        <a href="{{ route('kategori.show', $item->id) }}" class="text-blue-500 hover:underline">Lihat</a>
-                                        <a href="{{ route('kategori.edit', $item->id) }}" class="text-yellow-500 hover:underline">Edit</a>
-                                        <form action="{{ route('kategori.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin hapus?')">
+                                        <a href="{{ route('kategori.show', $item->id_kategori) }}" class="text-blue-500 hover:underline">Lihat</a>
+                                        <a href="{{ route('kategori.edit', $item->id_kategori) }}" class="text-yellow-500 hover:underline">Edit</a>
+                                        <form action="{{ route('kategori.destroy', $item->id_kategori) }}" method="POST" onsubmit="return confirm('Yakin ingin hapus?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-500 hover:underline">Hapus</button>
@@ -57,14 +57,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($pelaporan as $item)
+                        @forelse ($laporan as $item)
                             <tr class="border-t">
-                                <td class="px-4 py-2">{{ $item->nama }}</td>
+                                <td class="px-4 py-2">{{ $item->nama_kategori }}</td>
                                 <td class="px-4 py-2">
                                     <div class="flex space-x-2">
-                                        <a href="{{ route('kategori.show', $item->id) }}" class="text-blue-500 hover:underline">Lihat</a>
-                                        <a href="{{ route('kategori.edit', $item->id) }}" class="text-yellow-500 hover:underline">Edit</a>
-                                        <form action="{{ route('kategori.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin hapus?')">
+                                        <a href="{{ route('kategori.show', $item->id_kategori) }}" class="text-blue-500 hover:underline">Lihat</a>
+                                        <a href="{{ route('kategori.edit', $item->id_kategori) }}" class="text-yellow-500 hover:underline">Edit</a>
+                                        <form action="{{ route('kategori.destroy', $item->id_kategori) }}" method="POST" onsubmit="return confirm('Yakin ingin hapus?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-500 hover:underline">Hapus</button>

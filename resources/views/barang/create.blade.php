@@ -45,14 +45,14 @@
             </div>
 
             <div class="mb-4">
-                <label for="kategori" class="block text-gray-700">Kategori Barang</label>
-                <select name="kategori" id="kategori" class="w-full border rounded p-2 @error('kategori') border-red-500 @enderror">
-                    <option value="" {{ old('kategori') == '' ? 'selected' : '' }} disabled>Pilih Kategori</option>
-                    @foreach (['Gadget','Otomotif','Adminitrasi','Pakaian','Mainan','Olahraga','Furniture','Aksesoris'] as $kategori)
-                        <option value="{{ $kategori }}" {{ old('kategori') == $kategori ? 'selected' : '' }}>{{ $kategori }}</option>
+                <label for="id_kategori" class="block text-gray-700">Kategori Barang</label>
+                <select name="id_kategori" id="id_kategori" class="w-full border rounded p-2 @error('id_kategori') border-red-500 @enderror">
+                    <option value="" {{ old('id_kategori') == '' ? 'selected' : '' }} disabled>Pilih Kategori</option>
+                    @foreach ($kategori as $ktg)
+                        <option value="{{ $ktg->id_kategori }}" {{ old('id_kategori') == $ktg->id_kategori ? 'selected' : '' }}>{{ $ktg->nama_kategori }}</option>
                     @endforeach
                 </select>
-                @error('kategori')
+                @error('id_kategori')
                     <p class="text-red-500 text-sm">{{ $message }}</p>
                 @enderror
             </div>

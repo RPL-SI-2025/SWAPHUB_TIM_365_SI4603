@@ -40,7 +40,8 @@
                 <div class="md:w-2/3 md:pl-6 mt-4 md:mt-0">
                     <h3 class="text-xl font-semibold">{{ $barang->nama_barang }}</h3>
                     <p class="text-gray-600 mt-2"><strong>Deskripsi:</strong> {{ $barang->deskripsi_barang }}</p>
-                    <p class="text-gray-600 mt-2"><strong>Pemilik:</strong> {{ $barang->user->name }}</p>
+                    <p class="text-gray-600 mt-2"><strong>Pemilik:</strong> {{ $barang->user->first_name }}</p>
+                    <p class="text-gray-600 mt-2"><strong>Kategori:</strong> {{ $barang->kategori->nama_kategori }}</p>
                 </div>
             </div>
         </div>

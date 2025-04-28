@@ -11,15 +11,11 @@ return new class extends Migration
         if (!Schema::hasTable('barang')) {
             Schema::create('barang', function (Blueprint $table) {
                 $table->id('id_barang');
-                // Foreign key ke users.id
-                $table->unsignedBigInteger('id_user');
-                $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-                // Foreign key ke kategori.id_kategori
-                $table->foreignId('id_kategori')->constrained('kategori')->onDelete('cascade');
+                $table->foreignId('id_user')->references('id')->on('users')->onDelete('cascade');
+                $table->foreignId('id_kategori')->references('id_kategori')->on('kategori')->onDelete('cascade');
                 $table->string('nama_barang');
                 $table->text('deskripsi_barang');
-                $table->enum('status_barang', ['tersedia', 'ditukar', 'dihapus']);
-                $table->string('kategori');
+                $table->enum('status_barang', ['tersedia', 'tidak tersedia', 'ditukar']);
                 $table->string('gambar')->nullable();
                 $table->timestamps();
             });

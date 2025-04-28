@@ -15,12 +15,12 @@ class User extends Authenticatable
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'First_Name',
-        'Last_Name',
+        'first_name',
+        'last_name',
         'email',
         'password',
         'role',
-        'phone_users',
+        'phone',
         'profile_picture_users',
     ];
 
@@ -28,6 +28,13 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    // Periksa apakah user memiliki notifikasi yang belum dibaca
+    public function hasUnreadNotifications(): bool
+    {
+        return $this->notifikasis()->where('is_read', false)->exists();
+    }
+
 
     // Relasi dengan Barang
     public function barang()
@@ -44,6 +51,11 @@ class User extends Authenticatable
     public function getIsAdminAttribute()
     {
         return $this->role === 'admin';
+    }
+
+    public function notifikasis(): HasMany
+    {
+        return $this->hasMany(Notifikasi::class, 'id_user', 'id');
     }
 
     public function wishlists(): HasMany
