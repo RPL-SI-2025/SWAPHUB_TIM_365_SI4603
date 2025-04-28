@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.kategori')
 
 @section('content')
 <div class="container">
@@ -9,7 +9,7 @@
     </div>
 
     <div class="mb-3">
-        <strong>Deskripsi:</strong> {{ $kategori->deskripsi }}
+        <strong>Jenis:</strong> {{ $kategori->jenis }}
     </div>
 
     <a href="{{ route('kategori.index') }}" class="btn btn-secondary">Kembali</a>

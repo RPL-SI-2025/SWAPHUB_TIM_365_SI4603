@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.kategori')
 
 @section('content')
 <div class="container">
@@ -25,8 +25,12 @@
         </div>
 
         <div class="mb-3">
-            <label for="deskripsi" class="form-label">Deskripsi</label>
-            <textarea name="deskripsi" class="form-control">{{ old('deskripsi', $kategori->deskripsi) }}</textarea>
+            <label for="jenis" class="form-label">Jenis Kategori</label>
+            <select name="jenis" class="form-control" required>
+                <option value="">-- Pilih Jenis --</option>
+                <option value="Barang" {{ old('jenis', $kategori->jenis) == 'Barang' ? 'selected' : '' }}>Barang</option>
+                <option value="Pelaporan" {{ old('jenis', $kategori->jenis) == 'Pelaporan' ? 'selected' : '' }}>Pelaporan</option>
+            </select>
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>
