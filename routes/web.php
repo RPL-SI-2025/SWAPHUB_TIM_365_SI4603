@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PenukaranController;
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KategoriController;
 
 // Landing page
 Route::get('/', function () {
@@ -39,3 +40,5 @@ Route::middleware('auth')->group(function () {
     Route::post('notification/read/{id}', [App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notification.read');
     
 });
+
+Route::resource('kategori', KategoriController::class);
