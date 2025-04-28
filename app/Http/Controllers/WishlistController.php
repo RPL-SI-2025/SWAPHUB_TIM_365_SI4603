@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Barang;
+use App\Models\Notifikasi;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +40,10 @@ class WishlistController extends Controller
                 'message' => 'Barang sudah ada di wishlist.'
             ]);
         }
+
+        $barang = Barang::find($request->id_barang);
+
+        Notifikasi::send($request->id_user, "Barang kamu ($barang->nama_barang) ditambahkan ke wishlist oleh $user->first_name", "/barang/$request->id_barang");
 
         Wishlist::create([
             'id_user' => $user->id,
