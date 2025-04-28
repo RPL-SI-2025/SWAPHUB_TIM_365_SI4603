@@ -7,19 +7,15 @@ use Illuminate\Http\Request;
 
 class KategoriController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        $kategoris = Kategori::all();
-        return view('kategori.index', compact('kategoris'));
+        $barang = Kategori::where('jenis', 'Barang')->get();
+        $pelaporan = Kategori::where('jenis', 'Pelaporan')->get();
+    
+        return view('kategori.index', compact('barang', 'pelaporan'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-
+    
     public function create()
     {
         return view('kategori.create');
@@ -29,7 +25,7 @@ class KategoriController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
+            'jenis' => 'required|in:Barang,Pelaporan',
         ]);
 
         Kategori::create($request->all());
@@ -51,7 +47,7 @@ class KategoriController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
+            'jenis' => 'required|in:Barang,Pelaporan',
         ]);
 
         $kategori->update($request->all());
