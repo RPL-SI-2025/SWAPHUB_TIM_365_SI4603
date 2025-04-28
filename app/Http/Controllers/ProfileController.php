@@ -52,20 +52,14 @@ class ProfileController extends Controller
     // Handle profile picture
     if ($request->hasFile('profile_picture_users')) {
         $file = $request->file('profile_picture_users');
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-
-        if (!Storage::exists('public/uploads')) {
-            Storage::makeDirectory('public/uploads');
-        }
-
-        $file->storeAs('public/uploads', $filename);
-
-        if ($user->profile_picture_users) {
-            Storage::delete('public/uploads/' . $user->profile_picture_users);
-        }
-
-        $user->profile_picture_users = 'uploads/' . $filename;
+        $filename = time() . '_' . $file->getClientOriginalName(); // ⬅️ nama baru unik
+        $filePath = 'uploads/' . $filename;
+        $file->move(public_path('uploads'), $filename);
+    
+        // Update field di database
+        $user->profile_picture_users = $filePath;
     }
+    
 
     $user->save();
 

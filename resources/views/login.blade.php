@@ -23,7 +23,7 @@
         </div>
 
         <!-- Loading Screen -->
-        <div id="loadingScreen" class="fixed inset-0 bg-white flex items-center justify-center z-50 hidden">
+        <div id="loadingScreen" class="fixed inset-0 bg-white  items-center justify-center z-50 hidden">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
         </div>
 

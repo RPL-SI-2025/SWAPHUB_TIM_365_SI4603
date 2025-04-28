@@ -13,31 +13,21 @@ class Barang extends Model
     protected $primaryKey = 'id_barang';
 
     protected $fillable = [
-        'id_user', 
-        'id_kategori',
+        'id_user',
         'nama_barang',
         'deskripsi_barang',
         'status_barang',
-        'gambar'
+        'gambar',
+        'kategori',
     ];
 
-    // Relasi dengan User
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user', 'id');
     }
 
-    // Relasi dengan Kategori
-    public function kategori()
-    {
-        return $this->belongsTo(Kategori::class, 'id_kategori', 'id_kategori');
-    }
-
-    // Method untuk menampilkan barang
     public static function show_item()
     {
-        return self::with(['user', 'kategori'])
-            ->where('status_barang', 'tersedia')
-            ->get();
+        return self::with('user')->get();
     }
 }

@@ -22,7 +22,7 @@ return new class extends Migration
 
                 $table->string('nama_barang');
                 $table->text('deskripsi_barang');
-                $table->string('status_barang');
+                $table->enum('status_barang', ['tersedia', 'ditukar', 'dihapus']);
                 $table->string('gambar')->nullable();
                 $table->timestamps();
             });
