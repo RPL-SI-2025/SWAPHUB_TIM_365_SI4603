@@ -2,18 +2,25 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>CRUD Kategori</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Kategori</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
-    <nav class="navbar navbar-dark bg-dark mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('kategori.index') }}">Manajemen Kategori Admin</a>
+<body class="bg-gray-100 min-h-screen font-sans">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-600 shadow-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="{{ route('kategori.index') }}" class="text-white text-2xl font-bold">
+                Manajemen Kategori Admin
+            </a>
         </div>
     </nav>
 
-    <div class="container">
+    <!-- Content -->
+    <main class="py-8">
         @yield('content')
-    </div>
+    </main>
+
 </body>
 </html>
