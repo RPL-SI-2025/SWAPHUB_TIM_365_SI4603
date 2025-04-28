@@ -15,12 +15,16 @@ Route::get('/welcome', function () {
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/registration', [RegistrationController::class, 'showRegistrationForm'])->name('registration');
-Route::post('/registration', [RegistrationController::class, 'store']);
+Route::post('/registration', [RegistrationController::class, 'store'])->name('registration');
 
-Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/', [LoginController::class, 'login']);
+// Landing page
+Route::get('/', function () {
+    return view('landing');
+})->name('landing');
+
+// Login routes
+Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
@@ -29,6 +33,8 @@ Route::middleware(['auth'])->group(function () {
 Route::resource('kategori', KategoriController::class);
 
 
+
+// Authenticated routes
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
@@ -37,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/barang/{id_barang}/edit', [BarangController::class, 'edit'])->name('barang.edit');
     Route::put('/barang/{id_barang}', [BarangController::class, 'update'])->name('barang.update');
     Route::delete('/barang/{id_barang}', [BarangController::class, 'destroy'])->name('barang.destroy');
+    Route::get('/barang/filter', [BarangController::class, 'filter'])->name('barang.filter');
     Route::get('/barang/{id_barang}', [BarangController::class, 'show'])->name('barang.show');
 
     Route::get('/penukaran/{id_barang}/create', [PenukaranController::class, 'create'])->name('penukaran.create');
@@ -44,5 +51,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/penukaran', [PenukaranController::class, 'index'])->name('penukaran.index');
     Route::post('/penukaran/{id_penukaran}/confirm', [PenukaranController::class, 'confirm'])->name('penukaran.confirm');
     Route::post('/penukaran/{id_penukaran}/reject', [PenukaranController::class, 'reject'])->name('penukaran.reject');
-    Route::post('notification/read/{id}', [NotificationController::class, 'markAsRead'])->name('notification.read');
+    Route::post('notification/read/{id}', [App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notification.read');
+    
 });

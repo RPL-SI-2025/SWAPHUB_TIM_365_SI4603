@@ -21,6 +21,18 @@ class BarangController extends Controller
         return view('barang.index', compact('barang'));
     }
 
+    public function filter(Request $request)
+    {
+        $kategori = $request->query('kategori');
+        $barang = Barang::where('kategori', $kategori)->get();
+        $isOwner = Auth::user()->id;
+
+        return response()->json([
+            'barang' => $barang,
+            'is_owner' => $isOwner,
+        ]);
+    }
+
     public function create()
     {
         if (Auth::user()->is_admin) {
@@ -41,7 +53,7 @@ class BarangController extends Controller
             'deskripsi_barang' => 'required|string',
             'status_barang' => 'required|in:tersedia,tidak tersedia',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'kategori' => 'required|in:Fashion,Outfits,Automotive,Accessories,Stationery,Books,Furniture,Decoration',
+            'kategori' => 'required|in:Gadget,Otomotif,Administrasi,Pakaian,Mainan,Olahraga,Furniture,Aksesoris',
         ]);
 
         $data = [
@@ -102,7 +114,7 @@ class BarangController extends Controller
             'deskripsi_barang' => 'required|string',
             'status_barang' => 'required|in:tersedia,tidak tersedia',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'kategori' => 'required|in:Fashion,Outfits,Automotive,Accessories,Stationery,Books,Furniture,Decoration',
+            'kategori' => 'required|in:Gadget,Otomotif,Administrasi,Pakaian,Mainan,Olahraga,Furniture,Aksesoris'
         ]);
 
         $data = [
@@ -144,5 +156,6 @@ class BarangController extends Controller
         $barang->delete();
 
         return redirect()->route('home')->with('success', 'Barang berhasil dihapus!');
+        
     }
 }
