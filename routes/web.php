@@ -7,13 +7,19 @@ use App\Http\Controllers\PenukaranController;
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/', [LoginController::class, 'login']);
+// Landing page
+Route::get('/', function () {
+    return view('landing');
+})->name('landing');
+
+// Login routes
+Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/registration', [RegistrationController::class, 'showRegistrationForm'])->name('registration');
-Route::post('/registration', [RegistrationController::class, 'store']);
+// Registration route
+Route::post('/registration', [RegistrationController::class, 'store'])->name('registration');
 
+// Authenticated routes
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');

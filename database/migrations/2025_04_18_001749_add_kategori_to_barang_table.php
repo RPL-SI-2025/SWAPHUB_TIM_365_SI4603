@@ -10,14 +10,14 @@ return new class extends Migration
     {
         Schema::table('barang', function (Blueprint $table) {
             $table->enum('kategori', [
-                'Fashion',
-                'Outfits',
-                'Automotive',
-                'Accessories',
-                'Stationery',
-                'Books',
+                'Gadget',
+                'Otomotif',
+                'Administrasi',
+                'Pakaian',
+                'Mainan',
+                'Olahraga',
                 'Furniture',
-                'Decoration'
+                'Aksesoris'
             ])->nullable()->after('is_gift');
         });
     }
