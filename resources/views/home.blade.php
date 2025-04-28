@@ -405,7 +405,7 @@
                 <span class="logo-text">SWAPHUB</span>
             </div>
             <div class="user-profile">
-                <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="flex items-center text-sm pe-1 font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:me-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-black" type="button">
+                <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="flex items-center text-sm pe-1 font-medium text-gray-900 rounded-full hover:text-blue-600 " type="button">
                     <span class="sr-only">Open user menu</span>
                     <img class="w-8 h-8 me-2 rounded-full" 
                     src="{{ !empty(Auth::user()->profile_picture_users) ? asset(Auth::user()->profile_picture_users) : asset('photo-profile/default.png') }}?t={{ time() }}" 
@@ -416,30 +416,29 @@
                     </svg>
                 </button>
                 <!-- Dropdown menu -->
-                <div id="dropdownAvatarName" class="z-10 hidden bg-black divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
-                    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                <div id="dropdownAvatarName" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44">
+                    <div class="px-4 py-3 text-sm text-gray-900 ">
                         <div class="font-medium">Pro User</div>
                         <div class="truncate">{{ $user->email }}</div>
                     </div>
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownAvatarNameButton">
+                    <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownAvatarNameButton">
                         <li>
-                            <a href="{{ route('profile.index') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+                            <a href="{{ route('profile.index') }}" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
                         </li>
                         <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
                         </li>
                         <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Earnings</a>
                         </li>
                     </ul>
                     <div class="py-2">
-                        <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="text-start block w-full px-4 py-2 text-red-500 hover:bg-red-100">Sign out</a>
+                        </form>
                     </div>
                 </div>
-                {{-- <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 ml-4">Logout</button>
-                </form> --}}
             </div>
         </div>
 
