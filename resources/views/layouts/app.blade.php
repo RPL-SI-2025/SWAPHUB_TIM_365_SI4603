@@ -21,6 +21,7 @@
 
   {{-- Main Content --}}
   <main class="container mx-auto p-6">
+    @include('layouts.flash-messages')
     @yield('content')
   </main>
 
