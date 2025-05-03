@@ -11,11 +11,11 @@ class History extends Model
     protected $primaryKey = 'id_history';
 
     protected $fillable = [
-        'id_penukaran_barang',
+        'id_penukaran',
     ];
 
         public function penukaran()
     {
-        return $this->belongsTo(Penukaran::class, 'id_penukaran_barang', 'id_penukaran');
+        return $this->belongsTo(Penukaran::class, 'id_penukaran', 'id_penukaran');
     }
 }

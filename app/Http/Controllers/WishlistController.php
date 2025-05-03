@@ -43,7 +43,7 @@ class WishlistController extends Controller
 
         $barang = Barang::find($request->id_barang);
 
-        Notifikasi::send($request->id_user, "Barang kamu ($barang->nama_barang) ditambahkan ke wishlist oleh $user->first_name", "/barang/$request->id_barang");
+        Notifikasi::send($barang->user->id, "Barang kamu ($barang->nama_barang) ditambahkan ke wishlist oleh $user->first_name", "/barang/$request->id_barang");
 
         Wishlist::create([
             'id_user' => $user->id,

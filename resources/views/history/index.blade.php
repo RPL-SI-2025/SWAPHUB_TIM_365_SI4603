@@ -25,9 +25,9 @@
             </svg>
         </button>
         <span class="text-gray-700 font-medium">
-            {{ Auth::user()->name ?? 'Guest' }}
+            {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
         </span>
-        <img src="{{ Auth::user()->profile_photo }}" alt="Profile" class="h-10 w-10 rounded-full object-cover">
+        <img src="{{ Auth::user()->profile_photo ?? asset('photo-profile/default.png') }}" alt="Profile" class="h-10 w-10 rounded-full object-cover">
     </div>
 </header>
 
@@ -98,10 +98,10 @@
                 @forelse($histories as $history)
                     <tr class="bg-white border-b hover:bg-gray-50">
                         <td class="px-6 py-4">
-                            {{ $history->penukaran->penawar->First_Name ?? '-' }} {{ $history->penukaran->penawar->Last_Name ?? '' }}
+                            {{ $history->penukaran->penawar->first_name ?? '-' }} {{ $history->penukaran->penawar->last_name ?? '' }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $history->penukaran->ditawar->First_Name ?? '-' }} {{ $history->penukaran->ditawar->Last_Name ?? '' }}
+                            {{ $history->penukaran->ditawar->first_name ?? '-' }} {{ $history->penukaran->ditawar->last_name ?? '' }}
                         </td>
                         <td class="px-6 py-4">
                             {{ $history->created_at->format('d M Y') }}
@@ -110,7 +110,7 @@
                             Penukaran antara <strong>{{ $history->penukaran->barangPenawar->nama_barang ?? '-' }}</strong> dan <strong>{{ $history->penukaran->barangDitawar->nama_barang ?? '-' }}</strong>
                         </td>
                         <td class="px-6 py-4">
-                            {{ $history->penukaran->barangPenawar->kategori ?? '-' }} / {{ $history->penukaran->barangDitawar->kategori ?? '-' }}
+                            {{ $history->penukaran->barangPenawar->kategori->nama_kategori ?? '-' }} / {{ $history->penukaran->barangDitawar->kategori->nama_kategori ?? '-' }}
                         </td>
                         <td class="px-6 py-4">
                             <span class="px-2 py-1 text-xs font-medium rounded {{ $history->penukaran->status_penukaran === 'diterima' ? 'bg-green-200 text-green-800' : ($history->penukaran->status_penukaran === 'ditolak' ? 'bg-red-200 text-red-800' : 'bg-yellow-200 text-yellow-800') }}">

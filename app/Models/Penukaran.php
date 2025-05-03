@@ -43,6 +43,6 @@ class Penukaran extends Model
 
     public function history()
     {
-        return $this->hasOne(History::class, 'id_penukaran_barang', 'id_penukaran');
+        return $this->hasOne(History::class, 'id_history', 'id_penukaran');
     }
 }

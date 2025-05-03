@@ -23,9 +23,9 @@
             </svg>
         </button>
         <span class="text-gray-700 font-medium">
-            {{ Auth::user()->name ?? 'Guest' }}
+            {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
         </span>        
-        <img src="{{ Auth::user()->profile_photo }}" alt="Profile" class="h-10 w-10 rounded-full object-cover">
+        <img src="{{ Auth::user()->profile_photo ?? asset('photo-profile/default.png') }}" alt="Profile" class="h-10 w-10 rounded-full object-cover">
     </div>
 </header>
 
@@ -65,8 +65,8 @@
                     <h5 class="font-medium mb-2">Barang Penawar</h5>
                     <p><strong>Nama:</strong> {{ $history->penukaran->barangPenawar->nama_barang ?? '-' }}</p>
                     <p><strong>Deskripsi:</strong> {{ $history->penukaran->barangPenawar->deskripsi_barang ?? '-' }}</p>
-                    <p><strong>Kategori:</strong> {{ $history->penukaran->barangPenawar->kategori ?? '-' }}</p>
-                    <p><strong>Pemilik:</strong> {{ $history->penukaran->barangPenawar->user->First_Name }} {{ $history->penukaran->barangPenawar->user->Last_Name }}</p>
+                    <p><strong>Kategori:</strong> {{ $history->penukaran->barangPenawar->kategori->nama_kategori ?? '-' }}</p>
+                    <p><strong>Pemilik:</strong> {{ $history->penukaran->barangPenawar->user->first_name }} {{ $history->penukaran->barangPenawar->user->last_name }}</p>
                     @if($history->penukaran->barangPenawar->gambar)
                         <img src="{{ asset('storage/' . $history->penukaran->barangPenawar->gambar) }}" alt="Gambar Barang Penawar" class="mt-2 w-40 rounded">
                     @endif
@@ -77,8 +77,8 @@
                     <h5 class="font-medium mb-2">Barang Ditawar</h5>
                     <p><strong>Nama:</strong> {{ $history->penukaran->barangDitawar->nama_barang ?? '-' }}</p>
                     <p><strong>Deskripsi:</strong> {{ $history->penukaran->barangDitawar->deskripsi_barang ?? '-' }}</p>
-                    <p><strong>Kategori:</strong> {{ $history->penukaran->barangDitawar->kategori ?? '-' }}</p>
-                    <p><strong>Pemilik:</strong> {{ $history->penukaran->barangDitawar->user->First_Name }} {{ $history->penukaran->barangDitawar->user->Last_Name }}</p>
+                    <p><strong>Kategori:</strong> {{ $history->penukaran->barangDitawar->kategori->nama_kategori ?? '-' }}</p>
+                    <p><strong>Pemilik:</strong> {{ $history->penukaran->barangDitawar->user->first_name }} {{ $history->penukaran->barangDitawar->user->last_name }}</p>
                     @if($history->penukaran->barangDitawar->gambar)
                         <img src="{{ asset('storage/' . $history->penukaran->barangDitawar->gambar) }}" alt="Gambar Barang Ditawar" class="mt-2 w-40 rounded">
                     @endif

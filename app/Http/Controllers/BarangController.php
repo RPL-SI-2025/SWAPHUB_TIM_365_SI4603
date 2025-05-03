@@ -19,8 +19,9 @@ class BarangController extends Controller
 
     public function filter(Request $request)
     {
-        $kategori = $request->query('kategori');
-        $barang = Barang::with('kategori')->where('id_kategori', $kategori)->get();
+        $query = $request->query('kategori');
+        $kategori = Kategori::where('nama_kategori', 'like', '%'.$query.'%')->get();
+        $barang = Barang::with('kategori')->where('id_kategori', $kategori->id_kategori)->get();
         $isOwner = Auth::user()->id;
 
         return response()->json([

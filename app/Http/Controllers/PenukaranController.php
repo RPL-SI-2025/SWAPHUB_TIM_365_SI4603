@@ -112,7 +112,7 @@ class PenukaranController extends Controller
         );
  
         History::create([
-            'id_penukaran_barang' => $penukaran->id_penukaran,
+            'id_penukaran' => $penukaran->id_penukaran,
         ]);
         
         return redirect()->route('penukaran.index')->with('success', 'Permintaan tukar barang telah diterima!');

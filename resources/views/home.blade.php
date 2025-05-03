@@ -61,18 +61,18 @@
             gap: 10px;
         }
 
-        .user-profile svg {
-            width: 24px;
-            height: 24px;
-            fill: #717171;
-        }
-
-        .user-profile span {
+        .user-profile .user-name {
             font-family: 'Inter';
             font-weight: 600;
             font-size: 16px;
             color: #263238;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-profile svg {
+            width: 24px;
+            height: 24px;
+            fill: #717171;
         }
 
         .search-bar {
@@ -190,6 +190,15 @@
         .item-card .details {
             padding: 10px;
             text-align: center;
+        }
+
+        .item-card .details .item-name {
+            font-family: 'Inter';
+            font-weight: 600;
+            font-size: 14px;
+            color: #263238;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .item-card .details p.description {
@@ -405,12 +414,12 @@
                 <span class="logo-text">SWAPHUB</span>
             </div>
             <div class="user-profile">
+                <span class="user-name">{{ $user->first_name . ' ' . $user->last_name }}</span>
                 <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="flex items-center text-sm pe-1 font-medium text-gray-900 rounded-full hover:text-blue-600 " type="button">
                     <span class="sr-only">Open user menu</span>
                     <img class="w-8 h-8 me-2 rounded-full" 
                     src="{{ !empty(Auth::user()->profile_picture_users) ? asset(Auth::user()->profile_picture_users) : asset('photo-profile/default.png') }}?t={{ time() }}" 
                     alt="Profile Picture">
-                                   {{ $user->full_name }}
                     <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                     </svg>
@@ -422,6 +431,11 @@
                         <div class="truncate">{{ $user->email }}</div>
                     </div>
                     <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownAvatarNameButton">
+                        @if(Auth::user()->role == 'admin')
+                        <li>
+                            <a href="{{ route('users.index') }}" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
+                        </li>
+                        @endif
                         <li>
                             <a href="{{ route('profile.index') }}" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
                         </li>
@@ -435,7 +449,7 @@
                     <div class="py-2">
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button type="submit" class="text-start block w-full px-4 py-2 text-red-500 hover:bg-red-100">Sign out</a>
+                            <button type="submit" class="text-start block w-full px-4 py-2 text-red-500 hover:bg-red-100">Sign out</button>
                         </form>
                     </div>
                 </div>
@@ -523,6 +537,7 @@
                                     @endif
                                 </div>
                                 <div class="details">
+                                    <p class="item-name">{{ $item->nama_barang }}</p>
                                     <p class="description">{{ $item->deskripsi_barang }}</p>
                                     <a href="{{ route('barang.show', $item->id_barang) }}">Lihat</a>
                                 </div>
@@ -552,6 +567,7 @@
                                     @endif
                                 </div>
                                 <div class="details">
+                                    <p class="item-name">{{ $item->nama_barang }}</p>
                                     <p class="description">{{ $item->deskripsi_barang }}</p>
                                     <div class="flex justify-center gap-2">
                                         <a href="{{ route('barang.show', $item->id_barang) }}">Lihat</a>
@@ -616,7 +632,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@1.6.0/dist/flowbite.min.js"></script>
     <script>
-        
         document.addEventListener('DOMContentLoaded', function () {
             const categoryItems = document.querySelectorAll('.category-item');
             const itemGridContainer = document.getElementById('item-grid-container');
@@ -642,7 +657,7 @@
                     .then(data => {
                         // Kosongkan container sebelumnya
                         itemGridContainer.innerHTML = '';
-                        
+
                         if (data.barang.length === 0) {
                             itemGridContainer.innerHTML = '<p class="text-gray-600 mb-12">Tidak ada barang yang tersedia.</p>';
                         } else {
@@ -657,6 +672,7 @@
                                         ${item.gambar ? `<img src="/storage/${item.gambar}" alt="${item.nama_barang}" class="w-full h-full object-cover">` : '<span class="text-gray-500">Gambar Tidak Tersedia</span>'}
                                     </div>
                                     <div class="details">
+                                        <p class="item-name">${item.nama_barang || 'Nama Tidak Tersedia'}</p>
                                         <p class="description">${item.deskripsi_barang || 'Deskripsi tidak tersedia'}</p>
                                         <div class="flex justify-center gap-2">
                                             <a href="/barang/${item.id_barang}">Lihat</a>
