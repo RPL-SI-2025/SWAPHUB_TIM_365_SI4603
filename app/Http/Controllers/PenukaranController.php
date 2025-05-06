@@ -33,26 +33,38 @@ class PenukaranController extends Controller
     public function store(Request $request, $id_barang)
     {
         $barang = Barang::findOrFail($id_barang);
-
+    
         if (Auth::user()->id == $barang->id_user) {
             return redirect()->route('barang.show', $id_barang)->with('error', 'Anda tidak dapat meminta tukar barang milik Anda sendiri.');
         }
-
+    
         $request->validate([
             'id_barang_ditawarkan' => 'required|exists:barang,id_barang',
             'pesan_penukaran' => 'nullable|string|max:1000',
         ]);
-
+    
         $barangDitawarkan = Barang::findOrFail($request->id_barang_ditawarkan);
-
+    
         if ($barangDitawarkan->id_user != Auth::user()->id) {
             return redirect()->route('barang.show', $id_barang)->with('error', 'Anda hanya dapat menawarkan barang milik Anda.');
         }
-
+    
         if ($barangDitawarkan->status_barang != 'tersedia') {
             return redirect()->route('barang.show', $id_barang)->with('error', 'Barang yang Anda tawarkan tidak tersedia.');
         }
-
+    
+        // Pengecekan duplikat
+        $existingRequest = Penukaran::where('id_penawar', Auth::user()->id)
+                                  ->where('id_ditawar', $barang->id_user)
+                                  ->where('id_barang_penawar', $barangDitawarkan->id_barang)
+                                  ->where('id_barang_ditawar', $barang->id_barang)
+                                  ->where('status_penukaran', 'pending')
+                                  ->exists();
+    
+        if ($existingRequest) {
+            return redirect()->route('home')->with('error', 'Permintaan tukar untuk kombinasi ini sudah ada.');
+        }
+    
         Penukaran::create([
             'id_penawar' => Auth::user()->id,
             'id_ditawar' => $barang->id_user,
@@ -61,7 +73,7 @@ class PenukaranController extends Controller
             'pesan_penukaran' => $request->pesan_penukaran,
             'status_penukaran' => 'pending',
         ]);
-
+    
         return redirect()->route('home')->with('success', 'Permintaan tukar barang telah dikirim!');
     }
 
