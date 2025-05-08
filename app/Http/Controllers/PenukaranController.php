@@ -24,8 +24,8 @@ class PenukaranController extends Controller
         }
 
         $userBarang = Barang::where('id_user', Auth::user()->id)
-                           ->where('status_barang', 'tersedia')
-                           ->get();
+            ->where('status_barang', 'tersedia')
+            ->get();
 
         return view('penukaran.create', compact('barang', 'userBarang'));
     }
@@ -69,13 +69,13 @@ class PenukaranController extends Controller
     {
         // Permintaan masuk: Barang milik user yang diminta oleh orang lain
         $permintaanMasuk = Penukaran::where('id_ditawar', Auth::user()->id)
-                                   ->with(['barangPenawar', 'barangDitawar', 'penawar', 'ditawar'])
-                                   ->get();
+            ->with(['barangPenawar', 'barangDitawar', 'penawar', 'ditawar'])
+            ->get();
 
         // Penawaran keluar: Penawaran yang diajukan oleh user
         $penawaranKeluar = Penukaran::where('id_penawar', Auth::user()->id)
-                                   ->with(['barangPenawar', 'barangDitawar', 'penawar', 'ditawar'])
-                                   ->get();
+            ->with(['barangPenawar', 'barangDitawar', 'penawar', 'ditawar'])
+            ->get();
 
         return view('penukaran.index', compact('permintaanMasuk', 'penawaranKeluar'));
     }
@@ -96,25 +96,25 @@ class PenukaranController extends Controller
 
         $penukaran->barangPenawar->update(['status_barang' => 'ditukar']);
         $penukaran->barangDitawar->update(['status_barang' => 'ditukar']);
-        
+
         // Notifikasi untuk penawar
         Notifikasi::send(
             $penukaran->id_penawar,
-            'Permintaan tukar barang Anda untuk "' . $penukaran->barangDitawar->nama_barang . '" telah diterima oleh ' . $penukaran->ditawar->first_name . '.',
+            'Permintaan tukar barang Anda untuk "' . $penukaran->barangDitawar->nama_barang . '" telah diterima oleh ' . $penukaran->ditawar->full_name . '.',
             route('penukaran.index')
         );
 
         // Notifikasi untuk yang ditawar
         Notifikasi::send(
             $penukaran->id_penawar,
-            'Anda telah menerima penawaran tukar barang "' . $penukaran->barangPenawar->nama_barang . '" dari ' . $penukaran->penawar->first_name . '.',
+            'Anda telah menerima penawaran tukar barang "' . $penukaran->barangPenawar->nama_barang . '" dari ' . $penukaran->penawar->full_name . '.',
             route('penukaran.index')
         );
- 
+
         History::create([
             'id_penukaran' => $penukaran->id_penukaran,
         ]);
-        
+
         return redirect()->route('penukaran.index')->with('success', 'Permintaan tukar barang telah diterima!');
     }
 
@@ -135,7 +135,7 @@ class PenukaranController extends Controller
         // Notifikasi untuk penawar
         Notifikasi::send(
             $penukaran->id_penawar,
-            'Permintaan tukar barang Anda untuk "' . $penukaran->barangDitawar->nama_barang . '" telah ditolak oleh ' . $penukaran->ditawar->first_name . '.',
+            'Permintaan tukar barang Anda untuk "' . $penukaran->barangDitawar->nama_barang . '" telah ditolak oleh ' . $penukaran->ditawar->full_name . '.',
             route('penukaran.index')
         );
 
@@ -145,11 +145,10 @@ class PenukaranController extends Controller
     public function detail($id)
     {
         $penukaran = Penukaran::with([
-            'barangPenawar.user', 
+            'barangPenawar.user',
             'barangDitawar.user'
         ])->findOrFail($id);
 
         return view('penukaran.detail', compact('penukaran'));
     }
-
 }

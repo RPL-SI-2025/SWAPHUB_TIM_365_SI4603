@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Wishlist extends Model
 {
     protected $table = 'wishlist';
-    protected $primaryKey = 'id_barang';
+    protected $primaryKey = 'id_wishlist';
 
     protected $fillable = [
         "id_user",

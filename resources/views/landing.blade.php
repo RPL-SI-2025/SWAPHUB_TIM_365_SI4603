@@ -1,734 +1,511 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SwapHub - Swap, Use, Save, Sustain!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    @vite('resources/css/app.css')
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #F5F7FA;
-        }
+  <title>SwapHub - Swap, Use, Save, Sustain!</title>
 
-        .landing-page {
-            width: 100%;
-            background: #FFFFFF;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
+  {{-- Flowbite --}}
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 60px;
-            background: #FFFFFF;
-            border-bottom: 1px solid #E0E0E0;
-            height: 80px; /* Atur tinggi maksimal logo */
-            width: auto;  /* Biar proporsi logo tetap terjaga */
-        }
+  {{-- TailwindCSS --}}
+  @vite(['resources/css/app.css'])
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .logo img {
-            width: 80px;
-            height: 80px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .logo-text {
-            font-family: 'Inter';
-            font-weight: 700;
-            font-size: 24px;
-            color: #2194F3;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .menu {
-            display: flex;
-            gap: 80px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .menu a {
-            font-family: 'Inter';
-            font-weight: 500;
-            font-size: 16px;
-            color: #263238;
-            text-decoration: none;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-section {
-            display: flex;
-            align-items: center;
-            padding: 60px 100px;
-            background: #F5F7FA;
-            gap: 40px;
-            position: relative;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-text {
-            width: 50%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-text h1 {
-            font-family: 'Inter';
-            font-weight: 700;
-            font-size: 48px;
-            line-height: 56px;
-            color: #003459;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Contoh: 2px horizontal, 2px vertikal, 4px blur, warna abu-abu transparan */
-        }
-        .text-swap {
-            color: #2196F3; /* Biru cerah misal */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .text-reuse {
-            color: #2196F3; /* Hijau segar misal */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        .text-signup {
-            color: #2196F3; /* Biru cerah misal */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .text-enjoy {
-            color: #2196F3; /* Hijau segar misal */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        
-        .text-collection {
-            color: #2196F3; /* Hijau segar misal */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .text-swaphub {
-            color: #2196F3; /* Hijau segar misal */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .text-features {
-            color: #2196F3; /* Hijau segar misal */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-        .text-said {
-            color: #2196F3; /* Hijau segar misal */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-text p {
-            font-family: 'Inter';
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 24px;
-            color: #263238;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Contoh: 2px horizontal, 2px vertikal, 4px blur, warna abu-abu transparan */
-        }
-
-        .hero-button {
-            display: inline-flex;
-            align-items: center;
-            padding: 10px 24px;
-            background: #2194F3;
-            border-radius: 5px;
-            font-family: 'Inter';
-            font-weight: 600;
-            font-size: 16px;
-            color: #FFFFFF;
-            text-decoration: none;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Contoh: 2px horizontal, 2px vertikal, 4px blur, warna abu-abu transparan */
-        }
-
-        .hero-illustration {
-            width: 50%;
-            position: relative;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-illustration img {
-            width: 100%;
-            height: auto;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .arrows {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            width: 100px;
-            height: auto;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .community-section {
-            padding: 60px 100px;
-            background: #FFFFFF;
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .section-title {
-            font-family: 'Inter';
-            font-weight: 700;
-            font-size: 32px;
-            color: #003459;
-            margin-bottom: 40px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .auth-section {
-            display: flex;
-            justify-content: space-between;
-            gap: 40px;
-            
-        }
-
-        .signup-form, .login-form {
-            flex: 1;
-            background: #F5F7FA;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .signup-form h3, .login-form h3 {
-            font-family: 'Inter';
-            font-weight: 600;
-            font-size: 24px;
-            color: #263238;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #CFCFCF;
-            border-radius: 5px;
-            font-family: 'Inter';
-            font-size: 14px;
-            color: #263238;
-        }
-
-        .form-input::placeholder {
-            color: #717171;
-            opacity: 0.7;
-        }
-
-        .form-button {
-            width: 100%;
-            padding: 12px;
-            background: #2194F3;
-            border: none;
-            border-radius: 5px;
-            font-family: 'Inter';
-            font-weight: 600;
-            font-size: 16px;
-            color: #FFFFFF;
-            cursor: pointer;
-        }
-
-        .form-error {
-            color: #DC2626;
-            font-size: 14px;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .form-success {
-            color: #16A34A;
-            font-size: 14px;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .collection-section {
-            padding: 60px 100px;
-            background: #F5F7FA;
-            text-align: center;
-        }
-
-        .collection-items {
-            display: flex;
-            gap: 80px;
-            overflow-x: auto;
-            padding-bottom: 20px;
-        }
-
-        .item-card {
-            position: relative;
-            flex: 0 0 auto;
-        }
-
-        .item-card img {
-            width: 200px;
-            height: 150px;
-            border-radius: 10px;
-            object-fit: cover;
-        }
-
-        .status-tag {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #4CAF4F;
-            color: #FFFFFF;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-family: 'Inter';
-            font-weight: 600;
-            font-size: 12px;
-        }
-
-        .what-is-section {
-            display: flex;
-            align-items: center;
-            padding: 60px 100px;
-            background: #FFFFFF;
-            gap: 40px;
-        }
-
-        .what-is-image {
-            width: 40%;
-        }
-
-        .what-is-image img {
-            width: 100%;
-            height: auto;
-        }
-
-        .what-is-text {
-            width: 60%;
-        }
-
-        .what-is-text h2 {
-            font-family: 'Inter';
-            font-weight: 700;
-            font-size: 32px;
-            color: #003459;
-            margin-bottom: 20px;
-        }
-
-        .what-is-text p {
-            font-family: 'Inter';
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 24px;
-            color: #263238;
-        }
-
-        .features-section {
-            display: flex;
-            align-items: center;
-            padding: 60px 100px;
-            background: #F5F7FA;
-            gap: 40px;
-        }
-
-        .features-image {
-            width: 40%;
-        }
-
-        .features-image img {
-            width: 100%;
-            height: auto;
-        }
-
-        .features-text {
-            width: 60%;
-        }
-
-        .features-text h2 {
-            font-family: 'Inter';
-            font-weight: 700;
-            font-size: 32px;
-            color: #003459;
-            margin-bottom: 20px;
-        }
-
-        .features-text ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .features-text ul li {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Inter';
-            font-weight: 400;
-            font-size: 16px;
-            color: #263238;
-            margin-bottom: 10px;
-        }
-
-        .features-text ul li::before {
-            content: '';
-            width: 20px;
-            height: 20px;
-            background: #2194F3;
-            border-radius: 50%;
-        }
-
-        .community-updates {
-            padding: 60px 100px;
-            background: #FFFFFF;
-            text-align: center;
-        }
-
-        .testimonials {
-            display: flex;
-            gap: 20px;
-        }
-
-        .testimonial-card {
-            flex: 1;
-            background: #F5F7FA;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .testimonial-card img {
-            width: 100%;
-            height: 150px;
-            border-radius: 10px;
-            object-fit: cover;
-            margin-bottom: 15px;
-        }
-
-        .testimonial-card p {
-            font-family: 'Inter';
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 20px;
-            color: #717171;
-            margin-bottom: 10px;
-        }
-
-        .testimonial-card .author {
-            font-family: 'Inter';
-            font-weight: 600;
-            font-size: 14px;
-            color: #2194F3;
-        }
-
-        .feedback-section {
-            padding: 60px 100px;
-            background: #F5F7FA;
-            text-align: center;
-        }
-
-        .stars {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
-            flex-direction: row-reverse; /* Membuat bintang terurut dari kanan ke kiri */
-        }
-
-        .stars input {
-            display: none;
-        }
-
-        .stars label {
-            font-size: 60px;
-            color: #CFCFCF; /* Warna bintang default */
-            transition: color 0.3s;
-        }
-
-        .stars input:checked ~ label,
-        .stars label:hover,
-        .stars label:hover ~ label {
-            color: #FFD700; /* Warna bintang saat dipilih atau hover */
-        }
-
-        .feedback-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            width: 50%;
-            margin: 0 auto;
-        }
-
-        .feedback-form input, .feedback-form textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #CFCFCF;
-            border-radius: 5px;
-            font-family: 'Inter';
-            font-size: 14px;
-            color: #263238;
-        }
-
-        .feedback-form input::placeholder, .feedback-form textarea::placeholder {
-            color: #717171;
-            opacity: 0.7;
-        }
-
-        .feedback-form textarea {
-            height: 150px;
-            resize: none;
-        }
-
-        .footer {
-            padding: 30px;
-            background: #003459;
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .footer p {
-            font-family: 'Inter';
-            font-weight: 600;
-            font-size: 24px;
-            color: #FFFFFF;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-    </style>
 </head>
-<body>
-    <div class="landing-page">
-        <!-- Navbar -->
-        <div class="navbar">
-            <div class="logo">
-                <img src="{{ asset('images/SWAPHUBLOGO.png') }}" alt="SwapHub Logo">
-                <span class="logo-text">SWAPHUB</span>
-            </div>
-            <div class="menu">
-                <a href="#home">Home</a>
-                <a href="#profile">Profile</a>
-                <a href="#features">Features</a>
-                <a href="#review">Review</a>
-            </div>
-        </div>
 
-        <!-- Hero Section -->
-        <div class="hero-section" id="home">
-            <div class="hero-text">
-                <h1>The best way to <span class="text-swap">Swap</span> & <span class="text-reuse">Reuse</span> items with your friends!</h1>
-                <p>SwapHub hadir sebagai solusi inovatif untuk memfasilitasi pertukaran barang antar mahasiswa dalam satu platform yang aman dan terpercaya.</p>
-                <a href="#" class="hero-button">Learn More</a>
-            </div>
-            <div class="hero-illustration">
-                <img src="{{ asset('images/grafiklanding1.png') }}" alt="Hero Illustration">
-            </div>
-        </div>
+<body class="font-inter">
 
+  {{-- Navbar --}}
+  <nav class="bg-white border-gray-200">
+    <div class="container pe-4 md:px-4 lg:px-24 flex flex-wrap items-center justify-between mx-auto">
+      <a href="/" class="flex items-center space-x-3">
+        <img src="{{ asset('images/SWAPHUBLOGO.png') }}" class="h-20" alt="SwapHub Logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap text-primary text-shadow-lg">SWAPHUB</span>
+      </a>
+      <div class="@guest md:hidden @else flex @endguest items-center md:order-2 space-x-3 md:space-x-0">
         @auth
-        @else
-            <!-- Community Section (Sign Up & Log In) -->
-            <div class="community-section">
-                <h2 class="section-title"><span class="text-signup">SIGN UP</span> & <span class="text-enjoy">ENJOY</span> YOUR SWAPHUB!</h2>
-                <div class="auth-section">
-                    <!-- Sign Up Form -->
-                    <div class="signup-form">
-                        <h3>Sign Up</h3>
-
-                        @if (session('success'))
-                            <div class="form-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
-                        @if ($errors->any())
-                            <div class="form-error">
-                                <ul class="list-disc pl-5">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <form method="POST" action="{{ route('registration') }}" enctype="multipart/form-data">
-                            @csrf
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <input type="text" name="first_name" placeholder="Your first name"
-                                    class="form-input" value="{{ old('first_name') }}" required>
-                                <input type="text" name="last_name" placeholder="Your last name"
-                                    class="form-input" value="{{ old('last_name') }}" required>
-                            </div>
-
-                            <input type="email" name="email" placeholder="Your email address"
-                                class="form-input" value="{{ old('email') }}" required>
-
-                            <input type="text" name="phone" placeholder="Your phone number"
-                                class="form-input" value="{{ old('phone') }}" required>
-
-                            <input type="password" name="password" placeholder="Pick a password"
-                                class="form-input" required>
-
-                            <input type="password" name="password_confirmation" placeholder="Confirm password"
-                                class="form-input" required>
-
-                            <!-- Role Dropdown -->
-                            <select name="role" class="form-input" required>
-                                <option value="">Select Role</option>
-                                <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
-                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                            </select>
-
-                            <label class="block text-gray-700 mb-2 text-sm">Upload Profile Picture (optional)</label>
-                            <input type="file" name="profile_picture"
-                                class="form-input bg-white file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" accept="image/*">
-
-                            <button type="submit" class="form-button">Sign Up</button>
-                        </form>
-                    </div>
-
-                    <!-- Log In Form -->
-                    <div class="login-form">
-                        <h3>Log In</h3>
-
-                        @if (session('loginError'))
-                            <div class="form-error">
-                                {{ session('loginError') }}
-                            </div>
-                        @endif
-
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-
-                            <input type="email" name="email" placeholder="Email address"
-                                class="form-input" required />
-
-                            <input type="password" name="password" placeholder="Password"
-                                class="form-input" required />
-
-                            <button type="submit" class="form-button">Log In</button>
-                        </form>
-                    </div>
-                </div>
+          <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-primary"
+            id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
+            data-dropdown-placement="bottom">
+            <span class="sr-only">Open user menu</span>
+            <img class="w-8 h-8 rounded-full"
+              src="{{ !empty(Auth::user()->profile_picture_users) ? asset(Auth::user()->profile_picture_users) : asset('photo-profile/default.png') }}?t={{ time() }}"
+              alt="Profile Picture">
+          </button>
+          {{-- Dropdown menu  --}}
+          <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm"
+            id="user-dropdown">
+            <div class="px-4 py-3">
+              <span class="block text-sm text-gray-900">{{ Auth::user()->full_name }}</span>
+              <span class="block text-sm  text-gray-500 truncate">{{ Auth::user()->email }}</span>
             </div>
+            <ul class="py-2" aria-labelledby="user-menu-button">
+              <li>
+                <a href="#"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary-hover">Dashboard</a>
+              </li>
+              <li>
+                <a href="{{ route('home') }}"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary-hover">Home</a>
+              </li>
+              <li>
+                <a href="{{ route('profile.index') }}"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary-hover">Profile</a>
+              </li>
+              <li>
+                <a href="{{ route('wishlist.index') }}"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary-hover">Wishlist
+                  <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">1</span></a>
+                </a>
+              </li>
+              <li>
+                <a href="{{ route('notifikasi.index') }}"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary-hover">Notifications
+                  <span
+                    class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full">1</span></a>
+                </a>
+              </li>
+              <li>
+                <form action="{{ route('logout') }}" method="POST">
+                  @csrf
+                  <button type="submit"
+                    class="block w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-red-100">Logout</button>
+                </form>
+              </li>
+            </ul>
+          </div>
         @endauth
-
-        <!-- Our Collection -->
-        <div class="collection-section">
-            <h2 class="section-title">OUR <span class="text-collection">COLLECTION</span></h2>
-            <div class="collection-items">
-                <div class="item-card">
-                    <img src="{{ asset('images/LABUBU.jpg') }}" alt="LABUBU">
-                    <div class="status-tag">Tersedia</div>
-                </div>
-                <div class="item-card">
-                    <img src="{{ asset('images/hp.jpg') }}" alt="HP">
-                    <div class="status-tag">Tersedia</div>
-                </div>
-                <div class="item-card">
-                    <img src="{{ asset('images/One Piece Figure.jpg') }}" alt="One Piece Figure">
-                    <div class="status-tag">Tersedia</div>
-                </div>
-                <div class="item-card">
-                    <img src="{{ asset('images/TAS.jpg') }}" alt="TAS">
-                    <div class="status-tag">Tersedia</div>
-                </div>
-                <div class="item-card">
-                    <img src="{{ asset('images/Yehlex.jpg') }}" alt="Yehlex">
-                    <div class="status-tag">Tersedia</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- What is SwapHub? -->
-        <div class="what-is-section" id="profile">
-            <div class="what-is-image">
-                <img src="{{ asset('images/WHATIS.jpg') }}" alt="What is SwapHub">
-            </div>
-            <div class="what-is-text">
-                <h2>WHAT IS <span class="text-swaphub">SWAPHUB?</span></h2>
-                <p>SwapHub adalah platform web yang memudahkan mahasiswa bertukar barang secara efisien dan aman. Dengan fitur algoritma pencocokan, verifikasi akun, serta rating & ulasan transparan, SwapHub membangun kepercayaan dan mendorong praktik ekonomi timbal balik yang berkelanjutan. Platform ini berkontribusi pada SDG 12 (konsumsi dan produksi bertanggung jawab) dengan mengurangi limbah melalui penggunaan kembali barang, serta mendukung SDG 11 untuk membentuk komunitas yang lebih ramah lingkungan dan berkelanjutan.</p>
-            </div>
-        </div>
-
-        <!-- Available Features -->
-        <div class="features-section" id="features">
-            <div class="features-image">
-                <img src="{{ asset('images/FEATURES.jpg') }}" alt="Features">
-            </div>
-            <div class="features-text">
-                <h2>AVAILABLE <span class="text-features">FEATURES</span></h2>
-                <ul>
-                    <li>Pertukaran Barang</li>
-                    <li>Pencarian & Filter Barang</li>
-                    <li>Rating and review sistem</li>
-                    <li>Keamanan & Verifikasi Pengguna</li>
-                    <li>Manajemen Transaksi & Riwayat</li>
-                    <li>Feedback & Saran Pengguna</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Community Updates -->
-        <div class="community-updates" id="review">
-            <h2 class="section-title">THEY <span class="text-said">SAID...</span></h2>
-            <div class="testimonials">
-                <div class="testimonial-card">
-                    <img src="{{ asset('images/SWAPHUBLOGO.png') }}" alt="Alya">
-                    <p>"Fitur rating dan review bikin aku lebih percaya sama orang yang mau aku ajak barter. Jadi nggak takut kena tipu. Keren banget!"</p>
-                    <div class="author">Alya - Mahasiswa DKV</div>
-                </div>
-                <div class="testimonial-card">
-                    <img src="{{ asset('images/SWAPHUBLOGO.png') }}" alt="Nadia">
-                    <p>"SwapHub bikin proses barter lebih seru dan fleksibel. Bisa chat langsung sama pemilik barang, jadi lebih gampang negosiasi."</p>
-                    <div class="author">Nadia - Mahasiswa Manajemen</div>
-                </div>
-                <div class="testimonial-card">
-                    <img src="{{ asset('images/SWAPHUBLOGO.png') }}" alt="Fajar">
-                    <p>"Platformnya mudah digunakan dan sistem verifikasinya bikin aku lebih nyaman. Udah beberapa kali barter dan selalu lancar!"</p>
-                    <div class="author">Fajar - Mahasiswa Hukum</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Feedback Section -->
-        <div class="feedback-section">
-            <h2 class="section-title">Give Us Feedback for Improvement</h2>
-            <div class="stars">
-                <input type="radio" name="rating" id="star5" value="5" class="hidden">
-                <label for="star5" class="cursor-pointer">★</label>
-                <input type="radio" name="rating" id="star4" value="4" class="hidden">
-                <label for="star4" class="cursor-pointer">★</label>
-                <input type="radio" name="rating" id="star3" value="3" class="hidden">
-                <label for="star3" class="cursor-pointer">★</label>
-                <input type="radio" name="rating" id="star2" value="2" class="hidden">
-                <label for="star2" class="cursor-pointer">★</label>
-                <input type="radio" name="rating" id="star1" value="1" class="hidden">
-                <label for="star1" class="cursor-pointer">★</label>
-            </div>
-            <div class="feedback-form">
-                <input type="email" placeholder="Your Email Address">
-                <textarea placeholder="Message"></textarea>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <p>"SwapHub - Swap, Use, Save, Sustain!"</p>
-        </div>
+        <button data-collapse-toggle="navbar-user" type="button"
+          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
+          aria-controls="navbar-user" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15" />
+          </svg>
+        </button>
+      </div>
+      <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
+        <ul
+          class="flex flex-col text-shadow-lg font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 md:flex-row md:mt-0 md:border-0 md:bg-white">
+          @guest
+            <li>
+              <a href="#form-section"
+                class="block py-2 px-3 text-white bg-primary rounded-sm md:bg-transparent md:text-primary md:p-0"
+                aria-current="page">Join</a>
+            </li>
+          @else
+            <li>
+              <a href="#collection"
+                class="block py-2 px-3 text-white bg-primary rounded-sm md:bg-transparent md:text-primary md:p-0"
+                aria-current="page">Collection</a>
+            </li>
+          @endguest
+          <li>
+            <a href="#about"
+              class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0">About</a>
+          </li>
+          <li>
+            <a href="#features"
+              class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0">Features</a>
+          </li>
+          <li>
+            <a href="#review"
+              class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0">Review</a>
+          </li>
+        </ul>
+      </div>
     </div>
+  </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+  {{-- Hero Section --}}
+  <section class="bg-secondary px-4 md:px-24 py-10 animate-fade-in">
+    <div class="container mx-auto md:flex justify-between items-center">
+      <div class="flex-1 my-auto text-shadow-lg text-center md:text-start">
+        <h1 class="text-5xl font-bold text-tertiary">The best way to <span class="text-primary">Swap</span> &
+          <span class="text-primary">Reuse</span> items with
+          your friends!
+        </h1>
+        <p class="my-6">SwapHub hadir sebagai solusi inovatif untuk memfasilitasi pertukaran barang antar mahasiswa
+          dalam satu
+          platform yang aman dan terpercaya.</p>
+        <a href="#about"
+          class="px-4 py-2 bg-primary hover:bg-primary-hover w-full text-white inline-block rounded-sm font-semibold">Learn
+          More</a>
+      </div>
+      <div class="hidden md:block flex-1">
+        <img src="{{ asset('images/grafiklanding1.png') }}" alt="image" class="w- mx-auto">
+      </div>
+    </div>
+  </section>
+
+  @guest
+    {{-- Auth Section --}}
+    <section class="flex flex-col justify-center items-center px-4 md:px-24 py-10">
+      <h2 class="text-3xl font-bold text-tertiary text-center text-shadow-lg mb-8"><span class="text-primary">SIGN
+          UP</span>
+        & <span class="text-primary">ENJOY</span> YOUR SWAPHUB!</h2>
+
+      {{-- Tombol toggle pill  --}}
+      <div class="mb-6 md:hidden bg-white rounded-full shadow-md flex p-1 w-full max-w-xs">
+        <button id="showRegister"
+          class="flex-1 text-center py-2 rounded-full font-semibold text-tertiary hover:bg-tertiary-hover hover:text-white">
+          Sign Up
+        </button>
+        <button id="showLogin"
+          class="flex-1 text-center py-2 rounded-full font-semibold text-white bg-primary hover:bg-primary-hover hover:text-white">
+          Log In
+        </button>
+      </div>
+
+      {{-- Container form  --}}
+      <div class="container md:flex md:space-x-10" id="form-section">
+        {{-- Register Form  --}}
+        <div id="registerForm" class="w-full md:w-1/2 bg-secondary p-6 shadow-lg rounded-lg hidden md:block">
+          <h2 class="text-2xl font-bold mb-4 text-tertiary text-center">Sign Up</h2>
+
+          @if (session('success'))
+            <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 border border-green-300">
+              {{ session('success') }}
+            </div>
+          @endif
+
+          @if ($errors->any())
+            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 border border-red-300">
+              <ul class="list-disc pl-5">
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
+
+          <form method="POST" action="{{ route('registration') }}" enctype="multipart/form-data">
+            @csrf
+            <div class="flex flex-col md:flex-row md:gap-4">
+              <input type="text" name="first_name" value="{{ old('first_name') }}" placeholder="Your first name"
+                class="w-full px-4 py-2 mb-4 border rounded-sm" required />
+              <input type="text" name="last_name" value="{{ old('last_name') }}" placeholder="Your last name"
+                class="w-full px-4 py-2 mb-4 border rounded-sm" required />
+            </div>
+            <input type="email" name="email" value="{{ old('email') }}" placeholder="Email"
+              class="w-full px-4 py-2 mb-4 border rounded-sm" required />
+            <input type="text" name="phone" value="{{ old('phone') }}" placeholder="Your phone number"
+              class="w-full px-4 py-2 mb-4 border rounded-sm" required />
+            <input type="password" name="password" placeholder="Password"
+              class="w-full px-4 py-2 mb-4 border rounded-sm" required />
+            <input type="password" name="password_confirmation" placeholder="Confirm password"
+              class="w-full px-4 py-2 mb-4 border rounded-sm" required />
+
+            <select name="role" class="w-full px-4 py-2 mb-4 border rounded-sm">
+              <option value="">Select Role</option>
+              <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
+              <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+            </select>
+
+            <label class="block text-gray-700 mb-2 text-sm">Upload Profile Picture (optional)</label>
+            <input type="file" name="profile_picture" class="w-full mb-4 border rounded-sm" accept="image/*">
+
+            <button type="submit"
+              class="w-full bg-tertiary text-white py-2 rounded-sm hover:bg-tertiary-hover cursor-pointer">Sign
+              Up</button>
+          </form>
+        </div>
+
+        {{-- Login Form  --}}
+        <div id="loginForm" class="w-full md:w-1/2 bg-secondary p-6 shadow-lg rounded-lg">
+          <h2 class="text-2xl font-bold mb-4 text-primary text-center">Log in</h2>
+
+          @if (session('loginError'))
+            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 border border-red-300">
+              {{ session('loginError') }}
+            </div>
+          @endif
+
+          <form method="POST" action="{{ route('login') }}">
+            @csrf
+            <input type="email" name="email" placeholder="Email" class="w-full px-4 py-2 mb-4 border rounded-sm"
+              required />
+            <input type="password" name="password" placeholder="Password"
+              class="w-full px-4 py-2 mb-4 border rounded-sm" required />
+            <button type="submit"
+              class="w-full bg-primary text-white py-2 rounded-sm hover:bg-primary-hover cursor-pointer">Login</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  @endguest
+
+  {{-- Collection Section --}}
+  <section class="bg-secondary px-4 md:px-24 py-10" id="collection">
+    <div class="container mx-auto">
+      <h2 class="text-3xl font-bold text-center text-tertiary text-shadow-lg mb-8">
+        OUR <span class="text-primary">COLLECTION</span>
+      </h2>
+
+      <div class="overflow-x-auto whitespace-nowrap space-x-4 flex pb-4">
+        @forelse ($barang as $item)
+          <div class="relative inline-block min-w-[200px] max-w-[250px]">
+            <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->nama_barang }}"
+              class="w-full h-48 object-cover rounded-lg shadow-md" />
+            <div class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
+              Tersedia
+            </div>
+          </div>
+        @empty
+          <p class="mx-auto text-gray-600">Tidak ada barang yang tersedia saat ini.</p>
+        @endforelse
+      </div>
+    </div>
+  </section>
+
+  {{-- About Section --}}
+  <section class="px-4 md:px-24 py-10" id="about">
+    <div class="container mx-auto flex flex-col md:flex-row items-center gap-10">
+
+      {{-- Gambar  --}}
+      <div class="w-full md:w-1/3">
+        <img src="{{ asset('images/WHATIS.jpg') }}" alt="What is SwapHub" class="h-full rounded-lg" />
+      </div>
+
+      {{-- Deskripsi  --}}
+      <div class="w-full md:w-2/3">
+        <h2 class="text-3xl font-bold text-center md:text-left text-tertiary text-shadow-lg mb-8">
+          WHAT IS <span class="text-primary">SWAPHUB</span><span class="text-swaphub">?</span>
+        </h2>
+        <p class="text-gray-700 leading-relaxed">
+          SwapHub adalah platform web yang memudahkan mahasiswa bertukar barang secara efisien dan aman.
+          Dengan fitur algoritma pencocokan, verifikasi akun, serta rating & ulasan transparan, SwapHub membangun
+          kepercayaan dan mendorong praktik ekonomi timbal balik yang berkelanjutan.
+          <br><br>
+          Platform ini berkontribusi pada <strong>SDG 12</strong> (konsumsi dan produksi bertanggung jawab)
+          dengan mengurangi limbah melalui penggunaan kembali barang, serta mendukung <strong>SDG 11</strong>
+          untuk membentuk komunitas yang lebih ramah lingkungan dan berkelanjutan.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  {{-- Features Section --}}
+  <section class="bg-secondary px-4 md:px-24 py-10" id="features">
+    <div class="container mx-auto flex flex-col md:flex-row items-center gap-10">
+
+      {{-- Gambar  --}}
+      <div class="w-full md:w-1/3">
+        <img src="{{ asset('images/FEATURES.jpg') }}" alt="Features" class="h-full rounded-lg" />
+      </div>
+
+      {{-- Deskripsi  --}}
+      <div class="w-full md:w-2/3">
+        <h2 class="text-3xl font-bold text-center md:text-left text-tertiary text-shadow-lg mb-8">
+          AVAILABLE <span class="text-primary">FEATURES</span>
+        </h2>
+        <ul class="text-gray-700 leading-relaxed space-y-2">
+          <li class="list-style">
+            Pertukaran Barang
+          </li>
+          <li class="list-style">
+            Pencarian & Filter Barang
+          </li>
+          <li class="list-style">
+            Rating and review sistem
+          </li>
+          <li class="list-style">
+            Keamanan & Verifikasi Pengguna
+          </li>
+          <li class="list-style">
+            Manajemen Transaksi & Riwayat
+          </li>
+          <li class="list-style">
+            Feedback & Saran Pengguna
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+  </section>
+
+  {{-- Testimonial/Review Section --}}
+  <section class="px-4 md:px-24 py-10" id="review">
+    <h2 class="text-3xl font-bold text-center text-tertiary text-shadow-lg mb-8">
+      THEY <span class="text-primary">SAID...</span>
+    </h2>
+    <div class="container mx-auto flex flex-col md:flex-row gap-6 justify-center">
+      <div class="flex-1 bg-secondary p-6 text-center rounded-xl shadow-md">
+        <img src="{{ asset('images/SWAPHUBLOGO.png') }}" alt="Alya"
+          class="w-full h-[150px] rounded-lg object-cover mb-4">
+        <p class="text-sm text-gray-600 leading-5 mb-3">
+          "Fitur rating dan review bikin aku lebih percaya sama orang yang mau aku ajak barter. Jadi nggak takut kena
+          tipu. Keren banget!"
+        </p>
+        <div class="font-semibold text-sm text-primary">Alya - Mahasiswa DKV</div>
+      </div>
+      <div class="flex-1 bg-secondary p-6 text-center rounded-xl shadow-md">
+        <img src="{{ asset('images/SWAPHUBLOGO.png') }}" alt="Nadia"
+          class="w-full h-[150px] rounded-lg object-cover mb-4">
+        <p class="text-sm text-gray-600 leading-5 mb-3">
+          "SwapHub bikin proses barter lebih seru dan fleksibel. Bisa chat langsung sama pemilik barang, jadi lebih
+          gampang negosiasi."
+        </p>
+        <div class="font-semibold text-sm text-primary">Nadia - Mahasiswa Manajemen</div>
+      </div>
+      <div class="flex-1 bg-secondary p-6 text-center rounded-xl shadow-md">
+        <img src="{{ asset('images/SWAPHUBLOGO.png') }}" alt="Fajar"
+          class="w-full h-[150px] rounded-lg object-cover mb-4">
+        <p class="text-sm text-gray-600 leading-5 mb-3">
+          "Platformnya mudah digunakan dan sistem verifikasinya bikin aku lebih nyaman. Udah beberapa kali barter dan
+          selalu lancar!"
+        </p>
+        <div class="font-semibold text-sm text-primary">Fajar - Mahasiswa Hukum</div>
+      </div>
+    </div>
+  </section>
+
+  {{-- Feedback Section --}}
+  <section class="bg-secondary px-4 md:px-24 py-10">
+    <div class="container mx-auto">
+      <h2 class="text-3xl font-bold text-center text-tertiary text-shadow-lg mb-8">
+        Give Us <span class="text-primary">Feedback</span> for <span class="text-primary">Improvement</span>
+      </h2>
+
+      {{-- Stars  --}}
+      <div id="stars" class="flex justify-center gap-3 mb-6 text-[50px] text-gray-300 cursor-pointer">
+        <span data-value="1">★</span>
+        <span data-value="2">★</span>
+        <span data-value="3">★</span>
+        <span data-value="4">★</span>
+        <span data-value="5">★</span>
+      </div>
+
+      {{-- Feedback Form  --}}
+      <form id="feedback-form" class="flex flex-col gap-5 w-full md:w-1/2 mx-auto">
+        <input type="email" name="email" placeholder="Your Email Address" required
+          class="w-full px-4 py-2 border rounded-sm">
+
+        <textarea name="message" placeholder="Message" required
+          class="w-full px-4 py-2 border rounded-sm h-[150px] resize-none"></textarea>
+
+        {{-- Hidden input to store selected rating  --}}
+        <input type="hidden" name="rating" id="rating-value">
+
+        {{-- Submit Button  --}}
+        <button type="submit"
+          class="bg-primary text-white font-semibold px-6 py-3 rounded-md hover:bg-primary-hover cursor-pointer transition">
+          Submit Feedback
+        </button>
+      </form>
+    </div>
+  </section>
+
+  {{-- Footer --}}
+  <footer class="bg-tertiary px-4 md:px-24 py-8">
+    <p class="text-white text-center font-semibold text-2xl">"SwapHub - Swap, Use, Save, Sustain!"</p>
+  </footer>
+
+  {{-- Script toggle auth  --}}
+  <script>
+    const loginBtn = document.getElementById("showLogin");
+    const registerBtn = document.getElementById("showRegister");
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+
+    function showForm(show, hide) {
+      hide.classList.add("animate-fade-out");
+      setTimeout(() => {
+        hide.classList.add("hidden");
+        hide.classList.remove("animate-fade-out");
+
+        show.classList.remove("hidden");
+        show.classList.add("animate-fade-in");
+        setTimeout(() => {
+          show.classList.remove("animate-fade-in");
+        }, 300);
+      }, 300);
+    }
+
+
+    loginBtn.addEventListener("click", () => {
+      showForm(loginForm, registerForm);
+      loginBtn.classList.add("bg-primary", "text-white");
+      registerBtn.classList.remove("bg-tertiary", "text-white");
+      registerBtn.classList.add("text-tertiary");
+    });
+
+    registerBtn.addEventListener("click", () => {
+      showForm(registerForm, loginForm);
+      registerBtn.classList.add("bg-tertiary", "text-white");
+      loginBtn.classList.remove("bg-primary", "text-white");
+      loginBtn.classList.add("text-primary");
+    });
+  </script>
+
+  {{-- Script Star & Submit Feedback --}}
+  <script>
+    const stars = document.querySelectorAll('#stars span');
+    const ratingInput = document.getElementById('rating-value');
+    let currentRating = 0;
+
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        currentRating = parseInt(star.getAttribute('data-value'));
+        ratingInput.value = currentRating; // Simpan ke input hidden
+        updateStars();
+      });
+      star.addEventListener('mouseover', () => {
+        const hoverValue = parseInt(star.getAttribute('data-value'));
+        updateStars(hoverValue);
+      });
+      star.addEventListener('mouseleave', () => {
+        updateStars();
+      });
+    });
+
+    function updateStars(hoverValue = 0) {
+      stars.forEach(star => {
+        const starValue = parseInt(star.getAttribute('data-value'));
+        if ((hoverValue || currentRating) >= starValue) {
+          star.classList.add('text-yellow-400');
+          star.classList.remove('text-gray-300');
+        } else {
+          star.classList.remove('text-yellow-400');
+          star.classList.add('text-gray-300');
+        }
+      });
+    }
+
+    // Handle form submission
+    document.getElementById('feedback-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = this.email.value;
+      const message = this.message.value;
+      const rating = this.rating.value;
+
+      // TODO: kalau sudah fix untuk rating sistem
+      // fetch('/feedback', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'X-CSRF-TOKEN': '{{ csrf_token() }}'
+      //   },
+      //   body: JSON.stringify({
+      //     email: data.email,
+      //     message: data.message,
+      //     rating: data.rating
+      //   })
+      // });
+
+      alert(`Thank you!\nEmail: ${email}\nRating: ${rating} stars\nMessage: ${message}`);
+      this.reset();
+      currentRating = 0;
+      updateStars();
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>
+
 </html>
