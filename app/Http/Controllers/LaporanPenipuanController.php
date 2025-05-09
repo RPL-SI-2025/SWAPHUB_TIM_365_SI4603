@@ -1,3 +1,5 @@
+<?php
+
 namespace App\Http\Controllers;
 
 use App\Models\LaporanPenipuan;
@@ -9,51 +11,69 @@ use Illuminate\Support\Facades\Storage;
 
 class LaporanPenipuanController extends Controller
 {
+    // Index untuk admin (semua laporan) dan user (hanya laporan mereka sendiri)
     public function index()
     {
-        $laporan = LaporanPenipuan::with(['kategori', 'pelapor', 'dilapor'])->get();
+        if (Auth::user()->is_admin) {
+            $laporan = LaporanPenipuan::with(['kategori', 'pelapor', 'dilapor'])->get();
+        } else {
+            $laporan = LaporanPenipuan::with(['kategori', 'pelapor', 'dilapor'])->where('id_pelapor', Auth::user()->id)->get();
+        }
         return view('laporan_penipuan.index', compact('laporan'));
     }
 
+    // Form untuk membuat laporan (hanya user)
     public function create()
     {
-        $kategori = Kategori::all();
-        $users = User::where('id', '!=', Auth::user()->id)->get(); // Semua user kecuali pelapor
-        return view('laporan_penipuan.create', compact('kategori', 'users'));
+        if (!Auth::user()->is_admin) {
+            $kategori = Kategori::all();
+            $users = User::where('id', '!=', Auth::user()->id)->get();
+            return view('laporan_penipuan.create', compact('kategori', 'users'));
+        }
+        return redirect()->route('laporan_penipuan.index')->with('error', 'Hanya pengguna biasa yang dapat membuat laporan.');
     }
 
+    // Menyimpan laporan baru (hanya user)
     public function store(Request $request)
     {
-        $request->validate([
-            'id_kategori' => 'required|exists:kategori,id_kategori',
-            'id_dilapor' => 'required|exists:users,id',
-            'pesan_laporan' => 'required|string|max:1000',
-            'foto_bukti' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        if (!Auth::user()->is_admin) {
+            $request->validate([
+                'id_kategori' => 'required|exists:kategori,id_kategori',
+                'id_dilapor' => 'required|exists:users,id',
+                'pesan_laporan' => 'required|string|max:1000',
+                'foto_bukti' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            ]);
 
-        $data = $request->all();
-        $data['id_pelapor'] = Auth::user()->id;
-        $data['status_laporan'] = 'pending';
+            $data = $request->all();
+            $data['id_pelapor'] = Auth::user()->id;
+            $data['status_laporan'] = 'pending';
 
-        if ($request->hasFile('foto_bukti')) {
-            $data['foto_bukti'] = $request->file('foto_bukti')->store('foto_bukti', 'public');
+            if ($request->hasFile('foto_bukti')) {
+                $data['foto_bukti'] = $request->file('foto_bukti')->store('foto_bukti', 'public');
+            }
+
+            LaporanPenipuan::create($data);
+
+            return redirect()->route('home')->with('success', 'Laporan penipuan telah dikirim!');
         }
-
-        LaporanPenipuan::create($data);
-
-        return redirect()->route('home')->with('success', 'Laporan penipuan telah dikirim!');
+        return redirect()->route('laporan_penipuan.index')->with('error', 'Hanya pengguna biasa yang dapat membuat laporan.');
     }
 
+    // Detail laporan (user: milik sendiri, admin: semua)
     public function show($id)
     {
         $laporan = LaporanPenipuan::with(['kategori', 'pelapor', 'dilapor'])->findOrFail($id);
+        if (!Auth::user()->is_admin && $laporan->id_pelapor != Auth::user()->id) {
+            return redirect()->route('laporan_penipuan.index')->with('error', 'Anda tidak memiliki akses untuk melihat laporan ini.');
+        }
         return view('laporan_penipuan.show', compact('laporan'));
     }
 
+    // Form edit laporan (user: milik sendiri, admin: semua)
     public function edit($id)
     {
         $laporan = LaporanPenipuan::findOrFail($id);
-        if ($laporan->id_pelapor != Auth::user()->id && !Auth::user()->is_admin) {
+        if (!Auth::user()->is_admin && $laporan->id_pelapor != Auth::user()->id) {
             return redirect()->route('laporan_penipuan.index')->with('error', 'Anda tidak memiliki akses untuk mengedit laporan ini.');
         }
         $kategori = Kategori::all();
@@ -61,10 +81,11 @@ class LaporanPenipuanController extends Controller
         return view('laporan_penipuan.edit', compact('laporan', 'kategori', 'users'));
     }
 
+    // Update laporan (user: milik sendiri, admin: semua)
     public function update(Request $request, $id)
     {
         $laporan = LaporanPenipuan::findOrFail($id);
-        if ($laporan->id_pelapor != Auth::user()->id && !Auth::user()->is_admin) {
+        if (!Auth::user()->is_admin && $laporan->id_pelapor != Auth::user()->id) {
             return redirect()->route('laporan_penipuan.index')->with('error', 'Anda tidak memiliki akses untuk mengedit laporan ini.');
         }
 
@@ -89,10 +110,11 @@ class LaporanPenipuanController extends Controller
         return redirect()->route('laporan_penipuan.index')->with('success', 'Laporan penipuan telah diperbarui!');
     }
 
+    // Hapus laporan (user: milik sendiri, admin: semua)
     public function destroy($id)
     {
         $laporan = LaporanPenipuan::findOrFail($id);
-        if ($laporan->id_pelapor != Auth::user()->id && !Auth::user()->is_admin) {
+        if (!Auth::user()->is_admin && $laporan->id_pelapor != Auth::user()->id) {
             return redirect()->route('laporan_penipuan.index')->with('error', 'Anda tidak memiliki akses untuk menghapus laporan ini.');
         }
 
@@ -105,6 +127,7 @@ class LaporanPenipuanController extends Controller
         return redirect()->route('laporan_penipuan.index')->with('success', 'Laporan penipuan telah dihapus!');
     }
 
+    // Ubah status laporan (hanya admin)
     public function updateStatus(Request $request, $id)
     {
         if (!Auth::user()->is_admin) {

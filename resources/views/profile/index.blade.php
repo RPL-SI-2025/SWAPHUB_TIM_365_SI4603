@@ -4,24 +4,23 @@
     <meta charset="UTF-8">
     <title>SwapHub Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
     @vite('resources/css/app.css')
     <link href="https://cdn.jsdelivr.net/npm/flowbite@1.6.0/dist/flowbite.min.css" rel="stylesheet" />
-        <style>
-            a:hover .icon-path-1 {
-                opacity: 0;
-            }
-    
-            a:hover .icon-path-2 {
-                opacity: 1;
-                display: block;
-            }
-    
-            .icon-path-1,
-            .icon-path-2 {
-                transition: opacity 0.3s ease;
-            }
-        </style>
+    <style>
+        a:hover .icon-path-1 {
+            opacity: 0;
+        }
+
+        a:hover .icon-path-2 {
+            opacity: 1;
+            display: block;
+        }
+
+        .icon-path-1,
+        .icon-path-2 {
+            transition: opacity 0.3s ease;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     @php
@@ -40,7 +39,6 @@
             <a href="{{ route('profile.index') }}" class="flex items-center gap-2 hover:opacity-80 transition">
                 <span class="font-medium text-gray-700">{{ $user->first_name . ' '. $user->last_name }}</span>
                 <img src="{{ asset(Auth::user()->profile_picture ?? 'photo-profile/default.png') }}?t={{ time() }}" alt="Profile Picture" class="w-8 h-8 rounded-full object-cover">
-    
             </a>
         </div>
     </div>
@@ -84,8 +82,13 @@
                     </svg>
                     <span class="transition duration-300 ease-in-out">Notification</span>
                 </a>
-                
-                
+                <!-- Tombol Laporkan Penipuan -->
+                <a href="{{ route('laporan_penipuan.create') }}" class="flex items-center gap-2 text-gray-800 hover:text-yellow-600 transform hover:scale-105 transition duration-300 ease-in-out">
+                    <svg class="w-6 h-6 transition duration-300 ease-in-out" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 2a1 1 0 0 1 .894.553l7 14A1 1 0 0 1 19 18H5a1 1 0 0 1-.894-1.447l7-14A1 1 0 0 1 12 2Zm0 3.09L6.618 16h10.764L12 5.09Zm-1 7.91a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2Zm1 5a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="transition duration-300 ease-in-out">Laporkan Penipuan</span>
+                </a>
             </nav>
         </aside>
 
@@ -124,7 +127,6 @@
                                     class="text-green-600 hover:underline text-sm">
                                         Ubah
                                 </a>
-                                
                             </div>
                         </div>
                     
@@ -174,11 +176,8 @@
                                     </a>
                                 </div>
                             </div>
-                            
                         </div>
-
                     </div>
-                    
                 </div>
             </form>
             <form action="{{ route('logout') }}" method="POST" class="mt-4">
@@ -186,7 +185,7 @@
                 <button type="submit" class="flex items-center gap-2 text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                     <svg class="w-[25px] h-[25px] text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2"/>
-                      </svg>
+                    </svg>
                     <span>Log Out</span>
                 </button>
             </form>
