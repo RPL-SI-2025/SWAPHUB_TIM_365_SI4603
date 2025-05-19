@@ -16,12 +16,13 @@ class RegistrationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'firstName' => 'required|string',
-            'lastName' => 'required|string',
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
             'email' => 'required|email:dns|unique:users,email',
             'password' => 'required|confirmed|min:8',
-            'phone_users' => 'required|numeric|unique:users,phone_users',
+            'phone' => 'required|numeric|unique:users,phone',
             'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'role' => 'required|string|in:user,admin',
         ]);
 
         // Simpan gambar jika ada
@@ -34,17 +35,15 @@ class RegistrationController extends Controller
         }
 
         User::create([
-            'First_Name' => $request->firstName,
-            'Last_Name' => $request->lastName,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'user',
-            'phone_users' => $request->phone_users,
-            'profile_picture_users' => $profilePath,
+            'phone' => $request->phone,
+            'role' => $request->role,
+            'profile_picture' => $profilePath,
         ]);
 
-        $request->session()->put('success', 'Registration success!');
-
-        return redirect('/');
+        return redirect('/')->with('success', 'Registration success!');;
     }
 }

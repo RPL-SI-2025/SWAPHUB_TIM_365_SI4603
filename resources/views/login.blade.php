@@ -22,6 +22,12 @@
             </div>
         </div>
 
+        <!-- Loading Screen -->
+        <div id="loadingScreen" class="fixed inset-0 bg-white  items-center justify-center z-50 hidden">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
+        </div>
+
+
         <!-- Right Section - Login Form -->
         <div class="md:w-1/2 w-full bg-white p-8 rounded-lg shadow-lg max-w-md">
             <h2 class="text-2xl font-semibold mb-6 text-center">Log In to SwapHub</h2>
@@ -56,5 +62,15 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@1.6.0/dist/flowbite.min.js"></script>
+    <script>
+        const form = document.querySelector('form');
+        const loadingScreen = document.getElementById('loadingScreen');
+    
+        form.addEventListener('submit', function () {
+            loadingScreen.classList.remove('hidden'); // Show loading screen
+        });
+    </script>
+    
+
 </body>
 </html>

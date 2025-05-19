@@ -9,7 +9,13 @@
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-6">
-        <h1 class="text-3xl font-bold mb-6">Daftar Barang</h1>
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold">Daftar Barang</h1>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">Logout</button>
+            </form>
+        </div>
 
         @if (session('success'))
             <div class="bg-green-500 text-white p-4 rounded mb-4">
@@ -23,7 +29,6 @@
             </div>
         @endif
 
-        <!-- Hanya mahasiswa yang bisa melihat tombol Tambah Barang -->
         @if (!Auth::user()->is_admin)
             <a href="{{ route('barang.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block">Tambah Barang</a>
         @endif
@@ -33,7 +38,6 @@
                 <tr class="bg-gray-200">
                     <th class="p-3">Gambar</th>
                     <th class="p-3">Nama Barang</th>
-                    <th class="p-3">Kategori</th>
                     <th class="p-3">Deskripsi</th>
                     <th class="p-3">Status</th>
                     <th class="p-3">Pemilik</th>
@@ -41,7 +45,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($barang as $item)
+                @forelse ($barang as $item)
                     <tr>
                         <td class="p-3">
                             @if ($item->gambar)
@@ -51,13 +55,11 @@
                             @endif
                         </td>
                         <td class="p-3">{{ $item->nama_barang }}</td>
-                        <td class="p-3">{{ $item->kategori->nama_kategori }}</td>
                         <td class="p-3">{{ $item->deskripsi_barang }}</td>
                         <td class="p-3">{{ $item->status_barang }}</td>
                         <td class="p-3">{{ $item->user->name }}</td>
                         <td class="p-3">
-                            <!-- Hanya pemilik barang yang bisa melihat tombol Edit dan Hapus -->
-                            @if (Auth::user()->id == $item->user_id)
+                            @if (Auth::user()->id == $item->id_user && !Auth::user()->is_admin)
                                 <a href="{{ route('barang.edit', $item->id_barang) }}" class="bg-yellow-500 text-white px-3 py-1 rounded">Edit</a>
                                 <form action="{{ route('barang.destroy', $item->id_barang) }}" method="POST" class="inline">
                                     @csrf
@@ -67,7 +69,11 @@
                             @endif
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="6" class="p-3 text-center">Tidak ada barang tersedia.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
