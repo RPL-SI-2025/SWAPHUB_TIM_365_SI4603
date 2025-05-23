@@ -13,6 +13,8 @@ use App\Http\Controllers\PenukaranController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\LaporanPenipuanController;
+use App\Http\Controllers\RatingWebsiteController;
+
 
 // Landing page
 Route::get('/', function () {
@@ -76,3 +78,13 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
     // Route untuk Admin mengelola status Laporan Penipuan
     Route::post('laporan_penipuan/{id}/status', [LaporanPenipuanController::class, 'updateStatus'])->name('laporan_penipuan.updateStatus');
 });
+
+// Rating routes - memerlukan authentication
+Route::middleware(['auth'])->group(function () {
+    Route::get('/rating', [RatingWebsiteController::class, 'index'])->name('rating.index');
+    Route::post('/rating', [RatingWebsiteController::class, 'store'])->name('rating.store');
+    Route::put('/rating/{id}', [RatingWebsiteController::class, 'update'])->name('rating.update');
+    Route::delete('/rating/{id}', [RatingWebsiteController::class, 'destroy'])->name('rating.destroy');
+    Route::get('/rating/{id}/edit', [RatingWebsiteController::class, 'edit'])->name('rating.edit');
+});
+
