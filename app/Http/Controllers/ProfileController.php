@@ -25,20 +25,20 @@ class ProfileController extends Controller
 
     // Validasi request
     $request->validate([
-        'First_Name' => 'nullable|string|max:255',
-        'Last_Name' => 'nullable|string|max:255',
+        'first_name' => 'nullable|string|max:255',
+        'last_name' => 'nullable|string|max:255',
         'email' => 'nullable|email|max:255|unique:users,email,' . $user->id,
         'phone' => 'nullable|string|max:20',
-        'profile_picture_users' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
+        'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
     ]);
 
     // Update data yang tersedia
-    if ($request->filled('First_Name')) {
-        $user->First_Name = $request->First_Name;
+    if ($request->filled('first_name')) {
+        $user->first_name = $request->first_name;
     }
 
-    if ($request->filled('Last_Name')) {
-        $user->Last_Name = $request->Last_Name;
+    if ($request->filled('last_name')) {
+        $user->last_name = $request->last_name;
     }
 
     if ($request->filled('email')) {
@@ -46,18 +46,18 @@ class ProfileController extends Controller
     }
 
     if ($request->filled('phone')) {
-        $user->phone_users = $request->phone;
+        $user->phone = $request->phone;
     }
 
     // Handle profile picture
-    if ($request->hasFile('profile_picture_users')) {
-        $file = $request->file('profile_picture_users');
+    if ($request->hasFile('profile_picture')) {
+        $file = $request->file('profile_picture');
         $filename = time() . '_' . $file->getClientOriginalName(); // ⬅️ nama baru unik
         $filePath = 'uploads/' . $filename;
         $file->move(public_path('uploads'), $filename);
     
         // Update field di database
-        $user->profile_picture_users = $filePath;
+        $user->profile_picture = $filePath;
     }
     
 

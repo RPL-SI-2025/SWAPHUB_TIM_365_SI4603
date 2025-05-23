@@ -12,6 +12,7 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\PenukaranController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\LaporanPenipuanController;
 
 // Landing page
 Route::get('/', function () {
@@ -63,9 +64,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/notifikasi/{id}/mark-as-read', [NotifikasiController::class, 'markAsRead'])->name('notifikasi.markAsRead');
     Route::delete('/notifikasi/{id}', [NotifikasiController::class, 'destroy'])->name('notifikasi.destroy');
     Route::post('/notifikasi/mark-all-as-read', [NotifikasiController::class, 'markAllAsRead'])->name('notifikasi.markAllAsRead');
+
+    // Route Laporan Penipuan
+    Route::resource('laporan_penipuan', LaporanPenipuanController::class);
 });
 
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('kategori', KategoriController::class);
+
+    // Route untuk Admin mengelola status Laporan Penipuan
+    Route::post('laporan_penipuan/{id}/status', [LaporanPenipuanController::class, 'updateStatus'])->name('laporan_penipuan.updateStatus');
 });

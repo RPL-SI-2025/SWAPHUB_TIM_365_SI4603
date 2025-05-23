@@ -657,7 +657,7 @@
                 <img src="{{ asset('images/WHATIS.jpg') }}" alt="What is SwapHub">
             </div>
             <div class="what-is-text">
-                <h2>WHAT IS <span class="text-swaphub">SWAPHUB</span></h2>
+                <h2>WHAT IS <span class="text-swaphub">SWAPHUB?</span></h2>
                 <p>SwapHub adalah platform web yang memudahkan mahasiswa bertukar barang secara efisien dan aman. Dengan fitur algoritma pencocokan, verifikasi akun, serta rating & ulasan transparan, SwapHub membangun kepercayaan dan mendorong praktik ekonomi timbal balik yang berkelanjutan. Platform ini berkontribusi pada SDG 12 (konsumsi dan produksi bertanggung jawab) dengan mengurangi limbah melalui penggunaan kembali barang, serta mendukung SDG 11 untuk membentuk komunitas yang lebih ramah lingkungan dan berkelanjutan.</p>
             </div>
         </div>

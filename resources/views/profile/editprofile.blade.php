@@ -21,13 +21,13 @@
                 @method('PUT')
 
                 <div>
-                    <label for="First_Name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Depan</label>
-                    <input type="text" name="First_Name" id="First_Name" value="{{ $user->First_Name }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                    <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Depan</label>
+                    <input type="text" name="first_name" id="first_name" value="{{ $user->first_name }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                 </div>
 
                 <div>
-                    <label for="Last_Name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Belakang</label>
-                    <input type="text" name="Last_Name" id="Last_Name" value="{{ $user->Last_Name }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                    <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Belakang</label>
+                    <input type="text" name="last_name" id="last_name" value="{{ $user->last_name }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                     <p class="text-xs text-gray-400 mt-1">Nama dapat dilihat oleh pengguna lainnya</p>
                 </div>
 
@@ -64,7 +64,7 @@
 
                 <div>
                     <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nomor Telepon</label>
-                    <input type="tel" name="phone" id="phone" value="{{ $user->phone_users }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                    <input type="tel" name="phone" id="phone" value="{{ $user->phone }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                     <p class="text-xs text-gray-400 mt-1">Nomor telepon hanya digunakan untuk komunikasi penting</p>
                 </div>
 

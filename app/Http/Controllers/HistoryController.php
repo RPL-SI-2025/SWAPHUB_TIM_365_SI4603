@@ -24,7 +24,7 @@ class HistoryController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'id_penukaran_barang' => 'required|exists:penukaran_barang,id_penukaran_barang',
+            'id_penukaran' => 'required|exists:penukaran,id_penukaran',
         ]);
 
         History::create($validated);

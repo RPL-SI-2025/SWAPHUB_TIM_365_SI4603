@@ -15,6 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'is_admin' => App\Http\Middleware\IsAdmin::class,
         ]);
+        $middleware->validateCsrfTokens(except: [
+            '/wishlist'
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

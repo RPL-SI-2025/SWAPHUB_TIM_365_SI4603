@@ -21,7 +21,7 @@
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="wishlist-container">
     @foreach ($wishlistItems as $wishlist)
       <div class="relative group wishlist-item" data-nama="{{ strtolower($wishlist->barang->nama_barang) }}">
-        <img src="{{ asset('barang/' . $wishlist->barang->gambar) }}" alt="{{ $wishlist->barang->nama_barang }}"
+        <img src="{{ Storage::url($wishlist->barang->gambar) }}" alt="{{ $wishlist->barang->nama_barang }}"
           class="rounded-lg w-full h-48 object-cover">
 
         <div
@@ -33,14 +33,14 @@
           class="delete-form absolute top-2 right-2">
           @csrf
           @method('DELETE')
-          <a href="#" class="bg-blue-500 text-white text-xs px-2 py-1 rounded hover:bg-blue-600">Detail</a>
+          <a href="{{ route('barang.show', $wishlist->barang->id_barang) }}" class="bg-blue-500 text-white text-xs px-2 py-1 rounded hover:bg-blue-600">Detail</a>
           <button type="submit" class="bg-red-500 text-white text-xs px-2 py-1 rounded hover:bg-red-600">
             Hapus
           </button>
         </form>
       </div>
     @endforeach
-    <a href="#"
+    <a href="{{ route('home') }}"
       class="h-48 w-full rounded-lg bg-gray-200 flex items-center justify-center text-gray-500 cursor-pointer hover:bg-gray-300 transition duration-200 ease-in-out">
       + New Collection
     </a>

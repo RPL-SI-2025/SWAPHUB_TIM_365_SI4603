@@ -14,6 +14,7 @@
             <a href="{{ route('kategori.index') }}" class="text-white text-2xl font-bold">
                 Manajemen Kategori Admin
             </a>
+            <a href="{{ route('users.index') }}" class="text-white">Users</a>
         </div>
     </nav>
 
