@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class LaporanPenipuan extends Model
 {
@@ -11,7 +11,6 @@ class LaporanPenipuan extends Model
 
     protected $table = 'laporan_penipuan';
     protected $primaryKey = 'id_laporan';
-
     protected $fillable = [
         'id_kategori',
         'id_pelapor',
@@ -19,6 +18,7 @@ class LaporanPenipuan extends Model
         'pesan_laporan',
         'foto_bukti',
         'status_laporan',
+        'pesan_admin',
     ];
 
     public function kategori()

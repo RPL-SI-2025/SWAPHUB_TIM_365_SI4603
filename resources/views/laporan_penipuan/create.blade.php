@@ -108,6 +108,7 @@
                 <!-- Tombol -->
                 <div class="flex gap-3">
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">Kirim Laporan</button>
+                    <a href="{{ route('laporan_penipuan.index') }}" class="bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600 transition duration-200">Lihat Histori Laporan</a>
                     <a href="{{ route('home') }}" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-200">Kembali</a>
                 </div>
             </form>

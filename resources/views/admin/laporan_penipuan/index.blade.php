@@ -112,7 +112,17 @@
                                             </svg>
                                             Lihat
                                         </a>
-                                        
+                                        @if (Auth::user()->is_admin)
+                                            <form action="{{ route('laporan_penipuan.updateStatus', $item->id_laporan) }}" method="POST" class="inline-flex items-center gap-2">
+                                                @csrf
+                                                <select name="status_laporan" onchange="this.form.submit()" class="border rounded-lg p-1 bg-white text-gray-700 hover:bg-gray-50 transition duration-200 text-sm">
+                                                    <option value="pending" {{ $item->status_laporan == 'pending' ? 'selected' : '' }}>Pending</option>
+                                                    <option value="diterima" {{ $item->status_laporan == 'diterima' ? 'selected' : '' }}>Diterima</option>
+                                                    <option value="ditolak" {{ $item->status_laporan == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
+                                                </select>
+                                                <input type="text" name="pesan_admin" value="{{ old('pesan_admin', $item->pesan_admin ?? '') }}" placeholder="Masukkan catatan" class="border rounded-lg p-1 w-56 text-sm focus:ring-2 focus:ring-blue-500">
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
