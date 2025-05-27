@@ -4,13 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLaporanPenipuanTable extends Migration
+return new class extends Migration
 {
     public function up()
     {
         Schema::create('laporan_penipuan', function (Blueprint $table) {
             $table->id('id_laporan');
-            $table->foreignId('id_kategori')->constrained('kategori')->onDelete('cascade');
+            $table->foreignId('id_kategori')->constrained('kategori', 'id_kategori')->onDelete('cascade');
             $table->foreignId('id_pelapor')->constrained('users')->onDelete('cascade');
             $table->foreignId('id_dilapor')->constrained('users')->onDelete('cascade');
             $table->text('pesan_laporan');
@@ -24,4 +24,4 @@ class CreateLaporanPenipuanTable extends Migration
     {
         Schema::dropIfExists('laporan_penipuan');
     }
-}
+};
