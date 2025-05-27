@@ -14,7 +14,7 @@ use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\LaporanPenipuanController;
 use App\Http\Controllers\RatingWebsiteController;
-
+use App\Http\Controllers\RatingPenggunaController;
 
 // Landing page
 Route::get('/', function () {
@@ -88,3 +88,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/rating/{id}/edit', [RatingWebsiteController::class, 'edit'])->name('rating.edit');
 });
 
+// Rating pengguna routes - memerlukan authentication
+Route::middleware(['auth'])->group(function () {
+    Route::get('/rating-user', [RatingPenggunaController::class, 'index'])->name('rating_pengguna.index');
+    Route::get('/rating-user/create', [RatingPenggunaController::class, 'create'])->name('rating_pengguna.create');
+    Route::post('/rating-user', [RatingPenggunaController::class, 'store'])->name('rating_pengguna.store');
+    Route::put('/rating-user/{id}', [RatingPenggunaController::class, 'update'])->name('rating_pengguna.update');
+    Route::delete('/rating-user/{id}', [RatingPenggunaController::class, 'destroy'])->name('rating_pengguna.destroy');
+    Route::get('/rating-user/{id}/edit', [RatingPenggunaController::class, 'edit'])->name('rating_pengguna.edit');
+});
