@@ -6,10 +6,10 @@
 
     <div class="bg-white shadow rounded-lg p-4 mb-6">
         <div class="mb-1 text-gray-600">Review dari:</div>
-        <div class="font-semibold">{{ $review->content }}</p>
+        <div class="font-semibold">{{ $review->content }}</div>
     </div>
 
-    <form action="{{ route('admin.replies.store', $review->id }}" method="POST" class="space-y-4">
+    <form action="{{ route('admin.replies.store', $review->id) }}" method="POST" class="space-y-4">
         @csrf
         <div>
             <label for="reply_text" class="block text-sm font-medium text-gray-700">Balasan</label>
@@ -21,7 +21,7 @@
             <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm">
                 Kirim Balasan
             </button>
-            <a href="{{ route('admin.reviews.index') }}" class="ml-2 text-sm text-gray-600 hover:undeline">Batal</a>
+            <a href="{{ route('admin.reviews.index') }}" class="ml-2 text-sm text-gray-600 hover:underline">Batal</a>
         </div>
     </form>
 </div>

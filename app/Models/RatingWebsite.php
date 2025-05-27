@@ -40,4 +40,8 @@ class RatingWebsite extends Model
     {
         return $query->where('rating', $rating);
     }
+
+    public function reply() {
+    return $this->hasOne(AdminReply::class);
+    }
 }

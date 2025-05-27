@@ -14,6 +14,7 @@ use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\LaporanPenipuanController;
 use App\Http\Controllers\RatingWebsiteController;
+use App\Http\Controllers\Admin\ReplyController;
 
 
 // Landing page
@@ -77,6 +78,9 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
 
     // Route untuk Admin mengelola status Laporan Penipuan
     Route::post('laporan_penipuan/{id}/status', [LaporanPenipuanController::class, 'updateStatus'])->name('laporan_penipuan.updateStatus');
+
+    Route::get('/reviews/{id}/reply', [ReplyController::class, 'replyForm'])->name('admin.reviews.replyForm');
+    Route::post('/reviews/{id}/reply', [ReplyController::class, 'store'])->name('admin.replies.store');
 });
 
 // Rating routes - memerlukan authentication
