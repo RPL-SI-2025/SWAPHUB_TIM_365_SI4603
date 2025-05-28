@@ -69,6 +69,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard.index');
+    })->name('dashboard.index');
+
     Route::resource('users', UserController::class);
     Route::resource('kategori', KategoriController::class);
 });
