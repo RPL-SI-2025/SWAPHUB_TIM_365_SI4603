@@ -27,7 +27,7 @@ class LoginController extends Controller
             return redirect()->intended('/home');
         }
 
-        return back()->with('loginError', 'Login failed!');
+        return back()->with('loginError', 'Login failed!')->withFragment('form-section');
     }
 
     public function logout(Request $request)
