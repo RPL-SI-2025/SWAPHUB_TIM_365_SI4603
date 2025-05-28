@@ -12,6 +12,7 @@ class UserController extends Controller
     {
         $users = User::all();
         return view('admin.users.index', compact('users'));
+        
     }
 
     public function show(string $id)
@@ -48,4 +49,12 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
+    public function rekomendasi(User $user)
+    {
+        $rekomendasi = $user->rekomendasiBarangs()->with('barang')->get();
+        $kategori = Kategori::all();
+
+        return view('admin.users.rekomendasi', compact('user', 'rekomendasi', 'kategori'));
+    }
+
 }

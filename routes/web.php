@@ -12,6 +12,7 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\PenukaranController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\RekomendasiBarangController;
 use App\Models\Barang;
 
 // Landing page
@@ -71,4 +72,10 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('kategori', KategoriController::class);
+
+    // Route untuk fitur rekomendasi
+    Route::get('rekomendasi', [RekomendasiBarangController::class, 'index'])->name('admin.rekomendasi.index');
+    Route::post('rekomendasi', [RekomendasiBarangController::class, 'store'])->name('admin.rekomendasi.store');
+    Route::delete('rekomendasi/{id}', [RekomendasiBarangController::class, 'destroy'])->name('admin.rekomendasi.destroy');
 });
+

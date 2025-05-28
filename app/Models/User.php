@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Wishlist::class, 'id_user', 'id');
     }
+    public function rekomendasiBarangs()
+    {
+        return $this->belongsToMany(Barang::class, 'rekomendasi_barang', 'user_id', 'barang_id');
+    }
+
 }
