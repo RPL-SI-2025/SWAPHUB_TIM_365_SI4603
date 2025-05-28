@@ -5,13 +5,16 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\KategoriController;
+// use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\PenukaranController;
 use App\Http\Controllers\NotifikasiController;
+use App\Http\Controllers\LaporanPenipuanController;
+use App\Http\Controllers\RatingWebsiteController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\KategoriController;
 use App\Models\Barang;
 
 // Landing page
@@ -69,6 +72,14 @@ Route::middleware('auth')->group(function () {
 
     // Route Laporan Penipuan
     Route::resource('laporan_penipuan', LaporanPenipuanController::class);
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/rating', [RatingWebsiteController::class, 'index'])->name('rating.index');
+    Route::post('/rating', [RatingWebsiteController::class, 'store'])->name('rating.store');
+    Route::put('/rating/{id}', [RatingWebsiteController::class, 'update'])->name('rating.update');
+    Route::delete('/rating/{id}', [RatingWebsiteController::class, 'destroy'])->name('rating.destroy');
+    Route::get('/rating/{id}/edit', [RatingWebsiteController::class, 'edit'])->name('rating.edit');
 });
 
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
