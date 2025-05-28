@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{{ isset($title) ? $title : config('app.name', 'SwapHub') }}</title>
+  <title>{{ isset($title) ? $title : config('app.name', 'SwapHub Admin') }}</title>
 
   {{-- Flowbite --}}
   {{-- <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" /> --}}
@@ -20,18 +20,19 @@
 <body class="bg-secondary font-inter">
 
   {{-- Navbar --}}
-  @include('layouts.navbar')
+  @include('layouts.admin.navbar')
 
-  {{-- Main Content --}}
-  <main>
-    <div class="px-4 md:px-24">
+  {{-- Sideabar --}}
+  @include('layouts.admin.sidebar')
+
+  <div class="p-4 sm:ml-64">
+    <div class="p-4 border-2 border-gray-200 rounded-lg mt-14">
       @include('layouts.flash-messages')
+      <main>
+        @yield('content')
+      </main>
     </div>
-    @yield('content')
-  </main>
-
-  {{-- Footer --}}
-  @include('layouts.footer')
+  </div>
 
   {{-- JS SweetAlert --}}
   <script>

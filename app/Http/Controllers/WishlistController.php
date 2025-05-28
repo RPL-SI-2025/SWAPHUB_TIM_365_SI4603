@@ -43,7 +43,7 @@ class WishlistController extends Controller
 
         $barang = Barang::find($request->id_barang);
 
-        Notifikasi::send($barang->user->id, "Barang kamu ($barang->nama_barang) ditambahkan ke wishlist oleh $user->first_name", "/barang/$request->id_barang");
+        Notifikasi::send($barang->user->id, "Barang kamu ($barang->nama_barang) ditambahkan ke wishlist oleh $user->full_name", "/barang/$request->id_barang");
 
         Wishlist::create([
             'id_user' => $user->id,
@@ -59,7 +59,8 @@ class WishlistController extends Controller
 
     public function destroy($id)
     {
-        $wishlist = Wishlist::findOrFail($id);
+        $wishlist = Wishlist::find($id);
+
         $user = Auth::user();
 
         if ($wishlist->id_user !== $user->id) {

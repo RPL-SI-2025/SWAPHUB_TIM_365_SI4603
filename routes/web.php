@@ -13,27 +13,31 @@ use App\Http\Controllers\PenukaranController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\LaporanPenipuanController;
+use App\Models\Barang;
 
 // Landing page
 Route::get('/', function () {
-    return view('landing');
+    $barang = Barang::where('status_barang', 'tersedia')->latest()->limit(10)->get();
+    return view('landing', compact('barang'));
 })->name('landing');
 
-// Registration routes
-Route::post('/registration', [RegistrationController::class, 'store'])->name('registration');
+Route::middleware('guest')->group(function () {
+    // Registration routes
+    Route::post('/registration', [RegistrationController::class, 'store'])->name('registration');
 
-// Login routes
-Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    // Login routes
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
+});
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('/profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
 
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
     Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.create');
     Route::post('/barang', [BarangController::class, 'store'])->name('barang.store');
@@ -48,7 +52,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/penukaran', [PenukaranController::class, 'index'])->name('penukaran.index');
     Route::post('/penukaran/{id_penukaran}/confirm', [PenukaranController::class, 'confirm'])->name('penukaran.confirm');
     Route::post('/penukaran/{id_penukaran}/reject', [PenukaranController::class, 'reject'])->name('penukaran.reject');
-    Route::post('notification/read/{id}', [App\Http\Controllers\NotificationController::class, 'markAsRead'])->name('notification.read');
 
     // Route History
     Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
@@ -70,9 +73,13 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard.index');
+    })->name('dashboard.index');
+
     Route::resource('users', UserController::class);
     Route::resource('kategori', KategoriController::class);
 
-    // Route untuk Admin mengelola status Laporan Penipuan
+        // Route untuk Admin mengelola status Laporan Penipuan
     Route::post('laporan_penipuan/{id}/status', [LaporanPenipuanController::class, 'updateStatus'])->name('laporan_penipuan.updateStatus');
 });

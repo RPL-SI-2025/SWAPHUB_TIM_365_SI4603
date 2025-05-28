@@ -20,7 +20,7 @@ class BarangController extends Controller
     public function filter(Request $request)
     {
         $query = $request->query('kategori');
-        $kategori = Kategori::where('nama_kategori', 'like', '%'.$query.'%')->get();
+        $kategori = Kategori::where('nama_kategori', 'like', '%' . $query . '%')->first();
         $barang = Barang::with('kategori')->where('id_kategori', $kategori->id_kategori)->get();
         $isOwner = Auth::user()->id;
 
@@ -157,6 +157,5 @@ class BarangController extends Controller
         $barang->delete();
 
         return redirect()->route('home')->with('success', 'Barang berhasil dihapus!');
-        
     }
 }
