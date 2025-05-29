@@ -3,7 +3,9 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-800">Daftar Rating</h1>
+        <h1 class="text-3xl font-bold text-gray-800">
+        Daftar <span class="text-blue-600 drop-shadow-md">Rating</span>
+      </h1>
     </div>
 
     
