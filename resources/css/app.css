@@ -63,3 +63,7 @@
 .list-style {
   @apply relative pl-8 before:absolute before:left-0 before:top-1 before:w-5 before:h-5 before:rounded-full before:bg-primary
 }
+
+.selected {
+  @apply scale-110 text-primary
+}
