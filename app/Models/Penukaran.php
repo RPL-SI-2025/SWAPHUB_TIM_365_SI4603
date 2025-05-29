@@ -45,4 +45,12 @@ class Penukaran extends Model
     {
         return $this->hasOne(History::class, 'id_history', 'id_penukaran');
     }
+    
+        public function rating()
+    {
+        return $this->hasOne(RatingPengguna::class, 'id_penukaran_barang');
+    }
+
+
 }
+
