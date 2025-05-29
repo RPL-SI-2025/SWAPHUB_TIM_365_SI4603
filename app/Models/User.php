@@ -21,7 +21,7 @@ class User extends Authenticatable
         'password',
         'role',
         'phone',
-        'profile_picture_users',
+        'profile_picture',
     ];
 
     protected $hidden = [
@@ -61,6 +61,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Wishlist::class, 'id_user', 'id');
     }
+
+    // Jumlah notifikasi belum dibaca
+    public function getUnreadNotificationsCountAttribute()
+    {
+        return $this->notifikasis()->where('is_read', false)->count();
+    }
+
+    // Jumlah wishlist
+    public function getWishlistCountAttribute()
+    {
+        return $this->wishlists()->count();
+    }
+
     public function rekomendasiBarangs()
     {
         return $this->belongsToMany(Barang::class, 'rekomendasi_barang', 'user_id', 'barang_id');
