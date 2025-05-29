@@ -1,5 +1,5 @@
 @session('success')
-  <div id="alert-border-3" class="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50"
+  <div id="alert-border-3" class="flex items-center p-4 mt-4 text-green-800 border-t-4 border-green-300 bg-green-50"
     role="alert">
     <svg class="shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
       viewBox="0 0 20 20">
@@ -22,7 +22,7 @@
 @endsession
 
 @session('error')
-  <div id="alert-border-2" class="flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50"
+  <div id="alert-border-2" class="flex items-center p-4 mt-4 text-red-800 border-t-4 border-red-300 bg-red-50"
     role="alert">
     <svg class="shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
       viewBox="0 0 20 20">

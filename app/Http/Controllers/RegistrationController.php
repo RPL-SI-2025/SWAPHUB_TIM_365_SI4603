@@ -44,6 +44,6 @@ class RegistrationController extends Controller
             'profile_picture' => $profilePath,
         ]);
 
-        return redirect('/')->with('success', 'Registration success!');;
+        return redirect('/')->with('success', 'Registration success!')->withFragment('form-section');
     }
 }

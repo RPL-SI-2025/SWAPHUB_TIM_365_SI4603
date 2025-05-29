@@ -35,22 +35,21 @@ class User extends Authenticatable
         return $this->notifikasis()->where('is_read', false)->exists();
     }
 
-
-    // Relasi dengan Barang
-    public function barang()
-    {
-        return $this->hasMany(Barang::class, 'id_user', 'id');
-    }
-
     public function getFullNameAttribute()
     {
-        return "{$this->First_Name} {$this->Last_Name}";
+        return "{$this->first_name} {$this->last_name}";
     }
 
     // Check if user is admin
     public function getIsAdminAttribute()
     {
         return $this->role === 'admin';
+    }
+
+    // Relasi dengan Barang
+    public function barang()
+    {
+        return $this->hasMany(Barang::class, 'id_user', 'id');
     }
 
     public function notifikasis(): HasMany

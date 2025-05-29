@@ -1,705 +1,246 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SwapHub - Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@1.6.0/dist/flowbite.min.css" rel="stylesheet" />
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #F5F7FA;
-            margin: 0;
-        }
+@extends('layouts.app')
 
-        .dashboard-page {
-            width: 100%;
-            background: #FFFFFF;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 5%;
-            background: #FFFFFF;
-            height: 80px;
-        }
-
-        .bottom-bar {
-            width: 100%;
-            height: 10px;
-            background: #2194F3;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo img {
-            width: 80px;
-            height: 80px;
-        }
-
-        .logo-text {
-            font-family: 'Inter';
-            font-weight: 700;
-            font-size: 24px;
-            color: #2194F3;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-profile .user-name {
-            font-family: 'Inter';
-            font-weight: 600;
-            font-size: 16px;
-            color: #263238;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .user-profile svg {
-            width: 24px;
-            height: 24px;
-            fill: #717171;
-        }
-
-        .search-bar {
-            padding: 20px 5%;
-            background: #F5F7FA;
-            text-align: center;
-        }
-
-        .search-bar input {
-            width: 50%;
-            padding: 10px 20px;
-            border: 1px solid #CFCFCF;
-            border-radius: 20px;
-            font-family: 'Inter';
-            font-size: 14px;
-            color: #263238;
-        }
-
-        .search-bar input::placeholder {
-            color: #717171;
-            opacity: 0.7;
-        }
-
-        .categories {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            padding: 20px 5%;
-            background: #F5F7FA;
-        }
-
-        .category-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .category-item:hover {
-            transform: scale(1.1);
-        }
-
-        .category-item.selected {
-            transform: scale(1.1);
-        }
-
-        .category-item.selected span {
-            color: #2194F3;
-            font-weight: 600;
-        }
-
-        .category-item svg {
-            width: 40px;
-            height: 40px;
-            fill: #263238;
-        }
-
-        .category-item span {
-            font-family: 'Inter';
-            font-weight: 500;
-            font-size: 14px;
-            color: #263238;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .just-for-you, .daftar-barang {
-            padding: 40px 5%;
-            background: #FFFFFF;
-        }
-
-        .daftar-barang {
-            background: #F5F7FA;
-        }
-
-        .section-title {
-            font-family: 'Inter';
-            font-weight: 700;
-            font-size: 24px;
-            color: #003459;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .section-subtitle {
-            font-family: 'Inter';
-            font-weight: 400;
-            font-size: 16px;
-            color: #717171;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .item-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .item-card {
-            background: #F5F7FA;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .item-card img {
-            max-w-full;
-            max-h-full;
-            object-fit: cover;
-        }
-
-        .item-card .details {
-            padding: 10px;
-            text-align: center;
-        }
-
-        .item-card .details .item-name {
-            font-family: 'Inter';
-            font-weight: 600;
-            font-size: 14px;
-            color: #263238;
-            margin-bottom: 5px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .item-card .details p.description {
-            font-family: 'Inter';
-            font-weight: 400;
-            font-size: 12px;
-            color: #263238;
-            margin-bottom: 10px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .item-card .details a, .item-card .details button {
-            background: #4CAF4F;
-            color: #FFFFFF;
-            padding: 5px 15px;
-            border: none;
-            border-radius: 5px;
-            font-family: 'Inter';
-            font-weight: 600;
-            font-size: 12px;
-            cursor: pointer;
-            text-decoration: none;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .item-card .details a.edit, .item-card .details button.delete {
-            background: #FBBF24;
-        }
-
-        .item-card .details button.delete {
-            background: #EF4444;
-        }
-
-        .notification {
-            margin: 20px 5%;
-        }
-
-        .notification .success {
-            background: #4CAF4F;
-            color: #FFFFFF;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .notification .error {
-            background: #EF4444;
-            color: #FFFFFF;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .notification .unread {
-            background: #3B82F6;
-            color: #FFFFFF;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .notification .unread span {
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .notification .unread a {
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .action-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            padding: 20px 5%;
-        }
-
-        .action-buttons a {
-            padding: 10px 20px;
-            border-radius: 5px;
-            color: #FFFFFF;
-            font-family: 'Inter';
-            font-weight: 600;
-            font-size: 14px;
-            text-decoration: none;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .action-buttons a.tambah {
-            background: #3B82F6;
-        }
-
-        .action-buttons a.permintaan {
-            background: #8B5CF6;
-        }
-
-        .footer {
-            padding: 30px 5%;
-            background: #003459;
-            color: #FFFFFF;
-        }
-
-        .footer p.slogan {
-            font-family: 'Inter';
-            font-weight: 600;
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-align: center;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .footer-links div {
-            flex: 1;
-        }
-
-        .footer-links h4 {
-            font-family: 'Inter';
-            font-weight: 600;
-            font-size: 16px;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .footer-links ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-links ul li {
-            margin-bottom: 5px;
-        }
-
-        .footer-links ul li a {
-            font-family: 'Inter';
-            font-weight: 400;
-            font-size: 14px;
-            color: #FFFFFF;
-            text-decoration: none;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .footer-links .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .footer-links .social-icons {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .footer-links .social-icons svg {
-            width: 24px;
-            height: 24px;
-            fill: #FFFFFF;
-        }
-
-        .footer-links .email-input {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .footer-links .email-input input {
-            padding: 8px 12px;
-            border-radius: 5px;
-            border: none;
-            background: #4B5EAA;
-            color: #FFFFFF;
-            font-family: 'Inter';
-            font-size: 14px;
-        }
-
-        .footer-links .email-input input::placeholder {
-            color: #FFFFFF;
-            opacity: 0.7;
-        }
-
-        .footer-links .email-input svg {
-            width: 20px;
-            height: 20px;
-            fill: #FFFFFF;
-        }
-    </style>
-</head>
-<body>
-    @php
-        use Illuminate\Support\Facades\Auth;
-        $user = Auth::user();
-    @endphp
-    <div class="dashboard-page">
-        <!-- Navbar -->
-        <div class="navbar">
-            <div class="logo">
-                <img src="{{ asset('images/SWAPHUBLOGO.png') }}" alt="SwapHub Logo">
-                <span class="logo-text">SWAPHUB</span>
-            </div>
-            <div class="user-profile">
-                <span class="user-name">{{ $user->first_name . ' ' . $user->last_name }}</span>
-                <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="flex items-center text-sm pe-1 font-medium text-gray-900 rounded-full hover:text-blue-600 " type="button">
-                    <span class="sr-only">Open user menu</span>
-                    <img class="w-8 h-8 me-2 rounded-full" 
-                    src="{{ !empty(Auth::user()->profile_picture_users) ? asset(Auth::user()->profile_picture_users) : asset('photo-profile/default.png') }}?t={{ time() }}" 
-                    alt="Profile Picture">
-                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                    </svg>
-                </button>
-                <!-- Dropdown menu -->
-                <div id="dropdownAvatarName" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44">
-                    <div class="px-4 py-3 text-sm text-gray-900 ">
-                        <div class="font-medium">Pro User</div>
-                        <div class="truncate">{{ $user->email }}</div>
-                    </div>
-                    <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownAvatarNameButton">
-                        @if(Auth::user()->role == 'admin')
-                        <li>
-                            <a href="{{ route('users.index') }}" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
-                        </li>
-                        @endif
-                        <li>
-                            <a href="{{ route('profile.index') }}" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
-                        </li>
-                        <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
-                        </li>
-                        <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Earnings</a>
-                        </li>
-                    </ul>
-                    <div class="py-2">
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="text-start block w-full px-4 py-2 text-red-500 hover:bg-red-100">Sign out</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+@section('content')
+  {{-- Search & Filter Section --}}
+  <section class="px-4 md:px-24 pt-10">
+    {{-- Search Bar --}}
+    <form class="max-w-2xl mx-auto">
+      <label for="default-search"
+        class="mb-2 text-sm hover:text-primary font-medium text-gray-900 sr-only dark:text-white">Search</label>
+      <div class="relative">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+          </svg>
         </div>
+        <input type="search" id="search-bar"
+          class="block w-full p-3 ps-10 text-sm hover:text-primary text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-primary focus:border-primary"
+          placeholder="Find your items" />
+      </div>
+    </form>
 
-        <!-- Bottom Bar (Garis Biru di Bawah Navbar) -->
-        <div class="bottom-bar"></div>
+    {{-- Filter By Categories --}}
+    <div class="mt-6 overflow-x-scroll overflow-y-hidden md:overflow-x-hidden p-2">
+      <div class="flex space-x-6 md:space-x-14 md:justify-center">
+        @php
+          $categories = [
+              ['name' => 'Gadget', 'icon' => 'mac-book-air.png'],
+              ['name' => 'Otomotif', 'icon' => 'motorbike-helmet.png'],
+              ['name' => 'Administrasi', 'icon' => 'book-and-pencil.png'],
+              ['name' => 'Pakaian', 'icon' => 'hanger.png'],
+              ['name' => 'Mainan', 'icon' => 'plush.png'],
+              ['name' => 'Olahraga', 'icon' => 'tennis.png'],
+              ['name' => 'Furniture', 'icon' => 'sofa.png'],
+              ['name' => 'Aksesoris', 'icon' => 'necklace.png'],
+          ];
+        @endphp
 
-        <!-- Alert -->
-        <div class="notification">
-            @if (session('success'))
-                <div class="success">{{ session('success') }}</div>
-            @endif
-            @if (session('error'))
-                <div class="error">{{ session('error') }}</div>
-            @endif
-        </div>
+        @foreach ($categories as $category)
+          <div class="category-item flex-shrink-0 text-center cursor-pointer hover:scale-110 transition"
+            data-kategori="{{ $category['name'] }}">
+            <img src="{{ asset('images/' . $category['icon']) }}" alt="{{ $category['name'] }}" class="w-16 h-16 mx-auto">
+            <span class="text-sm">{{ $category['name'] }}</span>
+          </div>
+        @endforeach
+      </div>
 
-        <!-- Search Bar -->
-        <div class="search-bar">
-            <input type="text" placeholder="Find your items">
-        </div>
-
-        <!-- Categories -->
-        <div class="categories">
-            <div class="category-item" data-kategori="Gadget">
-                <img src="{{ asset('images/mac-book-air.png') }}" alt="Gadget">
-                <span>Gadget</span>
-            </div>
-            <div class="category-item" data-kategori="Otomotif">
-                <img src="{{ asset('images/motorbike-helmet.png') }}" alt="Otomotif">
-                <span>Otomotif</span>
-            </div>
-            <div class="category-item" data-kategori="Administrasi">
-                <img src="{{ asset('images/book-and-pencil.png') }}" alt="Administrasi">
-                <span>Administrasi</span>
-            </div>
-            <div class="category-item" data-kategori="Pakaian">
-                <img src="{{ asset('images/hanger.png') }}" alt="Pakaian">
-                <span>Pakaian</span>
-            </div>
-            <div class="category-item" data-kategori="Mainan">
-                <img src="{{ asset('images/plush.png') }}" alt="Mainan">
-                <span>Mainan</span>
-            </div>
-            <div class="category-item" data-kategori="Olahraga">
-                <img src="{{ asset('images/tennis.png') }}" alt="Olahraga">
-                <span>Olahraga</span>
-            </div>
-            <div class="category-item" data-kategori="Furniture">
-                <img src="{{ asset('images/sofa.png') }}" alt="Furniture">
-                <span>Furniture</span>
-            </div>
-            <div class="category-item" data-kategori="Aksesoris">
-                <img src="{{ asset('images/necklace.png') }}" alt="Aksesoris">
-                <span>Aksesoris</span>
-            </div>
-        </div>
-
-        <!-- Tombol Tambah Barang dan Lihat Permintaan Tukar -->
-        @if (!Auth::user()->is_admin)
-            <div class="action-buttons">
-                <a href="{{ route('barang.create') }}" class="tambah">Tambah Barang</a>
-                <a href="{{ route('penukaran.index') }}" class="permintaan">Lihat Permintaan Tukar</a>
-            </div>
-        @endif
-
-        <!-- Just For You Section (Hanya untuk Admin) -->
-        @if (Auth::user()->is_admin)
-            <div class="just-for-you">
-                <h2 class="section-title">Just For You</h2>
-                <p class="section-subtitle">Mungkin ada barang kamu inginkan?</p>
-                @if ($barang->isEmpty())
-                    <p class="text-gray-600 mb-12">Tidak ada barang yang tersedia.</p>
-                @else
-                    <div class="item-grid">
-                        @foreach ($barang as $item)
-                            <div class="item-card">
-                                <div class="h-48 bg-gray-200 flex items-center justify-center">
-                                    @if ($item->gambar)
-                                        <img src="{{ Storage::url($item->gambar) }}" alt="{{ $item->nama_barang }}" class="w-full h-full object-cover">
-                                    @else
-                                        <span class="text-gray-500">Gambar Tidak Tersedia</span>
-                                    @endif
-                                </div>
-                                <div class="details">
-                                    <p class="item-name">{{ $item->nama_barang }}</p>
-                                    <p class="description">{{ $item->deskripsi_barang }}</p>
-                                    <a href="{{ route('barang.show', $item->id_barang) }}">Lihat</a>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
-            </div>
-        @endif
-
-        <!-- Daftar Barang Section -->
-        <div class="daftar-barang">
-            <h2 class="section-title">Daftar Barang</h2>
-            <p class="section-subtitle">Apa yang lagi dicari hari ini?</p>
-            <div id="item-grid-container">
-                @if ($barang->isEmpty())
-                    <p class="text-gray-600 mb-12">Tidak ada barang yang tersedia.</p>
-                @else
-                    <div class="item-grid">
-                        @foreach ($barang as $item)
-                            <div class="item-card">
-                                <div class="h-48 bg-gray-200 flex items-center justify-center">
-                                    @if ($item->gambar)
-                                        <img src="{{ Storage::url($item->gambar) }}" alt="{{ $item->nama_barang }}" class="w-full h-full object-cover">
-                                    @else
-                                        <span class="text-gray-500">Gambar Tidak Tersedia</span>
-                                    @endif
-                                </div>
-                                <div class="details">
-                                    <p class="item-name">{{ $item->nama_barang }}</p>
-                                    <p class="description">{{ $item->deskripsi_barang }}</p>
-                                    <div class="flex justify-center gap-2">
-                                        <a href="{{ route('barang.show', $item->id_barang) }}">Lihat</a>
-                                        @if (Auth::user()->id == $item->id_user && $item->status_barang != 'ditukar')
-                                            <a href="{{ route('barang.edit', $item->id_barang) }}" class="edit">Edit</a>
-                                            <form action="{{ route('barang.destroy', $item->id_barang) }}" method="POST" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="delete" onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?')">Hapus</button>
-                                            </form>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <p class="slogan">"SwapHub - Swap, Use, Save, Sustain!"</p>
-            <div class="footer-links">
-                <div>
-                    <div class="logo">
-                        <img src="{{ asset('images/SWAPHUBLOGO.png') }}" alt="SwapHub Logo">
-                        <span class="logo-text">SWAPHUB</span>
-                    </div>
-                    <p style="font-size: 14px; margin-top: 10px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);">Copyright © 2020 Landify UI Kit.<br>All rights reserved</p>
-                </div>
-                <div>
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#">About us</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Contact us</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Testimonials</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="#">Help center</a></li>
-                        <li><a href="#">Terms of service</a></li>
-                        <li><a href="#">Legal</a></li>
-                        <li><a href="#">Privacy policy</a></li>
-                        <li><a href="#">Status</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4>Stay up to date</h4>
-                    <ul>
-                        <li><a href="#">Newsletter</a></li>
-                        <li><a href="#">Buletin</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@1.6.0/dist/flowbite.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const categoryItems = document.querySelectorAll('.category-item');
-            const itemGridContainer = document.getElementById('item-grid-container');
+  </section>
 
-            categoryItems.forEach(item => {
-                item.addEventListener('click', function () {
-                    // Hapus class 'selected' dari semua kategori
-                    categoryItems.forEach(i => i.classList.remove('selected'));
-                    // Tambahkan class 'selected' pada kategori yang diklik
-                    this.classList.add('selected');
+  {{-- TODO: Jika ada barang rekomendasi --}}
+  {{-- Just For You Section --}}
+  {{-- <section class="px-4 md:px-24 pt-10">
+      <h2 class="text-2xl md:text-3xl text-tertiary font-semibold tex mb-2">Just for you</h2>
+      <p class="text-gray-500 mb-8">Barang rekomendasi.</p>
 
-                    const kategori = this.getAttribute('data-kategori');
+      <div id="item-grid-container">
+        @if ($barang->isEmpty())
+          <p class="text-gray-600 text-center mb-12">Tidak ada barang yang tersedia.</p>
+        @else
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4  gap-6">
+            @foreach ($barang as $item)
+              <div
+                class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                <div class="h-48 bg-gray-100 flex items-center justify-center">
+                  @if ($item->gambar)
+                    <img src="{{ Storage::url($item->gambar) }}" alt="{{ $item->nama_barang }}"
+                      class="w-full h-full object-cover">
+                  @else
+                    <span class="text-gray-500 text-sm">Gambar Tidak Tersedia</span>
+                  @endif
+                </div>
+                <div class="p-4">
+                  <p class="font-medium text-lg text-gray-800 truncate">{{ $item->nama_barang }}</p>
+                  <p class="text-sm text-gray-600 mb-4 line-clamp-2">{{ $item->deskripsi_barang }}</p>
+                  <div class="flex justify-center flex-wrap gap-2">
+                    <a href="{{ route('barang.show', $item->id_barang) }}"
+                      class="text-sm px-4 py-1 bg-primary rounded-lg text-white hover:bg-primary-hover font-medium">Lihat</a>
 
-                    // Kirim permintaan AJAX untuk memfilter barang
-                    fetch(`/barang/filter?kategori=${kategori}`, {
-                        method: 'GET',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Accept': 'application/json',
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Kosongkan container sebelumnya
-                        itemGridContainer.innerHTML = '';
+                    @if (Auth::user()->id == $item->id_user && $item->status_barang != 'ditukar')
+                      <a href="{{ route('barang.edit', $item->id_barang) }}"
+                        class="text-sm px-4 py-1 bg-yellow-500 rounded-lg text-white hover:bg-yellow-700 font-medium">Edit</a>
 
-                        if (data.barang.length === 0) {
-                            itemGridContainer.innerHTML = '<p class="text-gray-600 mb-12">Tidak ada barang yang tersedia.</p>';
-                        } else {
-                            const itemGrid = document.createElement('div');
-                            itemGrid.classList.add('item-grid');
+                      <form action="{{ route('barang.destroy', $item->id_barang) }}" method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?')"
+                          class="text-sm px-4 py-1 bg-red-500 rounded-lg text-white hover:bg-red-700 font-medium">
+                          Hapus
+                        </button>
+                      </form>
+                    @endif
+                  </div>
+                </div>
+              </div>
+            @endforeach
+          </div>
+        @endif
+      </div>
+    </section> --}}
 
-                            data.barang.forEach(item => {
-                                const itemCard = document.createElement('div');
-                                itemCard.classList.add('item-card');
-                                itemCard.innerHTML = `
-                                    <div class="h-48 bg-gray-200 flex items-center justify-center">
-                                        ${item.gambar ? `<img src="/storage/${item.gambar}" alt="${item.nama_barang}" class="w-full h-full object-cover">` : '<span class="text-gray-500">Gambar Tidak Tersedia</span>'}
-                                    </div>
-                                    <div class="details">
-                                        <p class="item-name">${item.nama_barang || 'Nama Tidak Tersedia'}</p>
-                                        <p class="description">${item.deskripsi_barang || 'Deskripsi tidak tersedia'}</p>
-                                        <div class="flex justify-center gap-2">
-                                            <a href="/barang/${item.id_barang}">Lihat</a>
-                                            ${data.is_owner && item.status_barang !== 'ditukar' ? `
-                                                <a href="/barang/${item.id_barang}/edit" class="edit">Edit</a>
-                                                <form action="/barang/${item.id_barang}" method="POST" class="inline">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <button type="submit" class="delete" onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?')">Hapus</button>
-                                                </form>
-                                            ` : ''}
-                                        </div>
-                                    </div>
-                                `;
-                                itemGrid.appendChild(itemCard);
-                            });
+  {{-- Daftar Barang Section --}}
+  <section class="px-4 md:px-24 py-10">
+    <h2 class="text-2xl md:text-3xl text-tertiary font-semibold tex mb-2">Daftar Barang</h2>
+    <p class="text-gray-500 mb-8">Apa yang lagi dicari hari ini?</p>
 
-                            itemGridContainer.appendChild(itemGrid);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        itemGridContainer.innerHTML = '<p class="text-red-600 mb-12">Terjadi kesalahan saat memuat data.</p>';
-                    });
-                });
+    <div id="item-grid-container">
+      @if ($barang->isEmpty())
+        <p class="text-gray-600 text-center mb-12">Tidak ada barang yang tersedia.</p>
+      @else
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4  gap-6">
+          @foreach ($barang as $item)
+            <div
+              class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition barang-item"
+              data-nama="{{ strtolower($item->nama_barang) }}">
+              <div class="h-48 bg-gray-100 flex items-center justify-center">
+                @if ($item->gambar)
+                  <img src="{{ Storage::url($item->gambar) }}" alt="{{ $item->nama_barang }}"
+                    class="w-full h-full object-cover">
+                @else
+                  <span class="text-gray-500 text-sm">Gambar Tidak Tersedia</span>
+                @endif
+              </div>
+              <div class="p-4">
+                <p class="font-medium text-lg text-gray-800 truncate">{{ $item->nama_barang }}</p>
+                <p class="text-sm text-gray-600 mb-4 line-clamp-2">{{ $item->deskripsi_barang }}</p>
+                <div class="flex justify-center flex-wrap gap-2">
+                  <a href="{{ route('barang.show', $item->id_barang) }}"
+                    class="text-sm px-4 py-1 bg-primary rounded text-white hover:bg-primary-hover font-medium">Lihat</a>
+                </div>
+              </div>
+            </div>
+          @endforeach
+        </div>
+      @endif
+    </div>
+  </section>
+
+  {{-- Script Pencarian & Filter By Category --}}
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const categoryItems = document.querySelectorAll('.category-item');
+      const itemGridContainer = document.querySelector('#item-grid-container:last-of-type');
+      const searchInput = document.getElementById('search-bar');
+
+      let activeCategory = null;
+
+      function loadBarang(kategori = '', keyword = '') {
+        let url = '/barang/filter';
+
+        const params = new URLSearchParams();
+        if (kategori) params.append('kategori', kategori);
+        if (keyword) params.append('search', keyword);
+
+        url += '?' + params.toString();
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+              'X-CSRF-TOKEN': '{{ csrf_token() }}',
+              'Accept': 'application/json',
+            },
+          })
+          .then(response => response.json())
+          .then(data => {
+            itemGridContainer.innerHTML = '';
+
+            if (data.barang.length === 0) {
+              itemGridContainer.innerHTML =
+                '<p class="text-gray-600 text-center mb-12">Tidak ada barang yang ditemukan.</p>';
+              return;
+            }
+
+            const grid = document.createElement('div');
+            grid.className = 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6';
+
+            data.barang.forEach(item => {
+
+              const card = document.createElement('div');
+              card.className =
+                'bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition';
+
+              card.innerHTML = `
+              <div class="h-48 bg-gray-100 flex items-center justify-center">
+                ${item.gambar
+                  ? `<img src="/storage/${item.gambar}" alt="${item.nama_barang}" class="w-full h-full object-cover">`
+                  : `<span class="text-gray-500 text-sm">Gambar Tidak Tersedia</span>`}
+              </div>
+              <div class="p-4">
+                <p class="font-medium text-lg text-gray-800 truncate">${item.nama_barang}</p>
+                <p class="text-sm text-gray-600 mb-4 line-clamp-2">${item.deskripsi_barang}</p>
+                <div class="flex justify-center flex-wrap gap-2">
+                  <a href="/barang/${item.id_barang}" class="text-sm px-4 py-1 bg-primary rounded-lg text-white hover:bg-primary-hover font-medium">Lihat</a>
+                </div>
+              </div>
+            `;
+
+              grid.appendChild(card);
             });
+
+            itemGridContainer.appendChild(grid);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            itemGridContainer.innerHTML =
+              '<p class="text-red-600 text-center mb-12">Terjadi kesalahan saat memuat data.</p>';
+          });
+      }
+
+      // Klik kategori
+      categoryItems.forEach(item => {
+        item.addEventListener('click', function() {
+          const clickedKategori = this.getAttribute('data-kategori');
+
+          // Toggle aktif/nonaktif
+          if (activeCategory === clickedKategori) {
+            activeCategory = null; // Hilangkan filter kategori
+            categoryItems.forEach(i => i.classList.remove('selected'));
+          } else {
+            activeCategory = clickedKategori;
+            categoryItems.forEach(i => i.classList.remove('selected'));
+            this.classList.add('selected');
+          }
+
+          // Panggil ulang berdasarkan kategori baru & pencarian (jika ada)
+          const keyword = searchInput.value.trim().toLowerCase();
+          loadBarang(activeCategory, keyword);
         });
-    </script>
-</body>
-</html>
+      });
+
+      // Pencarian dengan kategori aktif
+      searchInput.addEventListener('input', function() {
+        const keyword = this.value.trim().toLowerCase();
+        loadBarang(activeCategory, keyword);
+      });
+
+      // Muat semua barang pertama kali
+      loadBarang();
+    });
+  </script>
+
+
+
+@endsection
