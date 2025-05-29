@@ -1,104 +1,159 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Permintaan Tukar Barang - SwapHub</title>
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+@section('content')
+  <div class="px-4 md:px-24 py-10">
 
-<body class="bg-gray-100">
-  <div class="container mx-auto p-6">
-    <div class="flex justify-between items-center mb-6">
-      <div class="flex items-center gap-4">
+    {{-- Header --}}
+    <div class="">
+      <div class="flex items-center mb-4">
+        <h1 class="text-3xl font-bold">Permintaan <span class="text-primary">Tukar Barang</span></h1>
+      </div>
+      <div class="flex justify-between items-start mb-6">
+        <a href="{{ route('history.index') }}"
+          class="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded transition duration-200">
+          History
+        </a>
         <a href="{{ route('home') }}"
           class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-200">
           ← Kembali
         </a>
-        <h1 class="text-3xl font-bold">Permintaan Tukar Barang</h1>
       </div>
-      <a href="{{ route('history.index') }}"
-        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-200">History</a>
     </div>
 
-    @if (session('success'))
-      <div class="bg-green-500 text-white p-4 rounded mb-4">{{ session('success') }}</div>
-    @endif
-    @if (session('error'))
-      <div class="bg-red-500 text-white p-4 rounded mb-4">{{ session('error') }}</div>
-    @endif
-
-    <!-- Permintaan Masuk -->
-    <h2 class="text-xl font-semibold mb-3">Permintaan Masuk</h2>
-    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md mb-10">
-      <thead>
-        <tr class="bg-gray-200">
-          <th class="p-3 text-left">Mahasiswa Pengaju</th>
-          <th class="p-3 text-left">Barang Anda</th>
-          <th class="p-3 text-left">Barang Ditawarkan</th>
-          <th class="p-3 text-left">Kategori</th>
-          <th class="p-3 text-left">Pesan</th>
-          <th class="p-3 text-left">Aksi</th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach ($permintaanMasuk as $penukaran)
-          <tr>
-            <td class="p-3 border-b">{{ $penukaran->penawar->full_name }}</td>
-            <td class="p-3 border-b">{{ $penukaran->barangDitawar->nama_barang }}</td>
-            <td class="p-3 border-b">{{ $penukaran->barangPenawar->nama_barang }}</td>
-            <td class="p-3 border-b">{{ $penukaran->barangDitawar->kategori->nama_kategori }}</td>
-            <td class="p-3 border-b">{{ $penukaran->pesan_penukaran ?? '-' }}</td>
-            <td class="p-3 border-b">
-              @if ($penukaran->status_penukaran == 'pending')
-                <form action="{{ route('penukaran.confirm', $penukaran->id_penukaran) }}" method="POST"
-                  class="inline">
-                  @csrf
-                  <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded mr-1"
-                    onclick="return confirm('Apakah Anda yakin ingin menerima permintaan ini?')">Terima</button>
-                </form>
-                <form action="{{ route('penukaran.reject', $penukaran->id_penukaran) }}" method="POST" class="inline">
-                  @csrf
-                  <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded"
-                    onclick="return confirm('Apakah Anda yakin ingin menolak permintaan ini?')">Tolak</button>
-                </form>
-              @endif
-
-            </td>
+    {{-- Permintaan Masuk --}}
+    <h2 class="text-xl font-semibold mb-3"><span class="text-primary">Permintaan</span> Masuk</h2>
+    <div class="overflow-x-auto rounded-lg shadow-md mb-10">
+      <table class="w-full bg-white">
+        <thead class="bg-tertiary text-white">
+          <tr class="text-center">
+            <th class="p-3">Mahasiswa Pengaju</th>
+            <th class="p-3">Barang Anda</th>
+            <th class="p-3">Barang Ditawarkan</th>
+            <th class="p-3">Kategori</th>
+            <th class="p-3">Pesan</th>
+            <th class="p-3">Status Penukaran</th>
+            <th class="p-3">Aksi</th>
           </tr>
-        @endforeach
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @foreach ($permintaanMasuk as $penukaran)
+            <tr class="hover:bg-gray-50 text-center">
+              <td class="p-3">{{ $penukaran->penawar->full_name }}</td>
+              <td class="p-3">{{ $penukaran->barangDitawar->nama_barang }}</td>
+              <td class="p-3">{{ $penukaran->barangPenawar->nama_barang }}</td>
+              <td class="p-3">{{ $penukaran->barangDitawar->kategori->nama_kategori }}</td>
+              <td class="p-3">{{ $penukaran->pesan_penukaran ?? '-' }}</td>
+              <td class="p-3">
+                <span
+                  class="px-2 py-1 text-xs font-medium rounded {{ $penukaran->status_penukaran === 'diterima' ? 'bg-green-200 text-green-800' : ($penukaran->status_penukaran === 'ditolak' ? 'bg-red-200 text-red-800' : 'bg-yellow-200 text-yellow-800') }}">
+                  {{ ucfirst($penukaran->status_penukaran) }}
+                </span>
+              </td>
+              <td class="p-3">
+                @if ($penukaran->status_penukaran == 'pending')
+                  <form action="{{ route('penukaran.confirm', $penukaran->id_penukaran) }}" method="POST"
+                    class="inline accept-form">
+                    @csrf
+                    <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded mr-1">
+                      Terima
+                    </button>
+                  </form>
+                  <form action="{{ route('penukaran.reject', $penukaran->id_penukaran) }}" method="POST"
+                    class="inline reject-form">
+                    @csrf
+                    <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded">
+                      Tolak
+                    </button>
+                  </form>
+                @else
+                  <span class="text-gray-400 text-sm italic">-</span>
+                @endif
+              </td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
 
-    <!-- Penawaran Keluar -->
-    <h2 class="text-xl font-semibold mb-3">Penawaran Keluar</h2>
-    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md mb-10">
-      <thead>
-        <tr class="bg-gray-200">
-          <th class="p-3 text-left">Mahasiswa Tujuan</th>
-          <th class="p-3 text-left">Barang Ditawarkan</th>
-          <th class="p-3 text-left">Barang Diminta</th>
-          <th class="p-3 text-left">Kategori</th>
-          <th class="p-3 text-left">Pesan</th>
-          <th class="p-3 text-left">Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach ($penawaranKeluar as $penukaran)
-          <tr>
-            <td class="p-3 border-b">{{ $penukaran->ditawar->full_name }}</td>
-            <td class="p-3 border-b">{{ $penukaran->barangPenawar->nama_barang }}</td>
-            <td class="p-3 border-b">{{ $penukaran->barangDitawar->nama_barang }}</td>
-            <td class="p-3 border-b">{{ $penukaran->barangPenawar->kategori->nama_kategori }}</td>
-            <td class="p-3 border-b">{{ $penukaran->pesan_penukaran ?? '-' }}</td>
-            <td class="p-3 border-b">{{ $penukaran->status_penukaran }}</td>
+    {{-- Penawaran Keluar --}}
+    <h2 class="text-xl font-semibold mb-3"><span class="text-primary">Penawaran</span> Keluar</h2>
+    <div class="overflow-x-auto rounded-lg shadow-md">
+      <table class="w-full bg-white">
+        <thead class="bg-tertiary text-white">
+          <tr class="text-center">
+            <th class="p-3">Mahasiswa Tujuan</th>
+            <th class="p-3">Barang Ditawarkan</th>
+            <th class="p-3">Barang Diminta</th>
+            <th class="p-3">Kategori</th>
+            <th class="p-3">Pesan</th>
+            <th class="p-3">Status</th>
           </tr>
-        @endforeach
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @foreach ($penawaranKeluar as $penukaran)
+            <tr class="hover:bg-gray-50 text-center">
+              <td class="p-3">{{ $penukaran->ditawar->full_name }}</td>
+              <td class="p-3">{{ $penukaran->barangPenawar->nama_barang }}</td>
+              <td class="p-3">{{ $penukaran->barangDitawar->nama_barang }}</td>
+              <td class="p-3">{{ $penukaran->barangPenawar->kategori->nama_kategori }}</td>
+              <td class="p-3">{{ $penukaran->pesan_penukaran ?? '-' }}</td>
+              <td class="p-3">
+                <span
+                  class="px-2 py-1 text-xs font-medium rounded {{ $penukaran->status_penukaran === 'diterima' ? 'bg-green-200 text-green-800' : ($penukaran->status_penukaran === 'ditolak' ? 'bg-red-200 text-red-800' : 'bg-yellow-200 text-yellow-800') }}">
+                  {{ ucfirst($penukaran->status_penukaran) }}
+                </span>
+              </td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
   </div>
-</body>
 
-</html>
+  {{-- Script SweetAlert --}}
+  <script>
+    // Reject
+    document.querySelectorAll('.reject-form').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        Swal.fire({
+          title: 'Apakah Anda yakin ingin menolak permintaan ini?',
+          text: 'Data ini tidak bisa dikembalikan!',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#22c55e',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya, tolak!',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            form.submit();
+          }
+        });
+      });
+    });
+
+    // Accept
+    document.querySelectorAll('.accept-form').forEach(form => {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        Swal.fire({
+          title: 'Apakah Anda yakin ingin menerima permintaan ini?',
+          text: 'Data ini tidak bisa dikembalikan!',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#22c55e',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya, terima!',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            form.submit();
+          }
+        });
+      });
+    });
+  </script>
+@endsection

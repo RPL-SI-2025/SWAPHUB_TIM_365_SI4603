@@ -13,22 +13,40 @@ class BarangController extends Controller
 {
     public function index()
     {
-        $barang = Barang::show_item();
-        return view('barang.index', compact('barang'));
+        $title = "Daftar Barang - SwapHub";
+        $userId = Auth::id();
+        $barang = Barang::where('id_user', $userId)->get();
+        return view('barang.index', compact('title', 'barang'));
     }
 
     public function filter(Request $request)
     {
-        $query = $request->query('kategori');
-        $kategori = Kategori::where('nama_kategori', 'like', '%' . $query . '%')->first();
-        $barang = Barang::with('kategori')->where('id_kategori', $kategori->id_kategori)->get();
-        $isOwner = Auth::user()->id;
+        $kategoriQuery = $request->query('kategori');
+        $searchQuery = $request->query('search');
+
+        $barangQuery = Barang::with('kategori')->where('status_barang', 'tersedia')->where('id_user', '!=', Auth::id());
+
+        if (!empty($kategoriQuery)) {
+            $kategori = Kategori::where('nama_kategori', 'like', '%' . $kategoriQuery . '%')->first();
+
+            if ($kategori) {
+                $barangQuery->where('id_kategori', $kategori->id_kategori);
+            }
+        }
+
+        if (!empty($searchQuery)) {
+            $barangQuery->where('nama_barang', 'like', '%' . $searchQuery . '%');
+        }
+
+        $barang = $barangQuery->get();
+        $userId = Auth::id();
 
         return response()->json([
             'barang' => $barang,
-            'is_owner' => $isOwner,
+            'user_id' => $userId,
         ]);
     }
+
 
     public function create()
     {
@@ -72,13 +90,14 @@ class BarangController extends Controller
 
         Log::info('Barang baru ditambahkan: ' . $barang->toJson());
 
-        return redirect()->route('home')->with('success', 'Barang berhasil ditambahkan!');
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil ditambahkan!');
     }
 
     public function show($id_barang)
     {
+        $title = 'Detail Barang - SwapHub';
         $barang = Barang::with('user')->findOrFail($id_barang);
-        return view('barang.show', compact('barang'));
+        return view('barang.show', compact('title', 'barang'));
     }
 
     public function edit($id_barang)
@@ -135,7 +154,7 @@ class BarangController extends Controller
 
         $barang->update($data);
 
-        return redirect()->route('home')->with('success', 'Barang berhasil diperbarui!');
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil diperbarui!');
     }
 
     public function destroy($id_barang)
@@ -156,6 +175,6 @@ class BarangController extends Controller
 
         $barang->delete();
 
-        return redirect()->route('home')->with('success', 'Barang berhasil dihapus!');
+        return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus!');
     }
 }

@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minta Tukar Barang - SwapHub</title>
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-
-<body class="bg-gray-100">
-  <div class="container mx-auto p-6">
+@section('content')
+  <div class="px-4 md:px-24 py-10">
     <h1 class="text-3xl font-bold mb-6">Minta Tukar Barang</h1>
 
     @if ($errors->any())
@@ -78,6 +69,4 @@
         class="bg-gray-500 text-white px-4 py-2 rounded">Kembali</a>
     </form>
   </div>
-</body>
-
-</html>
+@endsection

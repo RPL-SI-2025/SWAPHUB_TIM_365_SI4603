@@ -1,9 +1,10 @@
-{{-- Navbar --}}
-<nav class="bg-white border-b-8 border-primary">
-  <div class="container pe-4 md:px-4 lg:px-24 flex flex-wrap items-center justify-between mx-auto">
+<nav class="bg-white border-b-8 text-[#023051]">
+  <div class="px-6 md:px-16 flex flex-wrap items-center justify-between mx-auto">
     <a href="/" class="flex items-center space-x-3">
-      <img src="{{ asset('images/SWAPHUBLOGO.png') }}" class="h-20" alt="SwapHub Logo" />
-      <span class="self-center text-2xl font-semibold whitespace-nowrap text-primary text-shadow-lg">SWAPHUB</span>
+      <img src="{{ asset('images/SWAPHUBLOGO.png') }}" class="h-10" alt="SwapHub Logo" />
+      <span class="self-center text-xl font-semibold whitespace-nowrap text-primary text-shadow-lg">
+        <span class="md:text-primary">SWAP</span><span class="text-[#023051]">HUB</span>
+      </span>
     </a>
     @include('layouts.menu-user')
     <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">

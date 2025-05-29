@@ -1,12 +1,17 @@
-<footer class="bg-[#003459] text-white py-8 px-6 md:px-16">
-  <p class="text-2xl font-semibold text-center mb-8 drop-shadow-sm">"SwapHub - Swap, Use, Save, Sustain!"</p>
+<footer class="bg-[#023051] text-white py-8 px-6 md:px-16">
+  <p class="text-2xl font-semibold text-center mb-4 drop-shadow-sm">"SwapHub - Swap, Use, Save, Sustain!"</p>
+  <div class="w- h-px bg-white mx-auto mb-6"></div>
 
   <div class="flex flex-col md:flex-row justify-between gap-10">
     {{-- Logo & Info --}}
     <div class="flex-1">
       <div class="flex items-center gap-3 mb-3">
-        <img src="{{ asset('images/SWAPHUBLOGO.png') }}" alt="SwapHub Logo" class="h-20">
-        <span class="self-center text-2xl font-bold whitespace-nowrap text-primary text-shadow-lg">SWAPHUB</span>
+        <div class="bg-white rounded-full px-4 py-2 flex items-center gap-3">
+          <img src="{{ asset('images/SWAPHUB LOGO (CUT).png') }}" alt="SwapHub Logo" class="h-10">
+          <span class="self-center text-2xl font-bold whitespace-nowrap drop-shadow-none">
+            <span class="md:text-primary">SWAP</span><span class="text-[#023051]">HUB</span>
+          </span>
+        </div>
       </div>
       <p class="text-sm drop-shadow-sm">
         Copyright © 2025 SwapHub.<br>All rights reserved
