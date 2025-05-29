@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 
 class HistoryController extends Controller
 {
-        public function index(Request $request)
+    public function index(Request $request)
     {
+        $title = 'Riwayat Penukaran';
+
         $query = History::with([
             'penukaran.penawar',
             'penukaran.ditawar',
@@ -18,7 +20,7 @@ class HistoryController extends Controller
 
         $histories = $query->get();
 
-        return view('history.index', compact('histories'));
+        return view('history.index', compact('title', 'histories'));
     }
 
     public function store(Request $request)
@@ -34,6 +36,8 @@ class HistoryController extends Controller
 
     public function show($id)
     {
+        $title = 'Detail Riwayat Penukaran';
+
         $history = History::with([
             'penukaran.penawar',
             'penukaran.ditawar',
@@ -41,7 +45,6 @@ class HistoryController extends Controller
             'penukaran.barangDitawar',
         ])->findOrFail($id);
 
-        return view('history.show', compact('history'));
+        return view('history.show', compact('title', 'history'));
     }
-
 }

@@ -6,6 +6,8 @@
         <h1 class="text-3xl font-bold text-gray-800">Daftar Rating</h1>
     </div>
 
+    
+
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-blue-900">
@@ -49,7 +51,9 @@
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div class="flex space-x-2">
+                        @if(Auth::id() === $rating->id_user || 
+                            Auth::id() === $rating->penukaran->id_penawar || 
+                            Auth::id() === $rating->penukaran->id_ditawar)
                             <a href="{{ route('rating_pengguna.edit', $rating->id_rating_pengguna) }}" 
                                class="text-white bg-yellow-500 hover:bg-yellow-600 px-3 py-1 rounded-md inline-flex items-center">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -58,21 +62,7 @@
                                 </svg>
                                 Edit
                             </a>
-
-                            <form action="{{ route('rating_pengguna.destroy', $rating->id_rating_pengguna) }}" method="POST" 
-                                  onsubmit="return confirm('Apakah Anda yakin ingin menghapus rating ini?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" 
-                                        class="text-white bg-red-500 hover:bg-red-600 px-3 py-1 rounded-md inline-flex items-center">
-                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                    </svg>
-                                    Hapus
-                                </button>
-                            </form>
-                        </div>
+                        @endif
                     </td>
                 </tr>
                 @endforeach
@@ -80,81 +70,6 @@
         </table>
     </div>
 </div>
-<!-- Footer -->
-<footer class="bg-blue-900 text-white w-full mt-16">
-    <div class="max-w-7xl mx-auto px-6 py-10">
-
-        <!-- Judul Atas -->
-        <div class="text-center mb-6">
-            <h2 class="text-2xl font-bold">
-                <span class="text-white">"SwapHub</span> - 
-                <span class="text-blue-400">Swap, Use, Save, Sustain</span>
-                <span class="text-white">!"</span>
-            </h2>
-        </div>
-
-        <!-- Garis -->
-        <hr class="border-t border-white opacity-30 my-6">
-
-        <!-- Isi Footer -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
-
-            <!-- Kiri -->
-        <div class="flex flex-col items-center md:items-start">
-            <p class="text-gray-400 mb-4 text-center md:text-left">© 2020 Landify UI Kit.<br>All rights reserved.</p>
-
-            <!-- Logo SWAPHUB -->
-            <div class="flex items-center space-x-2 mt-2">
-                <img src="{{asset('images/SWAPHUB LOGO.png')}}" alt="SWAPHUB Logo" class="h-16 w-16">
-                <span class="text-2xl font-bold">
-                    <span class="text-blue-400">SWAP</span><span class="text-gray-400">HUB</span>
-                </span>
-            </div>
-        </div>
-
-            <!-- Tengah -->
-            <div class="flex flex-col md:flex-row justify-center gap-12">
-                <div>
-                    <h4 class="font-semibold mb-3">Company</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">About us</a></li>
-                        <li><a href="#" class="hover:text-white">Blog</a></li>
-                        <li><a href="#" class="hover:text-white">Contact us</a></li>
-                        <li><a href="#" class="hover:text-white">Pricing</a></li>
-                        <li><a href="#" class="hover:text-white">Testimonials</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-3">Support</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">Help center</a></li>
-                        <li><a href="#" class="hover:text-white">Terms of service</a></li>
-                        <li><a href="#" class="hover:text-white">Legal</a></li>
-                        <li><a href="#" class="hover:text-white">Privacy policy</a></li>
-                        <li><a href="#" class="hover:text-white">Rating & Review</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Kanan -->
-            <div class="flex flex-col items-center md:items-end">
-                <h4 class="font-semibold mb-3">Stay up to date</h4>
-                <form class="flex w-full max-w-xs">
-                    <input type="email" placeholder="Your email address"
-                           class="flex-1 px-4 py-2 rounded-l-md bg-blue-800 text-white placeholder-gray-400 focus:outline-none">
-                    <button type="submit" class="bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-r-md">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                        </svg>
-                    </button>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</footer>
-
 @endsection
 
 

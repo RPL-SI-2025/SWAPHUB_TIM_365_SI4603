@@ -5,7 +5,7 @@
     <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
         <div class="flex items-center justify-between mb-6">
             <h1 class="text-2xl font-bold text-gray-800">Tambah Rating</h1>
-            <a href="{{ route('rating_pengguna.index') }}" class="text-gray-600 hover:text-gray-800">
+            <a href="{{ route('history.index') }}" class="text-gray-600 hover:text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
@@ -39,14 +39,12 @@
             </div>
 
             <div class="flex justify-end space-x-4">
-                <a href="{{ route('rating_pengguna.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">Batal</a>
+                <a href="{{ route('history.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">Batal</a>
                 <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Simpan</button>
             </div>
         </form>
     </div>
 </div>
-
-
 
 <script>
 function setRating(rating) {
@@ -63,80 +61,6 @@ function setRating(rating) {
     });
 }
 </script>
-<!-- Footer -->
-<footer class="bg-blue-900 text-white w-full mt-16">
-    <div class="max-w-7xl mx-auto px-6 py-10">
-
-        <!-- Judul Atas -->
-        <div class="text-center mb-6">
-            <h2 class="text-2xl font-bold">
-                <span class="text-white">"SwapHub</span> - 
-                <span class="text-blue-400">Swap, Use, Save, Sustain</span>
-                <span class="text-white">!"</span>
-            </h2>
-        </div>
-
-        <!-- Garis -->
-        <hr class="border-t border-white opacity-30 my-6">
-
-        <!-- Isi Footer -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
-
-            <!-- Kiri -->
-        <div class="flex flex-col items-center md:items-start">
-            <p class="text-gray-400 mb-4 text-center md:text-left">© 2020 Landify UI Kit.<br>All rights reserved.</p>
-
-            <!-- Logo SWAPHUB -->
-            <div class="flex items-center space-x-2 mt-2">
-                <img src="{{asset('images/SWAPHUB LOGO.png')}}" alt="SWAPHUB Logo" class="h-16 w-16">
-                <span class="text-2xl font-bold">
-                    <span class="text-blue-400">SWAP</span><span class="text-gray-400">HUB</span>
-                </span>
-            </div>
-        </div>
-
-            <!-- Tengah -->
-            <div class="flex flex-col md:flex-row justify-center gap-12">
-                <div>
-                    <h4 class="font-semibold mb-3">Company</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">About us</a></li>
-                        <li><a href="#" class="hover:text-white">Blog</a></li>
-                        <li><a href="#" class="hover:text-white">Contact us</a></li>
-                        <li><a href="#" class="hover:text-white">Pricing</a></li>
-                        <li><a href="#" class="hover:text-white">Testimonials</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-3">Support</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">Help center</a></li>
-                        <li><a href="#" class="hover:text-white">Terms of service</a></li>
-                        <li><a href="#" class="hover:text-white">Legal</a></li>
-                        <li><a href="#" class="hover:text-white">Privacy policy</a></li>
-                        <li><a href="#" class="hover:text-white">Rating & Review</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Kanan -->
-            <div class="flex flex-col items-center md:items-end">
-                <h4 class="font-semibold mb-3">Stay up to date</h4>
-                <form class="flex w-full max-w-xs">
-                    <input type="email" placeholder="Your email address"
-                           class="flex-1 px-4 py-2 rounded-l-md bg-blue-800 text-white placeholder-gray-400 focus:outline-none">
-                    <button type="submit" class="bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-r-md">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                        </svg>
-                    </button>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</footer>
 @endsection
 
 
