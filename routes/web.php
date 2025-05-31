@@ -16,6 +16,7 @@ use App\Http\Controllers\RatingWebsiteController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ReplyController;
 use App\Http\Controllers\Admin\KategoriController;
+use App\Http\Controllers\Admin\RekomendasiBarangController;
 
 use App\Models\Barang;
 
@@ -100,4 +101,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/rating/{id}', [RatingWebsiteController::class, 'update'])->name('rating.update');
     Route::delete('/rating/{id}', [RatingWebsiteController::class, 'destroy'])->name('rating.destroy');
     Route::get('/rating/{id}/edit', [RatingWebsiteController::class, 'edit'])->name('rating.edit');
+
+    // Route untuk fitur rekomendasi
+    Route::get('rekomendasi', [RekomendasiBarangController::class, 'index'])->name('admin.rekomendasi.index');
+    Route::post('rekomendasi', [RekomendasiBarangController::class, 'store'])->name('admin.rekomendasi.store');
+    Route::delete('rekomendasi/{id}', [RekomendasiBarangController::class, 'destroy'])->name('admin.rekomendasi.destroy');
 });

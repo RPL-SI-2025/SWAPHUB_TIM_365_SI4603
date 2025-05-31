@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Barang;
 use App\Models\Kategori;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class KategoriController extends Controller
@@ -61,5 +63,17 @@ class KategoriController extends Controller
         $kategori->delete();
 
         return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus.');
+    }
+    public function showRecommendationForm()
+    {
+        // Ambil semua kategori dari tabel kategori
+        $kategori = Kategori::all();
+
+        // Ambil data user dan barang (sesuaikan dengan model Anda)
+        $users = User::all();
+        $barang = Barang::all();
+
+        // Pass data kategori ke view
+        return view('admin.recommendation', compact('kategori', 'users', 'barang'));
     }
 }

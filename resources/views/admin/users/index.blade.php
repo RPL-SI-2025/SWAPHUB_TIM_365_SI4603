@@ -57,7 +57,7 @@
                     Delete
                   </button>
                 </form>
-              </td>
+                </td>
             </tr>
           @empty
             <tr>
