@@ -49,10 +49,10 @@
             <a href="#features"
               class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0">Features</a>
           </li>
-          <li>
+          {{-- <li>
             <a href="#review"
               class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary md:p-0">Review</a>
-          </li>
+          </li> --}}
         </ul>
       </div>
     </div>
@@ -304,40 +304,40 @@
   </section>
 
   {{-- Feedback Section --}}
-  <section class="bg-secondary px-4 md:px-24 py-10">
+  {{-- <section class="bg-secondary px-4 md:px-24 py-10">
     <div class="container mx-auto">
       <h2 class="text-3xl font-bold text-center text-tertiary text-shadow-lg mb-8">
         Give Us <span class="text-primary">Feedback</span> for <span class="text-primary">Improvement</span>
-      </h2>
+      </h2> --}}
 
       {{-- Stars  --}}
-      <div id="stars" class="flex justify-center gap-3 mb-6 text-[50px] text-gray-300 cursor-pointer">
+      {{-- <div id="stars" class="flex justify-center gap-3 mb-6 text-[50px] text-gray-300 cursor-pointer">
         <span data-value="1">★</span>
         <span data-value="2">★</span>
         <span data-value="3">★</span>
         <span data-value="4">★</span>
         <span data-value="5">★</span>
-      </div>
+      </div> --}}
 
       {{-- Feedback Form  --}}
-      <form id="feedback-form" class="flex flex-col gap-5 w-full md:w-1/2 mx-auto">
+      {{-- <form id="feedback-form" class="flex flex-col gap-5 w-full md:w-1/2 mx-auto">
         <input type="email" name="email" placeholder="Your Email Address" required
           class="w-full px-4 py-2 border rounded-sm">
 
         <textarea name="message" placeholder="Message" required
-          class="w-full px-4 py-2 border rounded-sm h-[150px] resize-none"></textarea>
+          class="w-full px-4 py-2 border rounded-sm h-[150px] resize-none"></textarea> --}}
 
         {{-- Hidden input to store selected rating  --}}
-        <input type="hidden" name="rating" id="rating-value">
+        {{-- <input type="hidden" name="rating" id="rating-value"> --}}
 
         {{-- Submit Button  --}}
-        <button type="submit"
+        {{-- <button type="submit"
           class="bg-primary text-white font-semibold px-6 py-3 rounded-md hover:bg-primary-hover cursor-pointer transition">
           Submit Feedback
         </button>
       </form>
     </div>
-  </section>
+  </section> --}}
 
   {{-- Footer --}}
   <footer class="bg-tertiary px-4 md:px-24 py-8">
@@ -382,7 +382,7 @@
   </script>
 
   {{-- Script Star & Submit Feedback --}}
-  <script>
+  {{-- <script>
     const stars = document.querySelectorAll('#stars span');
     const ratingInput = document.getElementById('rating-value');
     let currentRating = 0;
@@ -413,9 +413,9 @@
           star.classList.add('text-gray-300');
         }
       });
-    }
+    } --}}
 
-    // Handle form submission
+    {{-- // Handle form submission
     document.getElementById('feedback-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const email = this.email.value;
@@ -434,13 +434,13 @@
       //     message: data.message,
       //     rating: data.rating
       //   })
-      // });
+      // }); --}}
 
-      alert(`Thank you!\nEmail: ${email}\nRating: ${rating} stars\nMessage: ${message}`);
+      {{-- alert(`Thank you!\nEmail: ${email}\nRating: ${rating} stars\nMessage: ${message}`);
       this.reset();
       currentRating = 0;
       updateStars();
-    });
+    }); --}}
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
