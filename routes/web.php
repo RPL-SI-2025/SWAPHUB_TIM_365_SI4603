@@ -85,8 +85,10 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
     // Route untuk Admin mengelola status Laporan Penipuan
     Route::post('laporan_penipuan/{id}/status', [LaporanPenipuanController::class, 'updateStatus'])->name('laporan_penipuan.updateStatus');
 
-    Route::get('/reviews/{id}/reply', [ReplyController::class, 'replyForm'])->name('admin.reviews.replyForm');
-    Route::post('/reviews/{id}/reply', [ReplyController::class, 'store'])->name('admin.replies.store');
+    // Route untuk Admin mengelola Rating dan Review
+    Route::get('/rating', [ReplyController::class, 'index'])->name('admin.rating.index');
+    Route::get('/rating/{id}/reply', [ReplyController::class, 'replyForm'])->name('admin.rating.replyForm');
+    Route::post('/rating/{id}/reply', [ReplyController::class, 'reply'])->name('admin.rating.reply');
 });
 
 // Rating routes - memerlukan authentication

@@ -3,36 +3,32 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\AdminReply;
 use App\Models\RatingWebsite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ReplyController extends Controller
 {
-    public function replyForm($id) {
-    $review = RatingWebsite::findOrFail($id);
-    return view('admin.reviews.reply', compact('review'));
-}
-
-public function store(Request $request, $id) {
-    $request->validate([
-        'reply_text' => 'required|string',
-    ]);
-
-    $review = RatingWebsite::findOrFail($id);
-
-    if ($review->reply) {
-        return redirect()->route('admin.reviews.index')->with('error', 'Sudah dibalas.');
+    public function index() {
+        $ratings = RatingWebsite::with('user')->orderBy('created_at', 'desc')->get();
+        return view('admin.rating.index', compact('ratings'));
     }
 
-    AdminReply::create([
-        'rating_id' => $id,
-        'admin_id' => auth('admin')->user()->id,
-        'reply_text' => $request->reply_text,
-    ]);
+    public function replyForm($id) {
+        $rating = RatingWebsite::findOrFail($id);
+        return view('admin.rating.reply', compact('rating'));
+    }
 
-    return redirect()->route('admin.reviews.index')->with('success', 'Berhasil dibalas.');
-}
+    public function reply(Request $request, $id) {
+        $request->validate([
+            'tanggapan_review' => 'required|string|max:1000',
+        ]);
+
+        $rating = RatingWebsite::findOrFail($id);
+        $rating->tanggapan_review = $request->tanggapan_review;
+        $rating->save();
+
+        return redirect()->route('admin.rating.index')->with('success', 'Reply submitted successfully.');
+    }
 
 }
