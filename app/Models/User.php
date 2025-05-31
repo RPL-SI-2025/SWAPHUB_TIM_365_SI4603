@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
-{
+{   
     use HasFactory, Notifiable;
 
     protected $table = 'users';
@@ -74,9 +74,16 @@ class User extends Authenticatable
         return $this->wishlists()->count();
     }
 
-    public function rekomendasiBarangs()
+    // Relasi dengan RekomendasiBarang (user yang menerima rekomendasi)
+    public function rekomendasiBarang()
     {
-        return $this->belongsToMany(Barang::class, 'rekomendasi_barang', 'user_id', 'barang_id');
+        return $this->hasMany(RekomendasiBarang::class, 'user_id', 'id');
+    }
+
+    // Relasi dengan RekomendasiBarang (admin yang memberikan rekomendasi)
+    public function rekomendasiAdmin()
+    {
+        return $this->hasMany(RekomendasiBarang::class, 'id_admin', 'id');
     }
 
 }

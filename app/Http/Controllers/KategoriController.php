@@ -61,4 +61,16 @@ class KategoriController extends Controller
 
         return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus.');
     }
+    public function showRecommendationForm()
+    {
+        // Ambil semua kategori dari tabel kategori
+        $kategori = Kategori::all();
+
+        // Ambil data user dan barang (sesuaikan dengan model Anda)
+        $users = User::all();
+        $barang = Barang::all();
+
+        // Pass data kategori ke view
+        return view('admin.recommendation', compact('kategori', 'users', 'barang'));
+    }
 }

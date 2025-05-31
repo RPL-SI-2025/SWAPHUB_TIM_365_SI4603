@@ -82,4 +82,3 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
     Route::post('rekomendasi', [RekomendasiBarangController::class, 'store'])->name('admin.rekomendasi.store');
     Route::delete('rekomendasi/{id}', [RekomendasiBarangController::class, 'destroy'])->name('admin.rekomendasi.destroy');
 });
-

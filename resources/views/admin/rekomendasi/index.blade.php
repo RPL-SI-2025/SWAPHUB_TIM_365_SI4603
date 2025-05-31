@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 
 @section('content')
   <div class="container mx-auto mt-8">
@@ -36,70 +36,56 @@
         </div>
     </div>
 
-    {{-- Form untuk menambah rekomendasi --}}
-    <div class="card shadow-lg rounded-lg">
-        <div class="card-header bg-indigo-500 text-white p-4 rounded-t-lg">Tambah Rekomendasi Barang</div>
-        <div class="card-body p-4">
-            <form action="{{ route('admin.rekomendasi.store') }}" method="POST">
-                @csrf
-                <div class="mb-4">
-                    <label for="user_id" class="block text-sm font-medium text-gray-700">Pilih User</label>
-                    <select name="user_id" id="user_id" class="form-select mt-1 block w-full bg-gray-100 border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" onchange="this.form.submit()">
-                        <option value="">-- Pilih User --</option>
-                        @foreach ($users as $user)
-                            <option value="{{ $user->id }}" {{ request('user_id') == $user->id ? 'selected' : '' }}>{{ $user->full_name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700">Pilih Barang</label>
-                    <div class="space-y-2">
-                        @foreach ($barang as $b)
-                            <div class="flex items-center">
-                                <input class="form-check-input h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" type="checkbox" name="barang_ids[]" value="{{ $b->id }}" id="barang{{ $b->id }}">
-                                <label class="form-check-label ml-2 text-gray-700" for="barang{{ $b->id }}">
-                                    {{ $b->nama_barang }}
-                                </label>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <button type="submit" class="btn btn-primary mt-3 bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 rounded-md">Tambah Rekomendasi</button>
-            </form>
-        </div>
+    {{-- Form for Adding Item Recommendation --}}
+    <form id="rekomendasiForm" action="{{ route('admin.rekomendasi.index') }}" method="GET">
+    @csrf
+    <!-- Pilih User -->
+    <div class="mb-4">
+        <label for="user_id" class="block text-sm font-medium text-gray-700">Pilih User</label>
+        <select name="user_id" id="user_id" class="form-select mt-1 block w-full bg-gray-100 border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+            <option value="">-- Pilih User --</option>
+            @foreach ($users as $user)
+                <option value="{{ $user->id }}" {{ request('user_id') == $user->id ? 'selected' : '' }}>{{ $user->full_name }}</option>
+            @endforeach
+        </select>
     </div>
+</form>
 
-    {{-- Riwayat Penukaran --}}
-    @if($penukaran)
-        <div class="card mt-6 shadow-lg rounded-lg">
-            <div class="card-header bg-green-500 text-white p-4 rounded-t-lg">Riwayat Penukaran Barang</div>
-            <div class="card-body p-4">
-                @if($penukaran->isEmpty())
-                    <p>Belum ada riwayat penukaran untuk user ini.</p>
-                @else
-                    <table class="table-auto w-full text-sm text-left text-gray-500">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">No</th>
-                                <th scope="col" class="px-6 py-3">Barang</th>
-                                <th scope="col" class="px-6 py-3">Tanggal Penukaran</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($penukaran as $index => $p)
-                                <tr class="bg-white text-gray-700 border-b">
-                                    <td class="px-6 py-4">{{ $index + 1 }}</td>
-                                    <td class="px-6 py-4">{{ $p->barang->nama_barang }}</td>
-                                    <td class="px-6 py-4">{{ $p->created_at->format('d-m-Y') }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endif
-            </div>
+<!-- Category Checkboxes -->
+<div>
+    @foreach($kategori as $ktg)
+        <div class="flex items-center">
+            <input type="checkbox" name="kategori_ids[]" value="{{ $ktg->id_kategori }}" class="form-check-input" id="kategori{{ $ktg->id_kategori }}">
+            <label class="form-check-label ml-2" for="kategori{{ $ktg->id_kategori }}">{{ $ktg->nama_kategori }}</label>
         </div>
-    @endif
+    @endforeach
+</div>
+
+<!-- Items based on selected category -->
+<div id="barang-items">
+    <!-- Barang items will be loaded here -->
+</div>
+
+<script>
+document.getElementById('user_id').addEventListener('change', function() {
+    var userId = this.value;
+    var kategoriIds = [];
+    document.querySelectorAll('input[name="kategori_ids[]"]:checked').forEach(function(checkbox) {
+        kategoriIds.push(checkbox.value);
+    });
+
+    // Make AJAX request to fetch items based on the selected user and categories
+    fetch('{{ route('admin.rekomendasi.index') }}?user_id=' + userId + '&kategori_ids=' + kategoriIds.join(','))
+        .then(response => response.json())
+        .then(data => {
+            // Update the items section with the fetched items
+            document.getElementById('barang-items').innerHTML = data.items;
+        });
+});
+</script>
+
+
+        <button type="submit" class="btn btn-primary mt-3 bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 rounded-md">Tambah Rekomendasi</button>
+    </form>
   </div>
 @endsection
