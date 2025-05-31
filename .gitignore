@@ -3,6 +3,7 @@
 /public/build
 /public/hot
 /public/storage
+/resources/views/test.blade.php
 /storage/*.key
 /vendor
 .env

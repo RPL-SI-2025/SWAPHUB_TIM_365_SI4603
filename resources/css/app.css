@@ -1,10 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
 @import "flowbite/src/themes/default";
 @plugin "flowbite/plugin";
 @source "../../node_modules/flowbite";
 @source "../views";
 
+@theme {
+  --color-primary: #2194F3;
+  --color-primary-hover: #1C82DA;
+  --color-primary-focus: #1472C2;
+  --color-primary-active: #0E5FA7;
+  --color-primary-disabled: #A0D1F8;
+
+  --color-secondary: #F5F7FA;
+
+  --color-tertiary: #003459;
+  --color-tertiary-hover: #002D4D;
+  --color-tertiary-focus: #001F38;
+  --color-tertiary-active: #001423;
+  --color-tertiary-disabled: #99A8B6;
+
+  --font-inter: "Inter", sans-serif;
+}
+
 @layer utilities {
+
+  /* Animasi masuk (fade + slide) */
   .animate-fade-in {
     animation: fadeIn 0.5s ease-out forwards;
   }
@@ -14,9 +35,35 @@
       opacity: 0;
       transform: translateY(20px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
+
+  /* Animasi keluar (fade + slide) */
+  .animate-fade-out {
+    animation: fadeOut 0.5s ease-in forwards;
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+}
+
+.list-style {
+  @apply relative pl-8 before:absolute before:left-0 before:top-1 before:w-5 before:h-5 before:rounded-full before:bg-primary
+}
+
+.selected {
+  @apply scale-110 text-primary
 }
