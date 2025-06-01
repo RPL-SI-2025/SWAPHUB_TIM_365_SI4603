@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('laporan_penipuan', function (Blueprint $table) {
             $table->id('id_laporan');
-            $table->foreignId('id_kategori')->constrained('kategori','id_kategori')->onDelete('cascade');
+            $table->foreignId('id_kategori')->constrained('kategori', 'id_kategori')->onDelete('cascade');
             $table->foreignId('id_pelapor')->constrained('users')->onDelete('cascade');
             $table->foreignId('id_dilapor')->constrained('users')->onDelete('cascade');
             $table->text('pesan_laporan');

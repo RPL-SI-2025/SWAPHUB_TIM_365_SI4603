@@ -45,5 +45,24 @@ class KategoriSeeder extends Seeder
             'jenis_kategori' => 'barang',
             'nama_kategori' => 'Aksesoris',
         ]);
+
+        $laporanList = [
+            'Barang Tidak Sesuai Deskripsi',
+            'Penukar Tidak Datang',
+            'Barang Rusak / Tidak Layak Pakai',
+            'Akun Palsu / Identitas Tidak Valid',
+            'Pemaksaan atau Ancaman',
+            'Spam atau Penawaran Tidak Relevan',
+            'Manipulasi Rating/Review',
+            'Penipuan Komunikasi di Luar Aplikasi',
+            'Perilaku Tidak Sopan / Pelecehan',
+        ];
+
+        foreach ($laporanList as $laporan) {
+            Kategori::create([
+                'jenis_kategori' => 'laporan',
+                'nama_kategori' => $laporan,
+            ]);
+        }
     }
 }

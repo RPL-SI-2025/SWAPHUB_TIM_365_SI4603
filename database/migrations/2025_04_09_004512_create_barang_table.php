@@ -17,6 +17,7 @@ return new class extends Migration
                 $table->text('deskripsi_barang');
                 $table->enum('status_barang', ['tersedia', 'tidak tersedia', 'ditukar']);
                 $table->string('gambar')->nullable();
+                $table->unsignedInteger('jumlah_klik')->default(0);
                 $table->timestamps();
             });
         }

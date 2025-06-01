@@ -40,6 +40,16 @@
               Trade
             </a>
           </li>
+
+          <li>
+            <a href="{{ route('rating.index') }}"
+              class="block py-2 px-3 rounded-sm md:p-0
+      {{ request()->routeIs('rating*')
+          ? 'text-white bg-primary md:bg-transparent md:text-primary'
+          : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-primary' }}">
+              Rate Our Service!
+            </a>
+          </li>
         @endif
       </ul>
     </div>

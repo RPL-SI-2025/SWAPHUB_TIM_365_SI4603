@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
-{
+{   
     use HasFactory, Notifiable;
 
     protected $table = 'users';
@@ -21,7 +21,7 @@ class User extends Authenticatable
         'password',
         'role',
         'phone',
-        'profile_picture_users',
+        'profile_picture',
     ];
 
     protected $hidden = [
@@ -61,4 +61,29 @@ class User extends Authenticatable
     {
         return $this->hasMany(Wishlist::class, 'id_user', 'id');
     }
+
+    // Jumlah notifikasi belum dibaca
+    public function getUnreadNotificationsCountAttribute()
+    {
+        return $this->notifikasis()->where('is_read', false)->count();
+    }
+
+    // Jumlah wishlist
+    public function getWishlistCountAttribute()
+    {
+        return $this->wishlists()->count();
+    }
+
+    // Relasi dengan RekomendasiBarang (user yang menerima rekomendasi)
+    public function rekomendasiBarang()
+    {
+        return $this->hasMany(RekomendasiBarang::class, 'user_id', 'id');
+    }
+
+    // Relasi dengan RekomendasiBarang (admin yang memberikan rekomendasi)
+    public function rekomendasiAdmin()
+    {
+        return $this->hasMany(RekomendasiBarang::class, 'id_admin', 'id');
+    }
+
 }
