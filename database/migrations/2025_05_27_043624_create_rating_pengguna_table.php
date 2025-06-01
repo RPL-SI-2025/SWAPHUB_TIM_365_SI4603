@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_penukaran_barang');
             $table->tinyInteger('rating')->unsigned(); // biasanya rating dari 1-5
             $table->text('review')->nullable();
+            $table->enum('rating_type', ['penawar', 'ditawar']);
             $table->timestamps();
-
         });
     }
 

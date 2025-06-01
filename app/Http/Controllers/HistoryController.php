@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\History;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 
 class HistoryController extends Controller
@@ -17,10 +18,12 @@ class HistoryController extends Controller
             'penukaran.barangPenawar',
             'penukaran.barangDitawar',
         ]);
+                
+        $categories = Kategori::where('jenis_kategori', 'barang')->get();
 
         $histories = $query->get();
 
-        return view('history.index', compact('title', 'histories'));
+        return view('history.index', compact('title', 'histories', 'categories'));
     }
 
     public function store(Request $request)
