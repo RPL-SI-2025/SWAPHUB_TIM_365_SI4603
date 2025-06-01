@@ -6,22 +6,23 @@
     {{-- Header --}}
     <div class="">
       <div class="flex items-center mb-4">
-        <h1 class="text-3xl font-bold">Permintaan <span class="text-primary">Tukar Barang</span></h1>
+        <a href="{{ route('home') }}" class="mr-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 hover:text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </a>
+        <h1 class="text-3xl font-bold text-shadow-lg">Permintaan <span class="text-primary">Tukar Barang</span></h1>
       </div>
-      <div class="flex justify-between items-start mb-6">
+      <div class="flex justify-end items-start mb-6">
         <a href="{{ route('history.index') }}"
           class="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded transition duration-200">
           History
-        </a>
-        <a href="{{ route('home') }}"
-          class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-200">
-          ← Kembali
         </a>
       </div>
     </div>
 
     {{-- Permintaan Masuk --}}
-    <h2 class="text-xl font-semibold mb-3"><span class="text-primary">Permintaan</span> Masuk</h2>
+    <h2 class="text-xl font-semibold mb-3 text-shadow-lg"><span class="text-primary">Permintaan</span> Masuk</h2>
     <div class="overflow-x-auto rounded-lg shadow-md mb-10">
       <table class="w-full bg-white">
         <thead class="bg-tertiary text-white">
@@ -76,7 +77,7 @@
     </div>
 
     {{-- Penawaran Keluar --}}
-    <h2 class="text-xl font-semibold mb-3"><span class="text-primary">Penawaran</span> Keluar</h2>
+    <h2 class="text-xl font-semibold mb-3 text-shadow-lg"><span class="text-primary">Penawaran</span> Keluar</h2>
     <div class="overflow-x-auto rounded-lg shadow-md">
       <table class="w-full bg-white">
         <thead class="bg-tertiary text-white">

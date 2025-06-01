@@ -58,6 +58,18 @@
       transform: translateY(20px);
     }
   }
+
+  /* Animasi fade dan slide ke atas saat scroll */
+  .animate-fade-slide-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .animate-fade-slide-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .list-style {

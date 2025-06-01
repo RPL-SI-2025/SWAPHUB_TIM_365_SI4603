@@ -1,4 +1,4 @@
-<footer class="bg-[#023051] text-white py-8 px-6 md:px-16">
+<footer class="bg-tertiary text-white py-8 px-6 md:px-16">
   <p class="text-2xl font-semibold text-center mb-4 drop-shadow-sm">"SwapHub - Swap, Use, Save, Sustain!"</p>
   <div class="w- h-px bg-white mx-auto mb-6"></div>
 
@@ -9,7 +9,7 @@
         <div class="bg-white rounded-full px-4 py-2 flex items-center gap-3">
           <img src="{{ asset('images/SWAPHUB LOGO (CUT).png') }}" alt="SwapHub Logo" class="h-10">
           <span class="self-center text-2xl font-bold whitespace-nowrap drop-shadow-none">
-            <span class="md:text-primary">SWAP</span><span class="text-[#023051]">HUB</span>
+            <span class="text-primary">SWAP</span><span class="text-tertiary">HUB</span>
           </span>
         </div>
       </div>

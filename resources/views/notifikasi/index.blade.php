@@ -3,12 +3,19 @@
 @section('content')
   <main class="px-4 md:px-24 py-10">
     <div class="flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold">Notifikasi</h1>
+      <div class="flex items-center">
+        <a href="{{ route('home') }}" class="mr-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 hover:text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </a>
+        <h1 class="text-3xl font-bold text-shadow-lg">Notifikasi</h1>
+      </div>
 
       <form action="{{ route('notifikasi.markAllAsRead') }}" method="POST">
         @csrf
         <button type="submit" class="bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded">
-          Mark all as Read
+          Tandai semua telah dibaca
         </button>
       </form>
     </div>
@@ -35,7 +42,7 @@
               <form action="{{ route('notifikasi.markAsRead', $notification->id_notifikasi) }}" method="POST">
                 @csrf
                 <button type="submit" class="bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded">
-                  Mark as Read
+                  Tandai telah dibaca
                 </button>
               </form>
             @endif

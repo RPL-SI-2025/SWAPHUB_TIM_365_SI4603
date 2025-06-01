@@ -2,14 +2,21 @@
 
 @section('content')
   <div class="px-4 md:px-24 py-10">
-    <h1 class="text-3xl font-bold mb-6">Detail <span class="text-primary">Barang</span></h1>
+    <div class="flex items-center mb-6">
+      <a href="{{ route('home') }}" class="mr-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 hover:text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </a>
+      <h1 class="text-3xl font-bold">Detail <span class="text-primary">Barang</span></h1>
+    </div>
 
     <div class="bg-white p-6 rounded shadow-md">
       <div class="flex flex-col md:flex-row">
-        <div class="md:w-1/3">
+        <div class="relative">
           @if ($barang->gambar)
             <img src="{{ Storage::url($barang->gambar) }}" alt="{{ $barang->nama_barang }}"
-              class="w-full h-48 object-cover rounded">
+              class="h-80 object-cover rounded">
           @else
             <span class="text-gray-500">Tidak ada gambar</span>
           @endif
@@ -25,32 +32,31 @@
           </p>
           <p class="text-gray-600 mt-2"><strong>Pemilik:</strong> {{ $barang->user->full_name }}</p>
           <p class="text-gray-600 mt-2"><strong>Kategori:</strong> {{ $barang->kategori->nama_kategori }}</p>
+          <div class="mt-4 flex space-x-4">
+            @if (Auth::user()->id != $barang->id_user && $barang->status_barang == 'tersedia')
+              <a href="{{ route('penukaran.create', $barang->id_barang) }}"
+                class="flex items-center bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-2 rounded">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Minta Tukar
+              </a>
+              <button class="wishlist-btn bg-red-500 text-white hover:bg-red-600 text-sm p-2 rounded focus:outline-none"
+                data-id="{{ $barang->id_barang }}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </button>
+            @endif
+          </div>
         </div>
       </div>
-      <div class="flex flex-wrap gap-2 mt-4">
-        <a href="{{ route('home') }}" class="bg-gray-500 hover:bg-gray-600 text-white text-sm px-4 py-2 rounded">
-          Kembali
-        </a>
-
-        @if (Auth::user()->id != $barang->id_user && $barang->status_barang == 'tersedia')
-          <a href="{{ route('penukaran.create', $barang->id_barang) }}"
-            class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-2 rounded">
-            Minta Tukar
-          </a>
-
-          <button class="bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded add-to-wishlist-btn"
-            data-id="{{ $barang->id_barang }}">
-            Tambah ke Wishlist
-          </button>
-        @endif
-      </div>
-
     </div>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const buttons = document.querySelectorAll('.add-to-wishlist-btn');
+      const buttons = document.querySelectorAll('.wishlist-btn');
 
       buttons.forEach(button => {
         button.addEventListener('click', function(e) {
@@ -78,7 +84,6 @@
               console.error(err);
               showToast('error', 'Terjadi kesalahan saat menambahkan wishlist.');
             });
-
         });
       });
     });

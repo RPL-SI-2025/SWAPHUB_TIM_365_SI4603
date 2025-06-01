@@ -3,14 +3,13 @@
 @section('content')
 <div class="max-w-4xl mx-auto mt-8 px-4 sm:px-6 lg:px-8 py-10">
     <div class="bg-white rounded-xl shadow-xl p-6">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-3xl font-semibold text-gray-900">Detail Laporan Penipuan</h2>
-            <a href="{{ route('laporan_penipuan.index') }}" class="flex items-center text-sm text-blue-600 hover:text-blue-800 font-medium">
-                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L9.586 10l-2.293 2.293a1 1 0 101.414 1.414L11 11.414l2.293 2.293a1 1 0 001.414-1.414L12.414 10l2.293-2.293a1 1 0 00-1.414-1.414L11 8.586 8.707 7.293z" clip-rule="evenodd"/>
+        <div class="flex items-center gap-3 mb-6">
+            <a href="{{ route('laporan_penipuan.index') }}" class="text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
-                Kembali
             </a>
+            <h2 class="text-3xl font-bold text-shadow-lg">Detail <span class="text-primary">Laporan Penipuan</span></h2>
         </div>
 
         <!-- Notifikasi -->
@@ -76,12 +75,6 @@
                 <p class="mt-1 text-gray-900">{{ $laporan->created_at->format('d M Y, H:i') }}</p>
             </div>
             <div class="mt-6 flex justify-end">
-                <a href="{{ route('laporan_penipuan.index') }}" class="flex items-center px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition duration-200 shadow-md">
-                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L9.586 10l-2.293 2.293a1 1 0 101.414 1.414L11 11.414l2.293 2.293a1 1 0 001.414-1.414L12.414 10l2.293-2.293a1 1 0 00-1.414-1.414L11 8.586 8.707 7.293z" clip-rule="evenodd"/>
-                    </svg>
-                    Kembali
-                </a>
             </div>
         </div>
     </div>

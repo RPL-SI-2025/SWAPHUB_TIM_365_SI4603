@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="px-4 md:px-24 py-10">
-    <h1 class="text-3xl font-bold mb-6">Edit Barang</h1>
+    <h1 class=" text-shadow-lg text-3xl font-bold">Edit <span class="text-primary">Barang</h1>
 
     @if ($barang->status_barang == 'ditukar')
       <div class="bg-yellow-500 text-white p-4 rounded mb-4">Barang ini sudah ditukar dan tidak dapat diubah.</div>

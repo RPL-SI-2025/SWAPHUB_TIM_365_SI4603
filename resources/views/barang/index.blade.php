@@ -2,43 +2,58 @@
 
 @section('content')
   <div class="px-4 md:px-24 py-10">
-    <div class="flex justify-between items-center mb-4">
-      <h1 class="text-3xl font-bold">Daftar <span class="text-primary">Barang</span></h1>
-    </div>
+    <div class="md:flex justify-between items-center mb-4">
+      <div class="flex items-center mb-4">
+        <a href="{{ route('home') }}" class="mr-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 hover:text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </a>
+        <span class="text-shadow-lg">
+          <h1 class="text-3xl font-bold">Daftar <span class="text-primary">Barang</span></h1>
+        </span>
+      </div>
 
-    @if (!Auth::user()->is_admin)
-      <a href="{{ route('barang.create') }}"
-        class="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded mb-4 inline-block">Tambah
-        Barang</a>
-    @endif
+      @if (!Auth::user()->is_admin)
+        <a href="{{ route('barang.create') }}"
+          class="flex items-center bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded w-fit">
+          Tambah Barang
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+        </a>
+      @endif
+    </div>
 
     <div class="w-full overflow-x-auto shadow-md rounded-lg">
       <table class="w-full bg-white">
         <thead>
-          <tr class="bg-tertiary text-white text-left">
+          <tr class="bg-tertiary text-white text-center">
             <th class="p-3">Gambar</th>
             <th class="p-3">Nama Barang</th>
-            <th class="p-3">Deskripsi</th>
+            <th class="p-3">Kategori</th>
+            <th class="p-3 w-1/4">Deskripsi</th>
             <th class="p-3">Status</th>
             <th class="p-3">Aksi</th>
           </tr>
         </thead>
         <tbody>
           @forelse ($barang as $item)
-            <tr class="hover:bg-gray-50">
+            <tr class="hover:bg-gray-50 border-b border-gray-300 text-center">
               <td class="p-3">
                 @if ($item->gambar)
                   <img src="{{ Storage::url($item->gambar) }}" alt="{{ $item->nama_barang }}"
-                    class="w-16 h-16 object-cover rounded">
+                    class="w-32 h-w-32 object-cover rounded mx-auto">
                 @else
                   <span class="text-gray-500 italic">Tidak ada gambar</span>
                 @endif
               </td>
               <td class="p-3 font-medium text-gray-800">{{ $item->nama_barang }}</td>
+              <td class="p-3 font-medium text-gray-800">{{ $item->kategori->nama_kategori }}</td>
               <td class="p-3 text-gray-700">{{ $item->deskripsi_barang }}</td>
               <td class="p-3">
                 <span
-                  class="px-2 py-1 text-xs font-medium rounded {{ $item->status_barang === 'tersedia' ? 'bg-green-200 text-green-800' : ($item->status_barang === 'tidak tersedia' ? 'bg-red-200 text-red-800' : 'bg-primary/50 text-tertiary') }}">
+                  class="px-2 py-1 font-medium rounded {{ $item->status_barang === 'tersedia' ? 'bg-green-200 text-green-800' : ($item->status_barang === 'tidak tersedia' ? 'bg-red-200 text-red-800' : 'bg-primary/50 text-tertiary') }}">
                   {{ ucfirst($item->status_barang) }}
                 </span>
               </td>
@@ -67,6 +82,5 @@
         </tbody>
       </table>
     </div>
-
   </div>
 @endsection

@@ -16,7 +16,7 @@
           </svg>
         </div>
         <input type="search" id="search-bar"
-          class="block w-full p-3 ps-10 text-sm hover:text-primary text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-primary focus:border-primary"
+          class="block w-full p-3 ps-10 text-sm hover:text-primary text-gray-900 border border-gray-300 rounded-full bg-gray-50 focus:ring-primary focus:border-primary shadow-lg"
           placeholder="Find your items" />
       </div>
     </form>
@@ -103,8 +103,8 @@
 
   {{-- Daftar Barang Section --}}
   <section class="px-4 md:px-24 py-10">
-    <h2 class="text-2xl md:text-3xl text-tertiary font-semibold tex mb-2">Daftar Barang</h2>
-    <p class="text-gray-500 mb-8">Apa yang lagi dicari hari ini?</p>
+    <h2 class="text-3xl md:text-4xl text-tertiary font-semibold text-center mb-2 text-shadow-lg">Daftar <span class="text-primary">Barang</span></h2>
+    <p class="text-gray-500 text-lg md:text-  xl text-center mb-8">Mau tukar apa hari ini?</p>
 
     <div id="item-grid-container">
       @if ($barang->isEmpty())
@@ -115,7 +115,7 @@
             <div
               class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition barang-item"
               data-nama="{{ strtolower($item->nama_barang) }}">
-              <div class="h-48 bg-gray-100 flex items-center justify-center">
+              <div class="h-80 bg-gray-100 flex items-center justify-center">
                 @if ($item->gambar)
                   <img src="{{ Storage::url($item->gambar) }}" alt="{{ $item->nama_barang }}"
                     class="w-full h-full object-cover">
@@ -183,7 +183,7 @@
                 'bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition';
 
               card.innerHTML = `
-              <div class="h-48 bg-gray-100 flex items-center justify-center">
+              <div class="h-80 bg-gray-100 flex items-center justify-center">
                 ${item.gambar
                   ? `<img src="/storage/${item.gambar}" alt="${item.nama_barang}" class="w-full h-full object-cover">`
                   : `<span class="text-gray-500 text-sm">Gambar Tidak Tersedia</span>`}

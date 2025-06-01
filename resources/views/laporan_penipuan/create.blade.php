@@ -3,7 +3,14 @@
 @section('content')
 <div class="max-w-5xl mx-auto mt-8 px-4 py-10">
     <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Buat Laporan Penipuan</h2>
+        <div class="flex items-center gap-3 mb-6">
+            <a href="{{ route('profile.index') }}" class="text-gray-600 hover:text-gray-800">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </a>
+            <h2 class="text-3xl font-bold text-shadow-lg">Buat <span class="text-primary">Laporan Penipuan</span></h2>
+        </div>
 
         <!-- Notifikasi -->
         @if ($errors->any())
@@ -101,12 +108,6 @@
                         <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
                     </svg>
                     Histori Laporan
-                </a>
-                <a href="{{ route('profile.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-200 flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7a1 1 0 011.414-1.414L9 14.586V3a1 1 0 012 0v11.586l5.293-5.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                    </svg>
-                    Kembali
                 </a>
             </div>
         </form>

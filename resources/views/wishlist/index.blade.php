@@ -17,13 +17,13 @@
       </div>
     </form>
 
-    <h1 class="text-3xl font-bold mb-6">Wishlist</h1>
+    <h1 class="text-3xl font-bold mb-6 text-shadow-lg">Wishlist</h1>
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="wishlist-container">
       @foreach ($wishlistItems as $wishlist)
         <div class="relative group wishlist-item" data-nama="{{ strtolower($wishlist->barang->nama_barang) }}">
           <img src="{{ Storage::url($wishlist->barang->gambar) }}" alt="{{ $wishlist->barang->nama_barang }}"
-            class="rounded-lg w-full h-48 object-cover">
+            class="rounded-lg w-full h-80 object-cover">
 
           <div
             class="rounded-lg absolute inset-0 bg-black/50 text-white opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-center text-sm font-semibold">
@@ -43,7 +43,7 @@
         </div>
       @endforeach
       <a href="{{ route('home') }}"
-        class="h-48 w-full rounded-lg bg-gray-200 flex items-center justify-center text-gray-500 cursor-pointer hover:bg-gray-300 transition duration-200 ease-in-out">
+        class="h-80 w-full rounded-lg bg-gray-200 flex items-center justify-center text-gray-500 cursor-pointer hover:bg-gray-300 transition duration-200 ease-in-out">
         + New Collection
       </a>
     </div>

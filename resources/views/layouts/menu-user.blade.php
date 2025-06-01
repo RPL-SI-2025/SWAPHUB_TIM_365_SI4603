@@ -1,4 +1,4 @@
-<div class="@guest md:hidden @else flex @endguest items-center md:order-2 space-x-3 md:space-x-0">
+<div class="@guest md:hidden @else flex @endguest items-center md:order-2 space-x-3 md:space-x-4">
   @auth
     <span
       class="hidden md:inline me-3 text-shadow-lg font-medium @if (request()->is('admin*')) text-white @else truncate max-w-[100px] @endif"
@@ -57,7 +57,7 @@
           </a>
         </li>
         <li>
-          <form action="{{ route('logout') }}" method="POST">
+          <form action="{{ route('logout') }}" method="POST" class= "logout-form">
             @csrf
             <button type="submit"
               class="block w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-red-100">Logout</button>
