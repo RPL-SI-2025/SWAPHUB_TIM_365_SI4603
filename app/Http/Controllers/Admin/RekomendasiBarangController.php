@@ -15,85 +15,117 @@ class RekomendasiBarangController extends Controller
 {
    public function index(Request $request)
 {
-    $users = User::where('role', '!=', 'admin')->get();  // Exclude admin
-    $histories = null;
-    $kategori = [];
-    $rekomendasi = RekomendasiBarang::with('barang')->get();
-    $barang = []; // Initialize barang as an empty array by default
+    $users = User::where('role', '!=', 'admin')->get();
+    $histories = collect();
+    $kategori = collect();
+    $items = collect();
+    $selectedUserId = $request->user_id ?? null;
+    $selectedCategoryFilter = $request->category_filter ?? null;
 
-    // If a user is selected, fetch history and categories based on the user's history
-    if ($request->has('user_id') && $request->user_id != '') {
-        // Fetch user's transaction history
-        $histories = History::with(['penukaran.penawar', 'penukaran.ditawar', 'penukaran.barangPenawar', 'penukaran.barangDitawar'])
-            ->whereHas('penukaran', function ($query) use ($request) {
-                $query->where('id_penawar', $request->user_id)
-                      ->orWhere('id_ditawar', $request->user_id);
-            })
-            ->get();
+    // Ambil rekomendasi barang untuk user terpilih
+    $rekomendasiQuery = RekomendasiBarang::with('barang');
+    if ($selectedUserId) {
+        $rekomendasiQuery->where('user_id', $selectedUserId);
+    }
+    $rekomendasi = $rekomendasiQuery->get();
 
-        // Get categories based on the user's history
-        $kategori = Kategori::whereIn('id_kategori', $this->getCategoriesFromHistory($histories))->get();
+    if ($selectedUserId) {
+        $histories = History::with([
+            'penukaran.penawar',
+            'penukaran.ditawar',
+            'penukaran.barangPenawar.kategori',
+            'penukaran.barangDitawar.kategori',
+        ])->whereHas('penukaran', function ($query) use ($selectedUserId) {
+            $query->where('id_penawar', $selectedUserId)
+                  ->orWhere('id_ditawar', $selectedUserId);
+        })->get();
 
-        // Fetch the items based on the selected categories
-        $barang = Barang::whereIn('id_kategori', $request->kategori_ids) // Select based on selected categories
-                        ->where('user_id', '!=', $request->user_id) // Exclude selected user's items
-                        ->get();
+        // Ambil id barang yang sudah pernah ditukar (baik sebagai penawar atau ditawar)
+        $barangDitukarIds = $histories->flatMap(function($history) {
+            return [
+                optional($history->penukaran->barangPenawar)->id_barang,
+                optional($history->penukaran->barangDitawar)->id_barang,
+            ];
+        })->filter()->unique()->toArray();
+
+        // Ambil id barang yang sudah direkomendasikan
+        $barangDirekomendasikanIds = $rekomendasi->pluck('id_barang')->toArray();
+
+        // Gabungkan semua id barang yang harus dikecualikan
+        $excludeBarangIds = array_merge($barangDitukarIds, $barangDirekomendasikanIds);
+
+        // Ambil semua kategori yang relevan
+        $categoryIds = $histories->map(function ($history) {
+            return optional($history->penukaran->barangPenawar->kategori)->id_kategori;
+        })->filter()->unique();
+
+        $kategori = Kategori::whereIn('id_kategori', $categoryIds)->get();
+
+        // Query barang yang bisa direkomendasikan, kecuali yang sudah ditukar dan sudah direkomendasikan
+        $barangQuery = Barang::query();
+
+        // Filter kategori jika ada filter yang dipilih
+        if ($selectedCategoryFilter) {
+            $barangQuery->where('id_kategori', $selectedCategoryFilter);
+        } else {
+            $barangQuery->whereIn('id_kategori', $categoryIds);
+        }
+
+        if (!empty($excludeBarangIds)) {
+            $barangQuery->whereNotIn('id_barang', $excludeBarangIds);
+        }
+
+        $items = $barangQuery->get();
     }
 
-    // If the request is via AJAX, return JSON response
-    if ($request->ajax()) {
-        return response()->json([
-            'items' => view('admin.rekomendasi.barang_items', compact('barang'))->render(),
-        ]);
-    }
-
-    // Return the view with required data
-    return view('admin.rekomendasi.index', compact('users', 'histories', 'kategori', 'rekomendasi', 'barang'));
+    return view('admin.rekomendasi.index', compact(
+        'users', 'histories', 'kategori', 'items', 'rekomendasi',
+        'selectedUserId', 'selectedCategoryFilter'
+    ));
 }
 
 
-    private function getCategoriesFromHistory($histories)
-    {
-        // Collect all categories the user has interacted with
-        $categoryIds = $histories->map(function ($history) {
-            return $history->penukaran->barangPenawar->kategori->id_kategori;
-        });
+private function getCategoriesFromHistory($histories)
+{
+    $categoryIds = $histories->map(function ($history) {
+        // Cek jika penukaran dan kategori tersedia agar tidak error
+        return optional($history->penukaran->barangPenawar->kategori)->id_kategori;
+    })->filter()->unique();
 
-        return $categoryIds->unique();
-    }
+    return $categoryIds;
+}
+
 
     public function store(Request $request)
-    {
-        // Validate input data
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'barang_ids' => 'required|array',
-            'barang_ids.*' => 'exists:barang,id_barang',
+{
+    $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'barang_ids' => 'required|array',
+        'barang_ids.*' => 'exists:barang,id_barang',
+    ]);
+
+    foreach ($request->barang_ids as $barang_id) {
+        RekomendasiBarang::create([
+            'id_barang' => $barang_id,
+            'user_id' => $request->user_id,
+            'id_admin' => Auth::id(),
         ]);
-
-        // Store recommendations for the selected user
-        foreach ($request->barang_ids as $barang_id) {
-            RekomendasiBarang::create([
-                'id_barang' => $barang_id,
-                'user_id' => $request->user_id,
-                'id_admin' => Auth::id(),
-            ]);
-        }
-
-        return redirect()->route('admin.rekomendasi.index')->with('success', 'Rekomendasi barang berhasil ditambahkan.');
     }
+
+    return redirect()->route('admin.rekomendasi.index', ['user_id' => $request->user_id])
+        ->with('success', 'Rekomendasi barang berhasil ditambahkan.');
+}
 
     public function getItemsByCategories(Request $request)
-    {
-        // Fetch items based on selected category IDs and exclude the selected user
-        $items = Barang::whereIn('id_kategori', $request->kategori_ids)
-            ->where('user_id', '!=', $request->user_id)
-            ->get();
+{
+    $items = Barang::whereIn('id_kategori', $request->kategori_ids)
+        ->where('id_user', '!=', $request->user_id)
+        ->get();
 
-        return response()->json([
-            'items' => view('admin.rekomendasi.barang_items', compact('items'))->render(),
-        ]);
-    }
+    return response()->json([
+        'items' => view('admin.rekomendasi.barang_items', compact('items'))->render(),
+    ]);
+}
 
     public function showRecommendationForm(Request $request)
 {
@@ -115,5 +147,13 @@ class RekomendasiBarangController extends Controller
 
     // Pass data to the view
     return view('admin.rekomendasi.index', compact('kategori', 'users', 'barang'));
+}
+public function destroy($id)
+{
+    $rekomendasi = RekomendasiBarang::findOrFail($id);
+    $rekomendasi->delete();
+
+    return redirect()->route('admin.rekomendasi.index', ['user_id' => $rekomendasi->user_id])
+                     ->with('success', 'Rekomendasi barang berhasil dihapus.');
 }
 }

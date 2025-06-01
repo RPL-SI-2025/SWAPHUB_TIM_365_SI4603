@@ -93,6 +93,11 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
     Route::get('/rating', [ReplyController::class, 'index'])->name('admin.rating.index');
     Route::get('/rating/{id}/reply', [ReplyController::class, 'replyForm'])->name('admin.rating.replyForm');
     Route::post('/rating/{id}/reply', [ReplyController::class, 'reply'])->name('admin.rating.reply');
+
+    // Route untuk fitur rekomendasi
+    Route::get('rekomendasi', [RekomendasiBarangController::class, 'index'])->name('admin.rekomendasi.index');
+    Route::post('rekomendasi', [RekomendasiBarangController::class, 'store'])->name('admin.rekomendasi.store');
+    Route::delete('rekomendasi/{id}', [RekomendasiBarangController::class, 'destroy'])->name('admin.rekomendasi.destroy');
 });
 
 // Rating routes - memerlukan authentication
@@ -111,8 +116,5 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/rating-user/{id}', [RatingPenggunaController::class, 'destroy'])->name('rating_pengguna.destroy');
     Route::get('/rating-user/{id}/edit', [RatingPenggunaController::class, 'edit'])->name('rating_pengguna.edit');
 
-    // Route untuk fitur rekomendasi
-    Route::get('rekomendasi', [RekomendasiBarangController::class, 'index'])->name('admin.rekomendasi.index');
-    Route::post('rekomendasi', [RekomendasiBarangController::class, 'store'])->name('admin.rekomendasi.store');
-    Route::delete('rekomendasi/{id}', [RekomendasiBarangController::class, 'destroy'])->name('admin.rekomendasi.destroy');
+    
 });
