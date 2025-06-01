@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Models\Barang;
 use App\Models\Kategori;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class KategoriController extends Controller
@@ -12,13 +15,13 @@ class KategoriController extends Controller
     {
         $barang = Kategori::where('jenis_kategori', 'barang')->get();
         $laporan = Kategori::where('jenis_kategori', 'laporan')->get();
-    
-        return view('kategori.index', compact('barang', 'laporan'));
+
+        return view('admin.kategori.index', compact('barang', 'laporan'));
     }
-    
+
     public function create()
     {
-        return view('kategori.create');
+        return view('admin.kategori.create');
     }
 
     public function store(Request $request)
@@ -35,12 +38,12 @@ class KategoriController extends Controller
 
     public function show(Kategori $kategori)
     {
-        return view('kategori.show', compact('kategori'));
+        return view('admin.kategori.show', compact('kategori'));
     }
 
     public function edit(Kategori $kategori)
     {
-        return view('kategori.edit', compact('kategori'));
+        return view('admin.kategori.edit', compact('kategori'));
     }
 
     public function update(Request $request, Kategori $kategori)
@@ -60,5 +63,17 @@ class KategoriController extends Controller
         $kategori->delete();
 
         return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus.');
+    }
+    public function showRecommendationForm()
+    {
+        // Ambil semua kategori dari tabel kategori
+        $kategori = Kategori::all();
+
+        // Ambil data user dan barang (sesuaikan dengan model Anda)
+        $users = User::all();
+        $barang = Barang::all();
+
+        // Pass data kategori ke view
+        return view('admin.recommendation', compact('kategori', 'users', 'barang'));
     }
 }

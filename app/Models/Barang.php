@@ -11,7 +11,7 @@ class Barang extends Model
     use HasFactory;
 
     protected $table = 'barang';
-    protected $primaryKey = 'id_barang';
+    protected $primaryKey = 'id_barang'; // pastikan ini cocok dengan migration
 
     protected $fillable = [
         'id_user',
@@ -27,9 +27,9 @@ class Barang extends Model
         return $this->belongsTo(User::class, 'id_user', 'id');
     }
 
-    public static function show_item()
+    public function kategori()
     {
-        return self::with('user')->get();
+        return $this->belongsTo(Kategori::class, 'id_kategori', 'id_kategori');
     }
 
     public function wishlists(): HasMany
@@ -37,8 +37,26 @@ class Barang extends Model
         return $this->hasMany(Wishlist::class, 'id_barang');
     }
 
-    public function kategori()
+    public function penukaran(): HasMany
     {
-        return $this->belongsTo(Kategori::class, 'id_kategori', 'id_kategori');
+        return $this->hasMany(Penukaran::class, 'id_barang', 'id_barang');
     }
+
+    // Jika kamu menyimpan jumlah klik barang, pastikan ada kolom 'jumlah_klik' di tabel 'barang'
+    public function scopePopuler($query)
+    {
+        return $query->withCount('penukaran')
+                     ->orderByDesc('penukaran_count')
+                     ->orderByDesc('jumlah_klik');
+    }
+
+    public static function show_item()
+    {
+        return self::with('user')->get();
+    }
+    public function direkomendasikanUntuk()
+    {
+        return $this->belongsToMany(User::class, 'rekomendasi_barang', 'id_barang', 'user_id');
+    }
+
 }

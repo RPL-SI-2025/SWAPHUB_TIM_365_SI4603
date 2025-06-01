@@ -40,4 +40,5 @@ class RatingWebsite extends Model
     {
         return $query->where('rating', $rating);
     }
+
 }

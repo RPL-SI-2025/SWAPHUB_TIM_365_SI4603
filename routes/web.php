@@ -5,16 +5,20 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\PenukaranController;
 use App\Http\Controllers\NotifikasiController;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\LaporanPenipuanController;
 use App\Http\Controllers\RatingWebsiteController;
 use App\Http\Controllers\RatingPenggunaController;
+
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ReplyController;
+use App\Http\Controllers\Admin\KategoriController;
+use App\Http\Controllers\Admin\RekomendasiBarangController;
+
 use App\Models\Barang;
 
 // Landing page
@@ -84,6 +88,11 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
 
     // Route untuk Admin mengelola status Laporan Penipuan
     Route::post('laporan_penipuan/{id}/status', [LaporanPenipuanController::class, 'updateStatus'])->name('laporan_penipuan.updateStatus');
+
+    // Route untuk Admin mengelola Rating dan Review
+    Route::get('/rating', [ReplyController::class, 'index'])->name('admin.rating.index');
+    Route::get('/rating/{id}/reply', [ReplyController::class, 'replyForm'])->name('admin.rating.replyForm');
+    Route::post('/rating/{id}/reply', [ReplyController::class, 'reply'])->name('admin.rating.reply');
 });
 
 // Rating routes - memerlukan authentication
@@ -93,14 +102,17 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/rating/{id}', [RatingWebsiteController::class, 'update'])->name('rating.update');
     Route::delete('/rating/{id}', [RatingWebsiteController::class, 'destroy'])->name('rating.destroy');
     Route::get('/rating/{id}/edit', [RatingWebsiteController::class, 'edit'])->name('rating.edit');
-});
 
-// Rating pengguna routes - memerlukan authentication
-Route::middleware(['auth'])->group(function () {
+    // Route untuk fitur rating pengguna
     Route::get('/rating-user', [RatingPenggunaController::class, 'index'])->name('rating_pengguna.index');
     Route::get('/rating-user/create', [RatingPenggunaController::class, 'create'])->name('rating_pengguna.create');
     Route::post('/rating-user', [RatingPenggunaController::class, 'store'])->name('rating_pengguna.store');
     Route::put('/rating-user/{id}', [RatingPenggunaController::class, 'update'])->name('rating_pengguna.update');
     Route::delete('/rating-user/{id}', [RatingPenggunaController::class, 'destroy'])->name('rating_pengguna.destroy');
     Route::get('/rating-user/{id}/edit', [RatingPenggunaController::class, 'edit'])->name('rating_pengguna.edit');
+
+    // Route untuk fitur rekomendasi
+    Route::get('rekomendasi', [RekomendasiBarangController::class, 'index'])->name('admin.rekomendasi.index');
+    Route::post('rekomendasi', [RekomendasiBarangController::class, 'store'])->name('admin.rekomendasi.store');
+    Route::delete('rekomendasi/{id}', [RekomendasiBarangController::class, 'destroy'])->name('admin.rekomendasi.destroy');
 });

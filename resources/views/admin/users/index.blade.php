@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 
 @section('title', 'User Management')
 
 @section('content')
-  <div class="container mx-auto px-4 mt-8">
-    <h1 class="text-3xl font-bold mb-6">User List</h1>
+  <div class="container mx-auto">
+    <h1 class="text-3xl font-bold mb-6">User <span class="text-primary">List</span></h1>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table class="w-full text-sm text-left text-gray-500">
@@ -49,8 +49,7 @@
                 {{ $user->role }}
               </td>
               <td class="px-6 py-4">
-                <form action="{{ route('users.destroy', $user->id) }}" method="POST"
-                  onsubmit="return confirm('Are you sure you want to delete this user?')">
+                <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline-block delete-form">
                   @csrf
                   @method('DELETE')
                   <button type="submit"
@@ -58,7 +57,7 @@
                     Delete
                   </button>
                 </form>
-              </td>
+                </td>
             </tr>
           @empty
             <tr>

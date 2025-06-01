@@ -131,7 +131,9 @@
 </style>
 
 <div class="feedback-section">
-    <h2 class="section-title">Give Us Feedback for Improvement</h2>
+    <h2 class="text-3xl font-bold text-center text-tertiary text-shadow-lg mb-8">
+    Give Us <span class="text-primary">Feedback</span> for <span class="text-primary">Improvement</span>
+    </h2>
     
     @if(session('success'))
         <div class="alert alert-success">

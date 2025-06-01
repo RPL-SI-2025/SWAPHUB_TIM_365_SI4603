@@ -28,10 +28,7 @@ class RegistrationController extends Controller
         // Simpan gambar jika ada
         $profilePath = null;
         if ($request->hasFile('profile_picture')) {
-            $file = $request->file('profile_picture');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('public/uploads', $filename);
-            $profilePath = 'storage/uploads/' . $filename;
+            $profilePath = $request->file('profile_picture')->store('photo-profile', 'public');
         }
 
         User::create([
