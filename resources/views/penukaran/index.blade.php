@@ -2,23 +2,25 @@
 
 @section('content')
   <div class="px-4 md:px-24 py-10">
-
-    {{-- Header --}}
-    <div class="">
+    <div class="md:flex justify-between items-center mb-4">
       <div class="flex items-center mb-4">
         <a href="{{ route('home') }}" class="mr-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 hover:text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500 hover:text-gray-700" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
           </svg>
         </a>
-        <h1 class="text-3xl font-bold text-shadow-lg">Permintaan <span class="text-primary">Tukar Barang</span></h1>
+        <span class="text-shadow-lg">
+          <h1 class="text-3xl font-bold text-shadow-lg">Permintaan <span class="text-primary">Tukar Barang</span></h1>
+        </span>
       </div>
-      <div class="flex justify-end items-start mb-6">
+
+      @if (!Auth::user()->is_admin)
         <a href="{{ route('history.index') }}"
-          class="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded transition duration-200">
+          class="flex items-center bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded w-fit">
           History
         </a>
-      </div>
+      @endif
     </div>
 
     {{-- Permintaan Masuk --}}

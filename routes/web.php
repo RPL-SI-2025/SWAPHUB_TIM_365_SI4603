@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\HomeController;
@@ -17,14 +18,26 @@ use App\Http\Controllers\RatingPenggunaController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ReplyController;
 use App\Http\Controllers\Admin\KategoriController;
+use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\RekomendasiBarangController;
 
 use App\Models\Barang;
+use App\Models\RatingWebsite;
+use Illuminate\Support\Facades\Auth;
 
 // Landing page
 Route::get('/', function () {
     $barang = Barang::where('status_barang', 'tersedia')->latest()->limit(10)->get();
-    return view('landing', compact('barang'));
+
+    $userRating = null;
+
+    if (Auth::check()) {
+        $userRating = RatingWebsite::byUser(Auth::id())->first();
+    }
+
+    $allRating = RatingWebsite::where('is_visible', true)->latest()->get();;
+
+    return view('landing', compact('barang', 'userRating', 'allRating'));
 })->name('landing');
 
 Route::middleware('guest')->group(function () {
@@ -79,15 +92,14 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard.index');
-    })->name('dashboard.index');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
     Route::resource('users', UserController::class);
     Route::resource('kategori', KategoriController::class);
 
-        // Route untuk Admin mengelola status Laporan Penipuan
-    Route::post('laporan_penipuan/{id}/status', [LaporanPenipuanController::class, 'updateStatus'])->name('laporan_penipuan.updateStatus');
+    // Route untuk Admin mengelola status Laporan Penipuan
+    Route::resource('laporan', LaporanController::class);
+    Route::post('laporan/{id}/status', [LaporanPenipuanController::class, 'updateStatus'])->name('laporan_penipuan.updateStatus');
 
     // Route untuk Admin mengelola Rating dan Review
     Route::get('/rating', [ReplyController::class, 'index'])->name('admin.rating.index');
@@ -102,11 +114,9 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
 
 // Rating routes - memerlukan authentication
 Route::middleware(['auth'])->group(function () {
-    Route::get('/rating', [RatingWebsiteController::class, 'index'])->name('rating.index');
     Route::post('/rating', [RatingWebsiteController::class, 'store'])->name('rating.store');
     Route::put('/rating/{id}', [RatingWebsiteController::class, 'update'])->name('rating.update');
     Route::delete('/rating/{id}', [RatingWebsiteController::class, 'destroy'])->name('rating.destroy');
-    Route::get('/rating/{id}/edit', [RatingWebsiteController::class, 'edit'])->name('rating.edit');
 
     // Route untuk fitur rating pengguna
     Route::get('/rating-user', [RatingPenggunaController::class, 'index'])->name('rating_pengguna.index');
@@ -115,6 +125,4 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/rating-user/{id}', [RatingPenggunaController::class, 'update'])->name('rating_pengguna.update');
     Route::delete('/rating-user/{id}', [RatingPenggunaController::class, 'destroy'])->name('rating_pengguna.destroy');
     Route::get('/rating-user/{id}/edit', [RatingPenggunaController::class, 'edit'])->name('rating_pengguna.edit');
-
-    
 });

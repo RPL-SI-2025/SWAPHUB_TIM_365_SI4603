@@ -35,4 +35,9 @@ class LaporanPenipuan extends Model
     {
         return $this->belongsTo(User::class, 'id_dilapor');
     }
+
+    public static function countPending()
+    {
+        return self::where('status_laporan', 'pending')->count();
+    }
 }

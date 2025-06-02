@@ -1,3 +1,8 @@
+@php
+  $jumlahPending = App\Models\LaporanPenipuan::countPending();
+  $jumlahBelumDitanggapi = App\Models\RatingWebsite::countBelumDitanggapi();
+@endphp
+
 <aside id="logo-sidebar"
   class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0"
   aria-label="Sidebar">
@@ -33,15 +38,21 @@
         </a>
       </li>
       <li>
-        <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
-          <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900"
+        <a href="{{ route('laporan.index') }}"
+          class="flex items-center p-2 rounded-lg group
+    {{ request()->routeIs('laporan*') ? 'bg-gray-100 text-primary' : 'text-gray-900 hover:bg-gray-100' }}">
+          <svg
+            class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-gray-900
+    {{ request()->routeIs('laporan*') ? 'text-primary' : 'text-gray-500' }}"
             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
             <path
               d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
           </svg>
           <span class="flex-1 ms-3 whitespace-nowrap">Fraud Reports</span>
-          <span
-            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">3</span>
+          @if ($jumlahPending > 0)
+            <span
+              class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-yellow-800 bg-yellow-100 rounded-full">{{ $jumlahPending }}</span>
+          @endif
         </a>
       </li>
       <li>
@@ -59,9 +70,11 @@
         </a>
       </li>
       <li>
-        <a href="{{ route('admin.rekomendasi.index') }}" class="flex items-center p-2 rounded-lg group
+        <a href="{{ route('admin.rekomendasi.index') }}"
+          class="flex items-center p-2 rounded-lg group
     {{ request()->routeIs('admin.rekomendasi*') ? 'bg-gray-100 text-primary' : 'text-gray-900 hover:bg-gray-100' }}">
-          <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-gray-900
+          <svg
+            class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-gray-900
     {{ request()->routeIs('admin.rekomendasi*') ? 'text-primary' : 'text-gray-500' }}"
             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
             <path
@@ -71,9 +84,11 @@
         </a>
       </li>
       <li>
-        <a href="{{ route('admin.rating.index') }}" class="flex items-center p-2 rounded-lg group
+        <a href="{{ route('admin.rating.index') }}"
+          class="flex items-center p-2 rounded-lg group
     {{ request()->routeIs('admin.rating*') ? 'bg-gray-100 text-primary' : 'text-gray-900 hover:bg-gray-100' }}">
-          <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-gray-900
+          <svg
+            class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-gray-900
     {{ request()->routeIs('admin.rating*') ? 'text-primary' : 'text-gray-500' }}"
             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
             <path fill-rule="evenodd"
@@ -81,6 +96,10 @@
               clip-rule="evenodd" />
           </svg>
           <span class="flex-1 ms-3 whitespace-nowrap">Website Rating</span>
+          @if ($jumlahBelumDitanggapi > 0)
+            <span
+              class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-yellow-800 bg-yellow-100 rounded-full">{{ $jumlahBelumDitanggapi }}</span>
+          @endif
         </a>
       </li>
     </ul>

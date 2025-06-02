@@ -43,12 +43,10 @@ class Barang extends Model
         return $this->hasMany(Penukaran::class, 'id_barang', 'id_barang');
     }
 
-    // Jika kamu menyimpan jumlah klik barang, pastikan ada kolom 'jumlah_klik' di tabel 'barang'
     public function scopePopuler($query)
     {
         return $query->withCount('penukaran')
-                     ->orderByDesc('penukaran_count')
-                     ->orderByDesc('jumlah_klik');
+            ->orderByDesc('penukaran_count');
     }
 
     public static function show_item()
@@ -59,5 +57,4 @@ class Barang extends Model
     {
         return $this->belongsToMany(User::class, 'rekomendasi_barang', 'id_barang', 'user_id');
     }
-
 }

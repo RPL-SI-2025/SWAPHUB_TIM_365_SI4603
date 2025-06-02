@@ -11,11 +11,12 @@ class RatingWebsite extends Model
 
     protected $table = 'rating_websites';
     protected $primaryKey = 'id_rating_website';
-    
+
     protected $fillable = [
         'id_user',
         'review',
         'rating',
+        'is_visible',
         'tanggapan_review'
     ];
 
@@ -41,4 +42,10 @@ class RatingWebsite extends Model
         return $query->where('rating', $rating);
     }
 
+    public static function countBelumDitanggapi()
+    {
+        return self::whereNull('tanggapan_review')
+            ->orWhere('tanggapan_review', '')
+            ->count();
+    }
 }

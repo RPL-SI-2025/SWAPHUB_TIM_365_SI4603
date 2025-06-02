@@ -6,10 +6,10 @@
   <div class="container mx-auto">
     <h1 class="text-3xl font-bold mb-6">User <span class="text-primary">List</span></h1>
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table class="w-full text-sm text-left text-gray-500">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-          <tr>
+    <div class="w-full overflow-x-auto shadow-md rounded-lg">
+      <table class="w-full bg-white">
+        <thead>
+          <tr class="bg-tertiary text-white text-center">
             <th scope="col" class="px-6 py-3">
               No
             </th>
@@ -32,7 +32,7 @@
         </thead>
         <tbody>
           @forelse($users as $index => $user)
-            <tr class="bg-white text-gray-700 border-b ">
+            <tr class="bg-white text-gray-700 border-b border-gray-300">
               <td class="px-6 py-4">
                 {{ $index + 1 }}
               </td>
@@ -57,7 +57,7 @@
                     Delete
                   </button>
                 </form>
-                </td>
+              </td>
             </tr>
           @empty
             <tr>

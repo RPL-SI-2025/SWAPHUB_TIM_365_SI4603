@@ -12,17 +12,17 @@
       <!-- Kategori Barang -->
       <div class="bg-blue-100 rounded-xl p-6 shadow-md">
         <h3 class="text-xl font-semibold text-center mb-4">Barang</h3>
-        <div class="overflow-x-auto">
-          <table class="min-w-full text-sm">
-            <thead class="text-gray-700">
-              <tr class="border-b">
+        <div class="w-full overflow-x-auto shadow-md rounded-lg">
+          <table class="w-full bg-white">
+            <thead>
+              <tr class="bg-tertiary text-white text-center">
                 <th class="px-4 py-2 text-left">Nama</th>
                 <th class="px-4 py-2 text-left">Aksi</th>
               </tr>
             </thead>
             <tbody>
               @forelse ($barang as $item)
-                <tr class="border-t">
+                <tr class="border-t border-gray-300">
                   <td class="px-4 py-2">{{ $item->nama_kategori }}</td>
                   <td class="px-4 py-2">
                     <div class="flex space-x-2">
@@ -52,10 +52,10 @@
       <!-- Kategori Pelaporan -->
       <div class="bg-blue-100 rounded-xl p-6 shadow-md">
         <h3 class="text-xl font-semibold text-center mb-4">Pelaporan</h3>
-        <div class="overflow-x-auto">
-          <table class="min-w-full text-sm">
-            <thead class="text-gray-700">
-              <tr class="border-b">
+        <div class="w-full overflow-x-auto shadow-md rounded-lg">
+          <table class="w-full bg-white">
+            <thead>
+              <tr class="bg-tertiary text-white text-center">
                 <th class="px-4 py-2 text-left">Nama</th>
                 <th class="px-4 py-2 text-left">Aksi</th>
               </tr>
