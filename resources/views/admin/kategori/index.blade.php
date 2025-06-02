@@ -31,7 +31,7 @@
                       <a href="{{ route('kategori.edit', $item->id_kategori) }}"
                         class="text-yellow-500 hover:underline">Edit</a>
                       <form action="{{ route('kategori.destroy', $item->id_kategori) }}" method="POST"
-                        onsubmit="return confirm('Yakin ingin hapus?')">
+                        class="delete-form">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="text-red-500 hover:underline">Hapus</button>

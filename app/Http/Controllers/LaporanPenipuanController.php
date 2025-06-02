@@ -24,7 +24,9 @@ class LaporanPenipuanController extends Controller
     {
         if (!Auth::user()->is_admin) {
             $kategori = Kategori::where('jenis_kategori', 'laporan')->get();
-            $users = User::where('id', '!=', Auth::user()->id)->get();
+            $users = User::where('id', '!=', Auth::id())
+                ->where('role', '!=', 'admin')
+                ->get();
             return view('laporan_penipuan.create', compact('kategori', 'users'));
         }
         return redirect()->route('laporan_penipuan.index')->with('error', 'Hanya pengguna biasa yang dapat membuat laporan.');
