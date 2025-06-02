@@ -18,17 +18,18 @@ class RekomendasiBarang extends Model
     ];
 
     public function barang()
-    {
-        return $this->belongsTo(Barang::class, 'id_barang');
-    }
+{
+    return $this->belongsTo(Barang::class, 'id_barang', 'id_barang');
+}
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id'); // kolom 'id' pada tabel user
     }
 
     public function admin()
     {
-        return $this->belongsTo(User::class, 'id_admin');
+        return $this->belongsTo(User::class, 'id_admin', 'id'); // kolom 'id' pada tabel user
     }
+
 }

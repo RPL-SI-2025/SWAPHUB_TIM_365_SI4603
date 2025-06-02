@@ -100,6 +100,35 @@
         @endif
       </div>
     </section> --}}
+  <!-- Bagian Barang yang Direkomendasikan -->
+<section class="px-4 md:px-24 py-10">
+    <h2 class="text-2xl md:text-3xl font-semibold mb-2">Barang yang Direkomendasikan Untukmu</h2>
+
+    @if($barangRekomendasi->isNotEmpty())
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+            @foreach ($barangRekomendasi as $item)
+            <div class="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                <div class="h-48 bg-gray-100 flex items-center justify-center">
+                    @if ($item->gambar)
+                        <img src="{{ Storage::url($item->gambar) }}" alt="{{ $item->nama_barang }}" class="w-full h-full object-cover">
+                    @else
+                        <span class="text-gray-500 text-sm">Gambar Tidak Tersedia</span>
+                    @endif
+                </div>
+                <div class="p-4">
+                    <p class="font-medium text-lg text-gray-800 truncate">{{ $item->nama_barang }}</p>
+                    <p class="text-sm text-gray-600 mb-4 line-clamp-2">{{ $item->deskripsi_barang }}</p>
+                    <div class="flex justify-center flex-wrap gap-2">
+                        <a href="{{ route('barang.show', $item->id_barang) }}" class="text-sm px-4 py-1 bg-primary rounded-lg text-white hover:bg-primary-hover font-medium">Lihat</a>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    @else
+        {{-- Jika belum ada barang direkomendasikan, bagian ini kosong (tidak tampil) --}}
+    @endif
+</section>
 
   {{-- Daftar Barang Section --}}
   <section class="px-4 md:px-24 py-10">
