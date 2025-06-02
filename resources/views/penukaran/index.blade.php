@@ -42,8 +42,12 @@
           @foreach ($permintaanMasuk as $penukaran)
             <tr class="hover:bg-gray-50 text-center">
               <td class="p-3">{{ $penukaran->penawar->full_name }}</td>
-              <td class="p-3">{{ $penukaran->barangDitawar->nama_barang }}</td>
-              <td class="p-3">{{ $penukaran->barangPenawar->nama_barang }}</td>
+              <td class="p-3 text-primary hover:text-primary-hover"><a
+                  href="{{ route('barang.show', $penukaran->barangDitawar->id_barang) }}">{{ $penukaran->barangDitawar->nama_barang }}</a>
+              </td>
+              <td class="p-3 text-primary hover:text-primary-hover"><a
+                  href="{{ route('barang.show', $penukaran->barangPenawar->id_barang) }}">{{ $penukaran->barangPenawar->nama_barang }}</a>
+              </td>
               <td class="p-3">{{ $penukaran->barangDitawar->kategori->nama_kategori }}</td>
               <td class="p-3">{{ $penukaran->pesan_penukaran ?? '-' }}</td>
               <td class="p-3">
@@ -52,7 +56,7 @@
                   {{ ucfirst($penukaran->status_penukaran) }}
                 </span>
               </td>
-              <td class="p-3">
+              <td class="p-3 flex">
                 @if ($penukaran->status_penukaran == 'pending')
                   <form action="{{ route('penukaran.confirm', $penukaran->id_penukaran) }}" method="POST"
                     class="inline accept-form">
@@ -96,8 +100,12 @@
           @foreach ($penawaranKeluar as $penukaran)
             <tr class="hover:bg-gray-50 text-center">
               <td class="p-3">{{ $penukaran->ditawar->full_name }}</td>
-              <td class="p-3">{{ $penukaran->barangPenawar->nama_barang }}</td>
-              <td class="p-3">{{ $penukaran->barangDitawar->nama_barang }}</td>
+              <td class="p-3 text-primary hover:text-primary-hover"><a
+                  href="{{ route('barang.show', $penukaran->barangPenawar->id_barang) }}">{{ $penukaran->barangPenawar->nama_barang }}</a>
+              </td>
+              <td class="p-3 text-primary hover:text-primary-hover"><a
+                  href="{{ route('barang.show', $penukaran->barangDitawar->id_barang) }}">{{ $penukaran->barangDitawar->nama_barang }}</a>
+              </td>
               <td class="p-3">{{ $penukaran->barangPenawar->kategori->nama_kategori }}</td>
               <td class="p-3">{{ $penukaran->pesan_penukaran ?? '-' }}</td>
               <td class="p-3">

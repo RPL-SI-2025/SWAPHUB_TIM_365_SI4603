@@ -3,10 +3,10 @@
 @section('content')
   <div class="container mx-auto">
     <!-- Welcome Section with Quick Stats -->
-    <div class="mb-8 bg-gradient-to-r from-blue-600 to-blue-800 rounded-3xl p-8 text-white shadow-lg">
+    <div class="mb-8 bg-gradient-to-r from-tertiary to-primary rounded-3xl p-8 text-white shadow-lg">
       <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
         <div>
-          <h2 class="text-4xl font-bold mb-2">Welcome Back, <span class="text-blue-200">{{ Auth::user()->full_name }}</span>
+          <h2 class="text-4xl font-bold mb-2">Welcome Back, {{ Auth::user()->full_name }}
           </h2>
           <p class="text-blue-100 mb-4">{{ now()->format('l, d F Y') }}</p>
         </div>
@@ -44,7 +44,7 @@
         </div>
       </div>
 
-      <!-- Active Trades Card -->
+      <!-- Trades Card -->
       <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
         <div class="flex items-center justify-between mb-4">
           <div class="bg-green-100 rounded-xl p-3">
@@ -54,8 +54,8 @@
             </svg>
           </div>
         </div>
-        <h3 class="text-2xl font-bold text-gray-800 mb-1">{{ number_format($activeTrades ?? 0) }}</h3>
-        <p class="text-sm text-gray-500">Active Trades</p>
+        <h3 class="text-2xl font-bold text-gray-800 mb-1">{{ number_format($totalTrades ?? 0) }}</h3>
+        <p class="text-sm text-gray-500">Total Trades</p>
         <div class="mt-4">
           <div class="flex justify-between text-xs text-gray-400 mb-1">
             <span>Success Rate</span>
@@ -67,7 +67,7 @@
         </div>
       </div>
 
-      <!-- Completed Trades Card -->
+      <!-- Average Rating Card -->
       <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
         <div class="flex items-center justify-between mb-4">
           <div class="bg-purple-100 rounded-xl p-3">
@@ -77,18 +77,9 @@
             </svg>
           </div>
         </div>
-        <h3 class="text-2xl font-bold text-gray-800 mb-1">{{ number_format($completedTrades ?? 0) }}</h3>
-        <p class="text-sm text-gray-500">Completed Trades</p>
-        <div class="mt-4 grid grid-cols-2 gap-2 text-xs">
-          <div class="bg-purple-50 rounded-lg p-2">
-            <p class="text-purple-600 font-medium">{{ number_format($thisWeekTrades ?? 0) }}</p>
-            <p class="text-gray-500">This Week</p>
-          </div>
-          <div class="bg-purple-50 rounded-lg p-2">
-            <p class="text-purple-600 font-medium">{{ number_format($lastWeekTrades ?? 0) }}</p>
-            <p class="text-gray-500">Last Week</p>
-          </div>
-        </div>
+        <h3 class="text-2xl font-bold text-gray-800 mb-1">{{ $averageRating ?? 0 }}<span
+            class="ms-1 text-2xl text-yellow-400">★</span></h3>
+        <p class="text-sm text-gray-500">Average Web Rating</p>
       </div>
 
       <!-- Reports Card -->
@@ -110,8 +101,12 @@
               <span class="text-yellow-500 font-medium">{{ $pendingReports ?? 0 }}</span>
             </div>
             <div class="flex justify-between text-xs">
-              <span class="text-gray-500">In Progress</span>
-              <span class="text-blue-500 font-medium">{{ $inProgressReports ?? 0 }}</span>
+              <span class="text-gray-500">Accepted</span>
+              <span class="text-green-500 font-medium">{{ $acceptReports ?? 0 }}</span>
+            </div>
+            <div class="flex justify-between text-xs">
+              <span class="text-gray-500">Rejected</span>
+              <span class="text-red-500 font-medium">{{ $rejectReports ?? 0 }}</span>
             </div>
           </div>
         </div>

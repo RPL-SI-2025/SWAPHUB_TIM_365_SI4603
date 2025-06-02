@@ -1,7 +1,7 @@
 <div class="@guest md:hidden @else flex @endguest items-center md:order-2 space-x-3 md:space-x-4">
   @auth
     <span
-      class="hidden md:inline me-3 text-shadow-lg font-medium @if (request()->is('admin*')) text-white @else truncate max-w-[100px] @endif"
+      class="hidden md:inline me-3 text-shadow-lg font-medium @if (request()->is('admin*')) text-tertiary @else truncate max-w-[100px] @endif"
       title="{{ Auth::user()->full_name }}">{{ Auth::user()->full_name }}</span>
     <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-primary"
       id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">

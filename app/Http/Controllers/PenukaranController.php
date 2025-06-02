@@ -54,6 +54,12 @@ class PenukaranController extends Controller
             return redirect()->route('barang.show', $id_barang)->with('error', 'Barang yang Anda tawarkan tidak tersedia.');
         }
 
+        Notifikasi::send(
+            $barang->id_user,
+            Auth::user()->full_name . ' mengirimkan permintaan tukar barang anda "' . $barang->nama_barang . '" dengan "' . $barangDitawarkan->nama_barang . '".',
+            route('penukaran.index')
+        );
+
         Penukaran::create([
             'id_penawar' => Auth::user()->id,
             'id_ditawar' => $barang->id_user,
