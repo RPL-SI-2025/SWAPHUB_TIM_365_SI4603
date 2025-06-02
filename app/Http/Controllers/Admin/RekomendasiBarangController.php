@@ -23,12 +23,12 @@ class RekomendasiBarangController extends Controller
     $selectedCategoryFilter = $request->category_filter ?? null;
 
     // Ambil rekomendasi barang untuk user terpilih
-    $rekomendasiQuery = RekomendasiBarang::with('barang');
-    if ($selectedUserId) {
-        $rekomendasiQuery->where('user_id', $selectedUserId);
-    }
-    $rekomendasi = $rekomendasiQuery->get();
-
+    $rekomendasi = collect();
+if ($selectedUserId) {
+    $rekomendasi = RekomendasiBarang::with('barang')
+                    ->where('user_id', $selectedUserId)
+                    ->get();
+}
     if ($selectedUserId) {
         $histories = History::with([
             'penukaran.penawar',
